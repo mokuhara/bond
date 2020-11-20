@@ -11,16 +11,8 @@ type AUTHRESPONSE = typeof authResponse
 type auth = {
     email : string
     password : string
-    type: string
+    type: number
 }
-
-type authState = {
-    email : string
-    password : string
-    type: string
-    token : string
-}
-
 
 type httpStatus = typeof httpStatus[keyof typeof httpStatus];
 
@@ -67,7 +59,6 @@ const authSlice = createSlice({
             email: "",
             password: "",
             type: 1,
-            token: "",
         },
         isLoginView: true,
     },
@@ -85,13 +76,11 @@ const authSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fetchAsyncLogin.fulfilled, (state, action)=>{
             localStorage.setItem("bdt", action.payload.token)
-            state.authen.token = action.payload.token
             //TODO トップページへ遷移
             window.location.href = "/"
         })
         builder.addCase(fetchAsyncSignup.fulfilled, (state, action)=>{
             localStorage.setItem("bdt", action.payload.token)
-            state.authen.token = action.payload.token
             //TODO トップページへ遷移
             window.location.href = "/"
         })
