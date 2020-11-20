@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Avatar, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography} from "@material-ui/core"
-import { LockOutlined } from "@material-ui/icons"
+import { Search } from "@material-ui/icons"
 
 import {makeStyles, Theme} from "@material-ui/core/styles";
 
@@ -83,7 +83,7 @@ const Auth: React.FC = () => {
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockOutlined />
+                        <Search />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                      Omoch
