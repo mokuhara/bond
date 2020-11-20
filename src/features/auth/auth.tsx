@@ -4,17 +4,18 @@ import { Search } from "@material-ui/icons"
 
 import {makeStyles, Theme} from "@material-ui/core/styles";
 
-// import { useSelector, useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 
-// import {
-//     editEmail,
-//     editPassword,
-//     editType,
-//     fetchAsyncLogin,
-//     fetchAsyncSignup,
-//     selectAuth,
-//     selectIsLoginView
-// } from "./authSlice"
+import {
+    editEmail,
+    editPassword,
+    editType,
+    toggleMode,
+    fetchAsyncLogin,
+    fetchAsyncSignup,
+    selectAuth,
+    selectIsLoginView
+} from "./authSlice"
 
 function Copyright() {
     return (
@@ -63,19 +64,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Auth: React.FC = () => {
 
     const classes = useStyles()
-    // const auth = () => {
-    //     const dispatch = useDispatch();
-    //     const authen = useSelector(selectAuth)
-    //     const isLoginView = useSelector(selectIsLoginView)
-    //     const btnDisabler = authen.email === "" || authen.password === ""
-    //     const auth = async () => {
-    //         if (isLoginView) {
-    //             await dispatch(fetchAsyncLogin(authen))
-    //         } else {
-    //             await dispatch(fetchAsyncSignup(authen))
-    //         }
-    //     }
-    // }
+    const dispatch = useDispatch();
+    const authen = useSelector(selectAuth)
+    const isLoginView = useSelector(selectIsLoginView)
+    const btnDisabler = authen.email === "" || authen.password === ""
+
+    const auth = async () => {
+        if (isLoginView) {
+            await dispatch(fetchAsyncLogin(authen))
+        } else {
+            await dispatch(fetchAsyncSignup(authen))
+        }
+    }
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -99,6 +99,7 @@ const Auth: React.FC = () => {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={(e)=> dispatch(editEmail(e.target.value))}
                         />
                         <TextField
                             variant="outlined"
@@ -110,6 +111,7 @@ const Auth: React.FC = () => {
                             name="password"
                             type="password"
                             autoComplete="current-password"
+                            onChange={(e)=> dispatch(editPassword(e.target.value))}
                         />
                         <Button
                             type="submit"
@@ -117,13 +119,18 @@ const Auth: React.FC = () => {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
+                            disabled={btnDisabler}
+                            onClick={auth}
                         >
-                            ログインする
+                            {isLoginView ? "ログインする": "新規登録する"}
                         </Button>
                         <Grid container justify="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                {"アカウント作成はこちら"}
+                                <Link
+                                  variant="body2"
+                                  onClick={() => dispatch(toggleMode())}
+                                >
+                                {isLoginView? "アカウント作成はこちら": "ログインはこちら"}
                                 </Link>
                             </Grid>
                         </Grid>

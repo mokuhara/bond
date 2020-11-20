@@ -58,7 +58,7 @@ const authSlice = createSlice({
         authen: {
             email: "",
             password: "",
-            type: 1,
+            type: 0,
         },
         isLoginView: true,
     },
@@ -71,22 +71,27 @@ const authSlice = createSlice({
         },
         editType(state, action) {
             state.authen.type = action.payload
+        },
+        toggleMode(state) {
+            state.isLoginView = !state.isLoginView
         }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAsyncLogin.fulfilled, (state, action)=>{
             localStorage.setItem("bdt", action.payload.token)
+            console.log(`token: ${action.payload.token}`)
             //TODO トップページへ遷移
             window.location.href = "/"
         })
         builder.addCase(fetchAsyncSignup.fulfilled, (state, action)=>{
             localStorage.setItem("bdt", action.payload.token)
+            console.log(`token: ${action.payload.token}`)
             //TODO トップページへ遷移
             window.location.href = "/"
         })
     }
 })
-export const { editEmail, editPassword, editType } = authSlice.actions
+export const { editEmail, editPassword, editType, toggleMode } = authSlice.actions
 export const selectAuth = (state: RootState) => state.auth.authen
 export const selectIsLoginView = (state: RootState) => state.auth.isLoginView
 
