@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import  axios from 'axios'
 import { RootState } from "../../app/store"
-import authResponse from "./auth.json"
+import authResponse from "./authen/auth.json"
 import httpStatus from "./httpStatus.json"
 
 const apiUrl = "http://localhost:3000/v1";
@@ -14,8 +14,6 @@ type auth = {
     type: number
 }
 
-type httpStatus = typeof httpStatus[keyof typeof httpStatus];
-
 export const fetchAsyncLogin = createAsyncThunk("auth/login", async(auth: auth)=>{
     const res = await axios.post<AUTHRESPONSE>(`${apiUrl}/auth/login`, auth, {
         headers: {
@@ -23,7 +21,7 @@ export const fetchAsyncLogin = createAsyncThunk("auth/login", async(auth: auth)=
         }
     })
     const data = res.data
-    if(data.status != httpStatus.StatusOK || data.status != httpStatus.StatusCreated){
+    if(data.status !== httpStatus.StatusOK || data.status !== httpStatus.StatusCreated){
         console.error("action=fetchAsyncLogin error: auth response error")
         //TODO errorHanling
     }
@@ -41,7 +39,7 @@ export const fetchAsyncSignup = createAsyncThunk("auth/signup", async(auth: auth
         }
     })
     const data = res.data
-    if(data.status != httpStatus.StatusOK || data.status != httpStatus.StatusCreated){
+    if(data.status !== httpStatus.StatusOK || data.status !== httpStatus.StatusCreated){
         console.error("action=fetchAsyncLogin error: auth response error")
         //TODO errorHanling
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Avatar, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography} from "@material-ui/core"
+import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography} from "@material-ui/core"
 import { Search } from "@material-ui/icons"
 
 import {makeStyles, Theme} from "@material-ui/core/styles";
@@ -9,13 +9,13 @@ import { useSelector, useDispatch } from "react-redux"
 import {
     editEmail,
     editPassword,
-    editType,
+    // editType,
     toggleMode,
     fetchAsyncLogin,
     fetchAsyncSignup,
     selectAuth,
     selectIsLoginView
-} from "./authSlice"
+} from "../authSlice"
 
 function Copyright() {
     return (
