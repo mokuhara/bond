@@ -5,6 +5,11 @@ import { Search } from "@material-ui/icons"
 import {makeStyles, Theme} from "@material-ui/core/styles";
 
 import { useSelector, useDispatch } from "react-redux"
+import { useAppDispatch } from "../../../../src/app/storeHelper";
+
+import { useHistory } from 'react-router-dom';
+
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import {
     editEmail,
@@ -14,7 +19,8 @@ import {
     fetchAsyncLogin,
     fetchAsyncSignup,
     selectAuth,
-    selectIsLoginView
+    selectIsLoginView,
+    selectUserInfo
 } from "../authSlice"
 
 function Copyright() {
@@ -65,16 +71,33 @@ const Auth: React.FC = () => {
 
     const classes = useStyles()
     const dispatch = useDispatch();
+    const asyncDispatch = useAppDispatch();
     const authen = useSelector(selectAuth)
     const isLoginView = useSelector(selectIsLoginView)
+    const userInfo = useSelector(selectUserInfo)
+    const history = useHistory()
     const btnDisabler = authen.email === "" || authen.password === ""
 
     const auth = async () => {
         if (isLoginView) {
-            await dispatch(fetchAsyncLogin(authen))
+          console.error("hoge")
+          asyncDispatch(fetchAsyncLogin(authen))
+            .then(unwrapResult)
+            .then(payload =>{
+              console.error(payload)
+              history.push(`/mypage/${payload.userId}`)
+            })
+            .catch(error => {
+              console.log({ error });
+            });
         } else {
-            await dispatch(fetchAsyncSignup(authen))
+          asyncDispatch(fetchAsyncSignup(authen))
+            .then(()=>{history.push(`/userInfo`)})
+            .catch(error => {
+              console.log({ error });
+            });
         }
+        return
     }
     return (
         <Grid container component="main" className={classes.root}>
@@ -88,7 +111,6 @@ const Auth: React.FC = () => {
                     <Typography component="h1" variant="h5">
                      Omoch
                     </Typography>
-                    <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -114,7 +136,6 @@ const Auth: React.FC = () => {
                             onChange={(e)=> dispatch(editPassword(e.target.value))}
                         />
                         <Button
-                            type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
@@ -137,7 +158,6 @@ const Auth: React.FC = () => {
                         <Box mt={5}>
                              <Copyright />
                         </Box>
-                    </form>
                 </div>
             </Grid>
         </Grid>

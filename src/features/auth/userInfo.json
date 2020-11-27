@@ -1,0 +1,14 @@
+{
+	"userId": 1,
+	"usage": 1,
+	"name": "hoge fuga",
+	"kana": "ホゲ フガ",
+	"phone": "090-1111-2222",
+	"companyName": "hoge株式会社",
+	"department": "社長室",
+	"position": "社員",
+	"companyPhone": "03-2222-3333",
+	"motivation": 1,
+	"supportRequest": true,
+	"consent": false
+}
