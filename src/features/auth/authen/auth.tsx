@@ -74,11 +74,11 @@ const Auth: React.FC = () => {
     const isLoginView = useSelector(selectIsLoginView)
     const userInfo = useSelector(selectUserInfo)
     const history = useHistory()
-    const btnDisabler = authen.email === "" || authen.password === ""
     const { register, errors, formState } = useForm({
       mode: 'onBlur',
       reValidateMode: 'onChange'
     });
+    const btnDisabler = authen.email === "" || authen.password === "" || Boolean(errors.email) || Boolean(errors.password)
 
 
     const auth = async () => {
@@ -127,9 +127,9 @@ const Auth: React.FC = () => {
                             autoComplete="email"
                             autoFocus
                             onChange={(e)=> dispatch(editEmail(e.target.value))}
-                            inputRef={register({ required: true})}
+                            inputRef={register({ pattern: /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/})}
                             error={Boolean(errors.email)}
-                            helperText={errors.email && "入力必須です"}
+                            helperText={errors.email && "メールアドレスの形式で入力してください(hoge@gmail.com)"}
                         />
                         <TextField
                             variant="outlined"
@@ -142,9 +142,9 @@ const Auth: React.FC = () => {
                             type="password"
                             autoComplete="current-password"
                             onChange={(e)=> dispatch(editPassword(e.target.value))}
-                            inputRef={register({ required: true})}
+                            inputRef={register({ pattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]*$/})}
                             error={Boolean(errors.password)}
-                            helperText={errors.password && "入力必須です"}
+                            helperText={errors.password && "半角英数字記号で入力してください"}
                         />
                         <Button
                             fullWidth
