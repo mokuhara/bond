@@ -1,16 +1,13 @@
 import React from "react";
 import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography} from "@material-ui/core"
 import { Search } from "@material-ui/icons"
-
 import {makeStyles, Theme} from "@material-ui/core/styles";
-
 import { useSelector, useDispatch } from "react-redux"
-import { useAppDispatch } from "../../../../src/app/storeHelper";
-
 import { useHistory } from 'react-router-dom';
-
+import { useForm } from 'react-hook-form';
 import { unwrapResult } from '@reduxjs/toolkit';
 
+import { useAppDispatch } from "../../../../src/app/storeHelper";
 import {
     editEmail,
     editPassword,
@@ -22,6 +19,7 @@ import {
     selectIsLoginView,
     selectUserInfo
 } from "../authSlice"
+
 
 function Copyright() {
     return (
@@ -77,10 +75,16 @@ const Auth: React.FC = () => {
     const userInfo = useSelector(selectUserInfo)
     const history = useHistory()
     const btnDisabler = authen.email === "" || authen.password === ""
+    const { register, errors, formState } = useForm({
+      mode: 'onBlur',
+      reValidateMode: 'onChange'
+    });
+
 
     const auth = async () => {
         if (isLoginView) {
-          console.error("hoge")
+          console.log(formState.isValid)
+          console.error(errors.email)
           asyncDispatch(fetchAsyncLogin(authen))
             .then(unwrapResult)
             .then(payload =>{
@@ -99,6 +103,7 @@ const Auth: React.FC = () => {
         }
         return
     }
+
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -122,6 +127,9 @@ const Auth: React.FC = () => {
                             autoComplete="email"
                             autoFocus
                             onChange={(e)=> dispatch(editEmail(e.target.value))}
+                            inputRef={register({ required: true})}
+                            error={Boolean(errors.email)}
+                            helperText={errors.email && "入力必須です"}
                         />
                         <TextField
                             variant="outlined"
@@ -134,9 +142,13 @@ const Auth: React.FC = () => {
                             type="password"
                             autoComplete="current-password"
                             onChange={(e)=> dispatch(editPassword(e.target.value))}
+                            inputRef={register({ required: true})}
+                            error={Boolean(errors.password)}
+                            helperText={errors.password && "入力必須です"}
                         />
                         <Button
                             fullWidth
+                            type="submit"
                             variant="contained"
                             color="primary"
                             className={classes.submit}
