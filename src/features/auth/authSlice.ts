@@ -100,7 +100,7 @@ const authSlice = createSlice({
         },
         userInfo: {
             userId: 0,
-            usage: 0,
+            usage: 1,
             name: "",
             kana: "",
             phone: "",
@@ -108,8 +108,8 @@ const authSlice = createSlice({
             department: "",
             position: "",
             companyPhone: "",
-            motivation: 0,
-            supportRequest: false,
+            motivation: 1,
+            supportRequest: true,
             consent: false
         },
         isLoginView: true,

@@ -28,10 +28,8 @@ enum Motivation {
 const UsageInfo: React.FC = () => {
     const classes = useStyles()
     const dispatch = useDispatch();
-    const personalInfo = useSelector(selectUserInfo)
-    const [motivation, setMotivationValue] = React.useState<number>(0);
-    const [supportRequest, setSupportRequestValue] = React.useState<string>("");
-    const [consent, setConsentValue] = React.useState<boolean>(false);
+    const userInfo = useSelector(selectUserInfo)
+    const [supportRequest, setSupportRequestValue] = React.useState<string>("true");
 
     const toBoolean = (booleanStr: string): boolean => {
         return  booleanStr.toLowerCase() === "true";
@@ -39,7 +37,6 @@ const UsageInfo: React.FC = () => {
 
     const handleMotivationChange = (event:  React.ChangeEvent<HTMLInputElement>)=> {
         dispatch(editMotivation(parseInt(event.target.value, 10)))
-        setMotivationValue(parseInt(event.target.value, 10))
     }
 
     const handleSupportChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +47,6 @@ const UsageInfo: React.FC = () => {
 
     const handleConsentChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editConsent(event.target.checked))
-        setConsentValue(event.target.checked)
     }
 
     return (
@@ -62,7 +58,7 @@ const UsageInfo: React.FC = () => {
                         <FormControl component="label">
                             <FormLabel component="label">現在の状況</FormLabel>
                             <RadioGroup
-                                value={motivation}
+                                value={userInfo.motivation}
                                 onChange={handleMotivationChange}
                             >
                                 <FormControlLabel
@@ -105,7 +101,7 @@ const UsageInfo: React.FC = () => {
                                 <FormControlLabel
                                     control={
                                     <Checkbox
-                                        checked={consent}
+                                        checked={userInfo.consent}
                                         onChange={handleConsentChange}
                                         name="consent"
                                         color="primary"

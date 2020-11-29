@@ -83,12 +83,9 @@ const Auth: React.FC = () => {
 
     const auth = async () => {
         if (isLoginView) {
-          console.log(formState.isValid)
-          console.error(errors.email)
           asyncDispatch(fetchAsyncLogin(authen))
             .then(unwrapResult)
             .then(payload =>{
-              console.error(payload)
               history.push(`/mypage/${payload.userId}`)
             })
             .catch(error => {

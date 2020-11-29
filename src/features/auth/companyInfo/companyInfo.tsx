@@ -1,8 +1,8 @@
 import React from "react"
 import {Grid, TextField} from "@material-ui/core"
 import { useSelector, useDispatch } from "react-redux"
-
 import {makeStyles, Theme} from "@material-ui/core/styles";
+import { useForm } from 'react-hook-form';
 
 import {
     editCompanyName,
@@ -23,7 +23,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 const CompanyInfo: React.FC = () => {
     const classes = useStyles()
     const dispatch = useDispatch();
-    // const companyInfo = useSelector(selectUserInfo)
+    const userInfo = useSelector(selectUserInfo)
+    const { register, errors, formState } = useForm({
+        mode: 'onBlur',
+        reValidateMode: 'onChange'
+      });
 
 
     return (
@@ -42,7 +46,11 @@ const CompanyInfo: React.FC = () => {
                             name="companyName"
                             autoComplete="companyName"
                             autoFocus
+                            value={userInfo.companyName}
                             onChange={(e)=> dispatch(editCompanyName(e.target.value))}
+                            inputRef={register({ required: true })}
+                            error={Boolean(errors.companyName)}
+                            helperText={errors.companyName && "入力必須です"}
                         />
                         <TextField
                             variant="outlined"
@@ -54,7 +62,11 @@ const CompanyInfo: React.FC = () => {
                             name="department"
                             autoComplete="department"
                             autoFocus
+                            value={userInfo.department}
                             onChange={(e)=> dispatch(editDepartment(e.target.value))}
+                            inputRef={register({ required: true })}
+                            error={Boolean(errors.department)}
+                            helperText={errors.department && "入力必須です"}
                         />
                         <TextField
                             variant="outlined"
@@ -66,7 +78,11 @@ const CompanyInfo: React.FC = () => {
                             name="position"
                             autoComplete="position"
                             autoFocus
+                            value={userInfo.position}
                             onChange={(e)=> dispatch(editPosition(e.target.value))}
+                            inputRef={register({ required: true })}
+                            error={Boolean(errors.position)}
+                            helperText={errors.position && "入力必須です"}
                         />
                         <TextField
                             variant="outlined"
@@ -78,7 +94,11 @@ const CompanyInfo: React.FC = () => {
                             name="companyPhone"
                             autoComplete="companyPhone"
                             autoFocus
+                            value={userInfo.companyPhone}
                             onChange={(e)=> dispatch(editCompanyPhone(e.target.value))}
+                            inputRef={register({ pattern: /^0([0-9]-[0-9]{4}|[0-9]{2}-[0-9]{3}|[0-9]{3}-[0-9]{2}|[0-9]{4}-[0-9])-[0-9]{4}$/})}
+                            error={Boolean(errors.companyPhone)}
+                            helperText={errors.companyPhone && "ハイフン(-)つきの電話番号を入力してください"}
                         />
                     </form>
                 </Grid>

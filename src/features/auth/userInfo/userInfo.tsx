@@ -4,12 +4,11 @@ import { Paper, Stepper, Step, StepLabel, Button, Typography, Grid } from "@mate
 import PersonalInfo from "../personalInfo/personalInfo"
 import CompanyInfo from "../companyInfo/companyInfo"
 import UsageInfo from "../usageInfo/usageInfo"
-
 import { useSelector, useDispatch } from "react-redux"
+import { useHistory } from 'react-router-dom';
 
 import { selectUserInfo,  fetchAsyncSendUserInfo} from "../authSlice"
 
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
     appBar: {
@@ -68,7 +67,6 @@ const UserInfo: React.FC = () => {
     const dispatch = useDispatch()
     const userInfo = useSelector(selectUserInfo)
     const history = useHistory()
-
     const [activeStep, setActiveStep] = React.useState(0);
 
     const sendUserInfo = async () => {
@@ -90,6 +88,21 @@ const UserInfo: React.FC = () => {
         history.push(`/mypage/${userInfo.userId}`)
     }
 
+    const validationHandler = () => {
+        switch (activeStep) {
+            case 0:
+                const validKane = userInfo.kana.match(/^[ァ-ンヴー]*$/)
+                const validPhoneNumber = userInfo.phone.match(/^0\d{2,3}-\d{1,4}-\d{4}$/)
+                return !Boolean(userInfo.kana && validKane && validPhoneNumber)
+            case 1:
+                const validCompanyPhone = userInfo.companyPhone.match( /^0([0-9]-[0-9]{4}|[0-9]{2}-[0-9]{3}|[0-9]{3}-[0-9]{2}|[0-9]{4}-[0-9])-[0-9]{4}$/)
+                return !Boolean(userInfo.companyName && userInfo.department && userInfo.position && validCompanyPhone)
+            case 2:
+                return !userInfo.consent
+            default:
+                return true
+        }
+    }
 
     return (
         <Grid container component="main" className={classes.layout}>
@@ -130,6 +143,7 @@ const UserInfo: React.FC = () => {
                                 <Button
                                     variant="contained"
                                     color="primary"
+                                    disabled={validationHandler()}
                                     onClick={handleNext}
                                     className={classes.buttons}>
                                         {activeStep === steps.length - 1 ? '登録する' : '次へ'}

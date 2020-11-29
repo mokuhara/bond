@@ -1,8 +1,8 @@
 import React from "react"
 import {Grid, TextField, FormControl, FormControlLabel, Radio, RadioGroup} from "@material-ui/core"
 import { useSelector, useDispatch } from "react-redux"
-
 import {makeStyles, Theme} from "@material-ui/core/styles";
+import { useForm } from 'react-hook-form';
 
 import {
     editUsage,
@@ -29,11 +29,14 @@ enum Usage {
 const PersonalInfo: React.FC = () => {
     const classes = useStyles()
     const dispatch = useDispatch();
-    const [value, setValue] = React.useState<number>(0);
+    const userInfo = useSelector(selectUserInfo)
+    const { register, errors, formState } = useForm({
+        mode: 'onBlur',
+        reValidateMode: 'onChange'
+      });
 
     const handleChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editUsage(parseInt(event.target.value, 10)))
-        setValue(parseInt(event.target.value, 10))
     }
 
     return (
@@ -44,7 +47,7 @@ const PersonalInfo: React.FC = () => {
                         {/* TODO validation追加 */}
                         <FormControl component="label">
                             <RadioGroup
-                                value={value}
+                                value={userInfo.usage}
                                 onChange={handleChange}
                             >
                                 <FormControlLabel
@@ -69,7 +72,11 @@ const PersonalInfo: React.FC = () => {
                             name="name"
                             autoComplete="name"
                             autoFocus
+                            value={userInfo.name}
                             onChange={(e)=> dispatch(editName(e.target.value))}
+                            inputRef={register({ required: true })}
+                            error={Boolean(errors.name)}
+                            helperText={errors.name && "入力必須です"}
                         />
                         <TextField
                             variant="outlined"
@@ -81,7 +88,11 @@ const PersonalInfo: React.FC = () => {
                             name="kana"
                             autoComplete="kana"
                             autoFocus
+                            value={userInfo.kana}
                             onChange={(e)=> dispatch(editKana(e.target.value))}
+                            inputRef={register({ pattern: /^[ァ-ンヴー]*$/})}
+                            error={Boolean(errors.kana)}
+                            helperText={errors.kana && "全角カタカナで入力してください"}
                         />
                         <TextField
                             variant="outlined"
@@ -93,7 +104,11 @@ const PersonalInfo: React.FC = () => {
                             name="phone"
                             autoComplete="phone"
                             autoFocus
-                            onChange={(e)=> dispatch(editPhone(e.target.value))}
+                            value={userInfo.phone}
+                            onChange={(e)=> {dispatch(editPhone(e.target.value))}}
+                            inputRef={register({ pattern: /^0\d{2,3}-\d{1,4}-\d{4}$/})}
+                            error={Boolean(errors.phone)}
+                            helperText={errors.phone && "ハイフン(-)つきの電話番号を入力してください"}
                         />
                     </form>
                 </Grid>
