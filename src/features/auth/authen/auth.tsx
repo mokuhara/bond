@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography} from "@material-ui/core"
 import { Search } from "@material-ui/icons"
 import {makeStyles, Theme} from "@material-ui/core/styles";
@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import { useAppDispatch } from "../../../../src/app/storeHelper";
+import { SnackBar } from "../../utils/snackbar"
+
 import {
     editEmail,
     editPassword,
@@ -17,7 +19,6 @@ import {
     fetchAsyncSignup,
     selectAuth,
     selectIsLoginView,
-    selectUserInfo
 } from "../authSlice"
 
 
@@ -72,13 +73,14 @@ const Auth: React.FC = () => {
     const asyncDispatch = useAppDispatch();
     const authen = useSelector(selectAuth)
     const isLoginView = useSelector(selectIsLoginView)
-    const userInfo = useSelector(selectUserInfo)
     const history = useHistory()
-    const { register, errors, formState } = useForm({
+  　const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const { register, errors } = useForm({
       mode: 'onBlur',
       reValidateMode: 'onChange'
     });
     const btnDisabler = authen.email === "" || authen.password === "" || Boolean(errors.email) || Boolean(errors.password)
+    const changeOpenStatus = (openStatus: boolean) => { setErrMessage({...errMessage, isOpen: openStatus})}
 
 
     const auth = async () => {
@@ -89,13 +91,20 @@ const Auth: React.FC = () => {
               history.push(`/mypage/${payload.userId}`)
             })
             .catch(error => {
-              console.log({ error });
+              console.error(error)
+              setErrMessage({...errMessage, message: "ログインに失敗しました", isOpen: true})
+              history.push("/")
             });
         } else {
           asyncDispatch(fetchAsyncSignup(authen))
-            .then(()=>{history.push(`/userInfo`)})
+            .then(unwrapResult)
+            .then((payload)=>{
+              history.push(`/userInfo/${payload.userId}`)
+            })
             .catch(error => {
-              console.log({ error });
+              console.error(error)
+              setErrMessage({...errMessage, message: "sign upに失敗しました", isOpen: true})
+              history.push("/")
             });
         }
         return
@@ -123,8 +132,9 @@ const Auth: React.FC = () => {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            value={authen.email}
                             onChange={(e)=> dispatch(editEmail(e.target.value))}
-                            inputRef={register({ pattern: /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/})}
+                            inputRef={register({ pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/})}
                             error={Boolean(errors.email)}
                             helperText={errors.email && "メールアドレスの形式で入力してください(hoge@gmail.com)"}
                         />
@@ -145,7 +155,7 @@ const Auth: React.FC = () => {
                         />
                         <Button
                             fullWidth
-                            type="submit"
+                            // type="submit"
                             variant="contained"
                             color="primary"
                             className={classes.submit}
@@ -167,6 +177,7 @@ const Auth: React.FC = () => {
                         <Box mt={5}>
                              <Copyright />
                         </Box>
+                        {errMessage.isOpen && <SnackBar severity={errMessage.severity} message={errMessage.message} isOpen={errMessage.isOpen} stateFunc={changeOpenStatus}/>}
                 </div>
             </Grid>
         </Grid>

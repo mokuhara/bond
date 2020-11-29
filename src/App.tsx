@@ -4,6 +4,8 @@ import Auth from "./features/auth/authen/auth"
 import UserInfo from "./features/auth/userInfo/userInfo"
 import Mypage from "./features/mypage/mypage"
 
+import PrivateRoute from "./routes/privateRoute"
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,15 +17,9 @@ function App() {
     <div>
       <Router>
         <Switch>
-          <Route path='/userinfo'>
-            <UserInfo />
-          </Route>
-          <Route path='/mypage'>
-            <Mypage />
-          </Route>
-          <Route path='/'>
-            <Auth />
-          </Route>
+          <PrivateRoute path='/userinfo/:id' component={UserInfo} />
+          <PrivateRoute path='/mypage/:id' component={Mypage} />
+          <Route path='/'  component={Auth} />
         </Switch>
       </Router>
     </div>

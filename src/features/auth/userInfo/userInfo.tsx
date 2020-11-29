@@ -1,13 +1,16 @@
-import React from 'react'
+import React , {useState} from 'react'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import { Paper, Stepper, Step, StepLabel, Button, Typography, Grid } from "@material-ui/core"
 import PersonalInfo from "../personalInfo/personalInfo"
 import CompanyInfo from "../companyInfo/companyInfo"
 import UsageInfo from "../usageInfo/usageInfo"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import { useHistory } from 'react-router-dom';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import { selectUserInfo,  fetchAsyncSendUserInfo} from "../authSlice"
+import { SnackBar } from "../../utils/snackbar"
+import { useAppDispatch } from "../../../../src/app/storeHelper";
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -64,13 +67,26 @@ const getStepContent = (step: number) => {
 
 const UserInfo: React.FC = () => {
     const classes = useStyles()
-    const dispatch = useDispatch()
+    const asyncDispatch = useAppDispatch();
     const userInfo = useSelector(selectUserInfo)
     const history = useHistory()
     const [activeStep, setActiveStep] = React.useState(0);
+    const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const changeOpenStatus = (openStatus: boolean) => { setErrMessage({...errMessage, isOpen: openStatus})}
 
     const sendUserInfo = async () => {
-        await dispatch(fetchAsyncSendUserInfo(userInfo))
+        asyncDispatch(fetchAsyncSendUserInfo(userInfo))
+            .then(unwrapResult)
+            .then(()=>{
+                setActiveStep(activeStep + 1)
+                setTimeout(() => {
+                    history.push(`/mypage/${userInfo.userId}`)
+                }, 2000);
+            })
+            .catch(error =>{
+                console.error(error)
+                setErrMessage({...errMessage, message: "入力に誤りがあります", isOpen: true})
+            })
     }
 
     const handleNext = () => {
@@ -83,10 +99,6 @@ const UserInfo: React.FC = () => {
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
-
-    const moveToMypage = () => {
-        history.push(`/mypage/${userInfo.userId}`)
-    }
 
     const validationHandler = () => {
         switch (activeStep) {
@@ -121,14 +133,7 @@ const UserInfo: React.FC = () => {
                                 ご登録ありがとうございました
                             </Typography>
                             <Typography variant="subtitle1">
-                                hogehoge
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={moveToMypage}
-                                >
-                                    mypageをみる
-                                </Button>
+                                マイページに移動します。
                             </Typography>
                         </React.Fragment>
                     ) : (
@@ -153,6 +158,7 @@ const UserInfo: React.FC = () => {
                     )}
                 </React.Fragment>
             </Paper>
+            {errMessage.isOpen && <SnackBar severity={errMessage.severity} message={errMessage.message} isOpen={errMessage.isOpen} stateFunc={changeOpenStatus}/>}
         </Grid>
     )
 }

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import  axios from 'axios'
+import Cookies from 'js-cookie'
 import { RootState } from "../../app/store"
 import authResponse from "./authen/auth.json"
 import httpStatus from "./httpStatus.json"
@@ -26,17 +27,26 @@ export const fetchAsyncLogin = createAsyncThunk("auth/login", async (auth: auth)
         headers: {
             "Content-Type": "application/json",
         }
+    }).catch((err) => {
+        console.error(err)
+        return {data:{
+            data: {
+                token: "",
+                userId: -1,
+            },
+            status: 500,
+            }}
     })
     const data = res.data
     if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
         console.error("action=fetchAsyncLogin error: auth response error")
         //TODO errorHanling
-        // throw new Error('action=fetchAsyncLogin error: auth response error');
+        throw new Error('action=fetchAsyncLogin error: auth response error');
     }
     if (!data.data || !data.data.token){
         console.error("action=fetchAsyncLogin error: token is not found")
         //TODO errorHanling
-        // throw new Error('action=fetchAsyncLogin error: token is not found');
+        throw new Error('action=fetchAsyncLogin error: token is not found');
     }
     return {
         token: data.data.token,
@@ -50,17 +60,25 @@ export const fetchAsyncSignup = createAsyncThunk("auth/signup", async(auth: auth
         headers: {
             "Content-Type": "application/json",
         }
+    }).catch((err) => {
+        console.error(err)
+        return {data:{
+            data: {
+                token: "",
+                userId: -1,
+            },
+            status: 500,
+            }}
     })
+
     const data = res.data
     if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
-        console.error("action=fetchAsyncLogin error: auth response error")
         //TODO errorHanling
-        // throw new Error('action=fetchAsyncLogin error: auth response error');
+        throw new Error('action=fetchAsyncSignup error: auth response error');
     }
     if (!data.data || !data.data.token){
-        console.error("action=fetchAsyncLogin error: token is not found")
         //TODO errorHanling
-        // throw new Error('action=fetchAsyncLogin error: token is not found');
+        throw new Error('action=fetchAsyncSignup error: token is not found');
     }
     return {
         token: data.data.token,
@@ -69,21 +87,25 @@ export const fetchAsyncSignup = createAsyncThunk("auth/signup", async(auth: auth
 })
 
 export const fetchAsyncSendUserInfo = createAsyncThunk("auth/sendUserInfo", async(userInfo: sendUserInfo)=>{
-    const token = localStorage.getItem('bdt')
+    const token = Cookies.get('bdt')
     if(!token){
-        console.error("action=fetchAsyncLogin error: token is not found in localstrage")
         //TODO errorHanling
-        throw new Error('action=fetchAsyncLogin error: token is not found in localstrage');
+        throw new Error('action=fetchAsyncSendUserInfo error: token is not found in localstrage');
     }
     const res = await axios.post<USERINFORESPONSE>(`${apiUrl}/userInfo/${userInfo.userId}/create`, userInfo, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `bearer ${token}`
         }
+    }).catch((err) => {
+        console.error(err)
+        return {data: {
+            data: "",
+            status: 500
+        }}
     })
     const data = res.data
     if(data.status !== httpStatus.StatusOK ){
-        console.error("action=fetchAsyncLogin error: auth response error")
         //TODO errorHanling
         throw new Error('action=fetchAsyncLogin error: auth response error');
     }
@@ -166,7 +188,7 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAsyncLogin.fulfilled, (state, action)=>{
-            localStorage.setItem("bdt", action.payload.token)
+            Cookies.set('bdt', action.payload.token, { expires: 1/24 });
             const userId = action.payload.userId
             return {
                 ...state,
@@ -177,7 +199,7 @@ const authSlice = createSlice({
             }
         })
         builder.addCase(fetchAsyncSignup.fulfilled, (state, action)=>{
-            localStorage.setItem("bdt", action.payload.token)
+            Cookies.set('bdt', action.payload.token, { expires: 1/24 });
             const userId = action.payload.userId
             return {
                 ...state,

@@ -24,7 +24,7 @@ const CompanyInfo: React.FC = () => {
     const classes = useStyles()
     const dispatch = useDispatch();
     const userInfo = useSelector(selectUserInfo)
-    const { register, errors, formState } = useForm({
+    const { register, errors } = useForm({
         mode: 'onBlur',
         reValidateMode: 'onChange'
       });
