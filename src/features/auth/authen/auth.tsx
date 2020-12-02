@@ -1,5 +1,5 @@
 import React , {useState} from "react";
-import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography} from "@material-ui/core"
+import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography,  FormControl, RadioGroup, FormControlLabel, Radio} from "@material-ui/core"
 import { Search } from "@material-ui/icons"
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux"
@@ -13,7 +13,7 @@ import { SnackBar } from "../../utils/snackbar"
 import {
     editEmail,
     editPassword,
-    // editType,
+    editType,
     toggleMode,
     fetchAsyncLogin,
     fetchAsyncSignup,
@@ -74,7 +74,7 @@ const Auth: React.FC = () => {
     const authen = useSelector(selectAuth)
     const isLoginView = useSelector(selectIsLoginView)
     const history = useHistory()
-  　const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
     const { register, errors } = useForm({
       mode: 'onBlur',
       reValidateMode: 'onChange'
@@ -110,6 +110,15 @@ const Auth: React.FC = () => {
         return
     }
 
+    const handleChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(editType(parseInt(event.target.value, 10)))
+    }
+
+    enum Type {
+      Specialist = 1,
+      Client,
+    }
+
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
@@ -122,6 +131,23 @@ const Auth: React.FC = () => {
                     <Typography component="h1" variant="h5">
                      Omoch
                     </Typography>
+                        <FormControl component="label">
+                            <RadioGroup
+                                value={authen.type}
+                                onChange={handleChange}
+                            >
+                                <FormControlLabel
+                                    value={Type.Client}
+                                    control={<Radio />}
+                                    label="案件を依頼する"
+                                />
+                                <FormControlLabel
+                                    value={Type.Specialist}
+                                    control={<Radio />}
+                                    label="依頼に提案する"
+                                />
+                            </RadioGroup>
+                        </FormControl>
                         <TextField
                             variant="outlined"
                             margin="normal"

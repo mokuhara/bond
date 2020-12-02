@@ -1,11 +1,10 @@
 import React from "react"
-import {Grid, TextField, FormControl, FormControlLabel, Radio, RadioGroup} from "@material-ui/core"
+import {Grid, TextField} from "@material-ui/core"
 import { useSelector, useDispatch } from "react-redux"
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import { useForm } from 'react-hook-form';
 
 import {
-    editUsage,
     editName,
     editKana,
     editPhone,
@@ -20,12 +19,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       },
 }))
 
-enum Usage {
-    Admin = 0,
-    Specialist,
-    Client,
-}
-
 const PersonalInfo: React.FC = () => {
     const classes = useStyles()
     const dispatch = useDispatch();
@@ -35,9 +28,6 @@ const PersonalInfo: React.FC = () => {
         reValidateMode: 'onChange'
       });
 
-    const handleChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(editUsage(parseInt(event.target.value, 10)))
-    }
 
     return (
         <React.Fragment>
@@ -45,23 +35,6 @@ const PersonalInfo: React.FC = () => {
                 <Grid item xs={12} sm={6}>
                     <form className={classes.form} noValidate>
                         {/* TODO validation追加 */}
-                        <FormControl component="label">
-                            <RadioGroup
-                                value={userInfo.usage}
-                                onChange={handleChange}
-                            >
-                                <FormControlLabel
-                                    value={Usage.Client}
-                                    control={<Radio />}
-                                    label="案件を依頼する"
-                                />
-                                <FormControlLabel
-                                    value={Usage.Specialist}
-                                    control={<Radio />}
-                                    label="依頼に提案する"
-                                />
-                            </RadioGroup>
-                        </FormControl>
                         <TextField
                             variant="outlined"
                             margin="normal"

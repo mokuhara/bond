@@ -118,11 +118,10 @@ const authSlice = createSlice({
         authen: {
             email: "",
             password: "",
-            type: 0,
+            type: 1,
         },
         userInfo: {
             userId: 0,
-            usage: 1,
             name: "",
             kana: "",
             phone: "",
@@ -148,9 +147,6 @@ const authSlice = createSlice({
         },
         editUserId(state, action) {
             state.userInfo.userId = action.payload
-        },
-        editUsage(state, action) {
-            state.userInfo.usage = action.payload
         },
         editName(state, action) {
             state.userInfo.name = action.payload
@@ -215,7 +211,7 @@ const authSlice = createSlice({
     }
 })
 
-export const { editEmail, editPassword, editType, editUserId, editUsage, editName, editKana, editPhone, editCompanyName,  editDepartment, editPosition, editCompanyPhone, editMotivation , editSupportRequest, editConsent, toggleMode } = authSlice.actions
+export const { editEmail, editPassword, editType, editUserId, editName, editKana, editPhone, editCompanyName,  editDepartment, editPosition, editCompanyPhone, editMotivation , editSupportRequest, editConsent, toggleMode } = authSlice.actions
 export const selectAuth = (state: RootState) => state.auth.authen
 export const selectUserInfo = (state: RootState) => state.auth.userInfo
 export const selectIsLoginView = (state: RootState) => state.auth.isLoginView
