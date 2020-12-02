@@ -132,7 +132,7 @@ const Auth: React.FC = () => {
                      Omoch
                     </Typography>
                         <FormControl component="label">
-                            <RadioGroup
+                            {!isLoginView && <RadioGroup
                                 value={authen.type}
                                 onChange={handleChange}
                             >
@@ -146,7 +146,7 @@ const Auth: React.FC = () => {
                                     control={<Radio />}
                                     label="依頼に提案する"
                                 />
-                            </RadioGroup>
+                            </RadioGroup>}
                         </FormControl>
                         <TextField
                             variant="outlined"
