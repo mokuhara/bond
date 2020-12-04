@@ -1,18 +1,12 @@
 import React, { MouseEvent } from 'react';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HelpIcon from '@material-ui/icons/Help';
 import CreateIcon from '@material-ui/icons/Create';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector } from "react-redux"
 import {
     ListItemAvatar,
     Avatar,
@@ -26,6 +20,11 @@ import {
     List
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+
+//TODO auth階層のslice読みに言って気持ち悪いので修正する必要ある
+import {
+    selectUserInfo
+} from "../auth/authSlice"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,13 +50,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MenuList: React.FC = () =>{
     const classes = useStyles();
+    const userInfo = useSelector(selectUserInfo)
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
         setAnchorEl(event.currentTarget);
       };
 
-      const handleClose = () => {
+      const handleClose = (category: string) => {
         setAnchorEl(null);
+        history.push(`/mypage/${userInfo.userId}/${category}`)
       };
 
     return (
@@ -65,31 +67,31 @@ const MenuList: React.FC = () =>{
             <Grid justify="space-between" direction="column" container className={classes.menuList}>
                 <Grid item>
                     <List>
-                        <ListItem button component={Link} to="/mypage/bizpack/index" >
+                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/bizpack/index`} >
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
                             <ListItemText primary="BizBack作成" />
                         </ListItem>
-                        <ListItem button component={Link} to="/mypage/bizpack/create">
+                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/bizpack/create`}>
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
                             <ListItemText primary="過去事例作成" />
                         </ListItem>
-                        <ListItem button component={Link} to="/mypage/bizpack/create">
+                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/portfolio/create`}>
                             <ListItemIcon>
                                 <AssignmentIndIcon />
                             </ListItemIcon>
                             <ListItemText primary="BizBack一覧" />
                         </ListItem>
-                        <ListItem button component={Link} to="/mypage/bizpack/create">
+                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/portfolio`}>
                             <ListItemIcon>
                                 <InsertDriveFileIcon />
                             </ListItemIcon>
                             <ListItemText primary="過去事例一覧" />
                         </ListItem>
-                        <ListItem button component={Link} to="/mypage/bizpack/create">
+                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/transaction`}>
                             <ListItemIcon>
                                 <SupervisorAccountIcon />
                             </ListItemIcon>
@@ -123,9 +125,9 @@ const MenuList: React.FC = () =>{
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>プロフィール設定（工事中）</MenuItem>
-                            <MenuItem onClick={handleClose}>アカウント設定（工事中）</MenuItem>
-                            <MenuItem onClick={handleClose}>支払い設定（工事中）</MenuItem>
+                            <MenuItem onClick={() => handleClose('profile')}>プロフィール設定（工事中）</MenuItem>
+                            <MenuItem onClick={() => handleClose('account')}>アカウント設定（工事中）</MenuItem>
+                            <MenuItem onClick={() => handleClose('credit')}>支払い設定（工事中）</MenuItem>
                         </Menu>
                     </List>
                 </Grid>
