@@ -99,6 +99,7 @@ const Auth: React.FC = () => {
           asyncDispatch(fetchAsyncSignup(authen))
             .then(unwrapResult)
             .then((payload)=>{
+              console.log(`/userInfo/${payload.userId}`)
               history.push(`/userInfo/${payload.userId}`)
             })
             .catch(error => {

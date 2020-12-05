@@ -12,8 +12,8 @@ const PrivateRoute: React.FC<RouteProps> = props => {
   const auth = Cookies.get('bdt')
   const path = (props.location && props.location.pathname) || ""
   //TODO 正規表現で無理やりpath matchしているので後々変更
-  const mypageIdRegExp =  (path.match(/^.*mypage\/(\d+)?.*$/))
-  const id = (mypageIdRegExp && parseInt(mypageIdRegExp[1])) || -1
+  const IdRegExp =  (path.match(/^.*[mypage|userinfo]\/(\d+)?.*$/))
+  const id = (IdRegExp && parseInt(IdRegExp[1])) || -1
   const userInfo = useSelector(selectUserInfo)
 
   const isAuthenticated = Boolean(auth) && id === userInfo.userId

@@ -23,6 +23,7 @@ const RootRouter: React.FC = () => {
       <>
         <Router>
             <Switch>
+                <PrivateRoute path='/userinfo/:id' component={UserInfo} />
                 <PrivateRoute  path='/mypage/:id/bizpack/index'>
                     <Mypage><BizpackIndex /></Mypage>
                 </PrivateRoute>
@@ -45,7 +46,6 @@ const RootRouter: React.FC = () => {
                     <Mypage><TransactionIndex /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/:id' component={Mypage} />
-                <PrivateRoute path='/userinfo/:id' component={UserInfo} />
                 <Route exact path='/'  component={Auth} />
             </Switch>
         </Router>
