@@ -90,9 +90,9 @@ export const fetchAsyncSendUserInfo = createAsyncThunk("auth/sendUserInfo", asyn
     const token = Cookies.get('bdt')
     if(!token){
         //TODO errorHanling
-        throw new Error('action=fetchAsyncSendUserInfo error: token is not found in localstrage');
+        throw new Error('action=fetchAsyncSendUserInfo error: token is not found in cookie');
     }
-    const res = await axios.post<USERINFORESPONSE>(`${apiUrl}/userInfo/${userInfo.userId}/create`, userInfo, {
+    const res = await axios.post<USERINFORESPONSE>(`${apiUrl}/userInfo/create`, userInfo, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `bearer ${token}`
@@ -184,8 +184,9 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAsyncLogin.fulfilled, (state, action)=>{
-            Cookies.set('bdt', action.payload.token, { expires: 1/24 });
-            const userId = action.payload.userId
+            const { userId, token } = action.payload
+            Cookies.set('bdt', token, { expires: 1/24 });
+            Cookies.set('bd-uid', String(userId), { expires: 1/24 });
             return {
                 ...state,
                 userInfo: {
@@ -195,8 +196,9 @@ const authSlice = createSlice({
             }
         })
         builder.addCase(fetchAsyncSignup.fulfilled, (state, action)=>{
-            Cookies.set('bdt', action.payload.token, { expires: 1/24 });
-            const userId = action.payload.userId
+            const { userId, token } = action.payload
+            Cookies.set('bdt', token, { expires: 1/24 });
+            Cookies.set('bd-uid', String(userId), { expires: 1/24 });
             return {
                 ...state,
                 userInfo: {

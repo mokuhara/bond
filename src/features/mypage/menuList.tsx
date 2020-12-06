@@ -6,7 +6,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Link, useHistory } from 'react-router-dom';
-import { useSelector } from "react-redux"
+import Cookies from 'js-cookie'
 import {
     ListItemAvatar,
     Avatar,
@@ -21,10 +21,6 @@ import {
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-//TODO auth階層のslice読みに言って気持ち悪いので修正する必要ある
-import {
-    selectUserInfo
-} from "../auth/authSlice"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,7 +46,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MenuList: React.FC = () =>{
     const classes = useStyles();
-    const userInfo = useSelector(selectUserInfo)
     const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -59,7 +54,7 @@ const MenuList: React.FC = () =>{
 
       const handleClose = (category: string) => {
         setAnchorEl(null);
-        history.push(`/mypage/${userInfo.userId}/${category}`)
+        history.push(`/mypage/${category}`)
       };
 
     return (
@@ -67,31 +62,31 @@ const MenuList: React.FC = () =>{
             <Grid justify="space-between" direction="column" container className={classes.menuList}>
                 <Grid item>
                     <List>
-                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/bizpack/index`} >
+                        <ListItem button component={Link} to={`/mypage/bizpack/index`} >
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
                             <ListItemText primary="BizBack作成" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/bizpack/create`}>
+                        <ListItem button component={Link} to={`/mypage/bizpack/create`}>
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
                             <ListItemText primary="過去事例作成" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/portfolio/create`}>
+                        <ListItem button component={Link} to={`/mypage/portfolio/create`}>
                             <ListItemIcon>
                                 <AssignmentIndIcon />
                             </ListItemIcon>
                             <ListItemText primary="BizBack一覧" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/portfolio`}>
+                        <ListItem button component={Link} to={`/mypage/portfolio`}>
                             <ListItemIcon>
                                 <InsertDriveFileIcon />
                             </ListItemIcon>
                             <ListItemText primary="過去事例一覧" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/${userInfo.userId}/transaction`}>
+                        <ListItem button component={Link} to={`/mypage/transaction`}>
                             <ListItemIcon>
                                 <SupervisorAccountIcon />
                             </ListItemIcon>

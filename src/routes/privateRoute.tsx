@@ -1,22 +1,13 @@
 import React from 'react'
 import { Route, RouteProps, Redirect } from 'react-router-dom'
-import { useSelector } from "react-redux"
 
 import Cookies from 'js-cookie'
 
 import _ from 'lodash'
 
-import { selectUserInfo } from "../features/auth/authSlice"
-
 const PrivateRoute: React.FC<RouteProps> = props => {
   const auth = Cookies.get('bdt')
-  const path = (props.location && props.location.pathname) || ""
-  //TODO 正規表現で無理やりpath matchしているので後々変更
-  const IdRegExp =  (path.match(/^.*[mypage|userinfo]\/(\d+)?.*$/))
-  const id = (IdRegExp && parseInt(IdRegExp[1])) || -1
-  const userInfo = useSelector(selectUserInfo)
-
-  const isAuthenticated = Boolean(auth) && id === userInfo.userId
+  const isAuthenticated = Boolean(auth)
 
   const rest = _.omit(props, ['component'])
   return (

@@ -87,8 +87,8 @@ const Auth: React.FC = () => {
         if (isLoginView) {
           asyncDispatch(fetchAsyncLogin(authen))
             .then(unwrapResult)
-            .then(payload =>{
-              history.push(`/mypage/${payload.userId}`)
+            .then(() =>{
+              history.push(`/mypage`)
             })
             .catch(error => {
               console.error(error)
@@ -98,9 +98,9 @@ const Auth: React.FC = () => {
         } else {
           asyncDispatch(fetchAsyncSignup(authen))
             .then(unwrapResult)
-            .then((payload)=>{
-              console.log(`/userInfo/${payload.userId}`)
-              history.push(`/userInfo/${payload.userId}`)
+            .then(()=>{
+              console.log(`/userInfo`)
+              history.push(`/userInfo`)
             })
             .catch(error => {
               console.error(error)

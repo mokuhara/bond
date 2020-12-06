@@ -23,29 +23,29 @@ const RootRouter: React.FC = () => {
       <>
         <Router>
             <Switch>
-                <PrivateRoute path='/userinfo/:id' component={UserInfo} />
-                <PrivateRoute  path='/mypage/:id/bizpack/index'>
+                <PrivateRoute path='/userinfo' component={UserInfo} />
+                <PrivateRoute  path='/mypage/bizpack/index'>
                     <Mypage><BizpackIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id/bizpack/create'>
+                <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id/bizpack/create'>
+                <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id/profile'>
+                <PrivateRoute path='/mypage/profile'>
                     <Mypage><Profile /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id/portfolio/create'>
+                <PrivateRoute path='/mypage/portfolio/create'>
                     <Mypage><PortfolioCreate /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id/portfolio'>
+                <PrivateRoute path='/mypage/portfolio'>
                     <Mypage><PortfolioIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id/transaction'>
+                <PrivateRoute path='/mypage/transaction'>
                     <Mypage><TransactionIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/:id' component={Mypage} />
+                <PrivateRoute path='/mypage' component={Mypage} />
                 <Route exact path='/'  component={Auth} />
             </Switch>
         </Router>
