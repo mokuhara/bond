@@ -1,0 +1,17 @@
+{
+    "products": [
+        {
+            "name": "xxxx"
+        },
+        {
+            "name": "xxxx"
+        }
+    ],
+    "userId": 1,
+    "industry": "xxxxxx",
+    "scale": 100,
+    "description": "xxxxx",
+    "unitPrice": 10000,
+    "duration": 5,
+    "isPublic": false
+}

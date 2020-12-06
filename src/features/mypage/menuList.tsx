@@ -6,7 +6,6 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { Link, useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie'
 import {
     ListItemAvatar,
     Avatar,
@@ -62,19 +61,19 @@ const MenuList: React.FC = () =>{
             <Grid justify="space-between" direction="column" container className={classes.menuList}>
                 <Grid item>
                     <List>
-                        <ListItem button component={Link} to={`/mypage/bizpack/index`} >
+                        <ListItem button component={Link} to={`/mypage/bizpack/create`} >
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
                             <ListItemText primary="BizBack作成" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/bizpack/create`}>
+                        <ListItem button component={Link} to={`/mypage/portfolio/create`}>
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
                             <ListItemText primary="過去事例作成" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/portfolio/create`}>
+                        <ListItem button component={Link} to={`/mypage/bizpack`}>
                             <ListItemIcon>
                                 <AssignmentIndIcon />
                             </ListItemIcon>

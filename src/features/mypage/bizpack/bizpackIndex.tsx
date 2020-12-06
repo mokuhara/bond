@@ -1,8 +1,28 @@
-import React  from 'react'
+import React, { useEffect }  from 'react'
+import { useSelector } from "react-redux"
+
+import { useAppDispatch } from "../../../../src/app/storeHelper";
+
+import {
+    selectBizpacks,
+    fetchAsyncGetBizpacks
+} from "../mypageSlice"
 
 const BizPackIndex: React.FC = () => {
+    const asyncDispatch = useAppDispatch();
+    const bizpacks = useSelector(selectBizpacks)
+
+    useEffect(()=>{
+        asyncDispatch(fetchAsyncGetBizpacks())
+        console.log(bizpacks)
+    },[bizpacks, asyncDispatch])
+
+
     return (
-        <div>BizPackIndex</div>
+        <div>
+            hoge
+            {JSON.stringify(bizpacks)}
+        </div>
     )
 }
 
