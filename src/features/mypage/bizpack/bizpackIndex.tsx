@@ -1,8 +1,11 @@
 import React, { useEffect }  from 'react'
 import { useSelector } from "react-redux"
-import { Grid, CssBaseline, Paper,Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Chip  } from '@material-ui/core';
+import { Grid, CssBaseline, Paper,Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Chip, Button, Menu, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 
 import { useAppDispatch } from "../../../../src/app/storeHelper";
@@ -17,7 +20,7 @@ import { random } from 'lodash';
 type bizpack = typeof resGetBizpacksType.data[0]
 
 interface Column {
-    id: 'products' | 'industry' | 'scale' | 'description' | 'unitPrice' | 'duration' | 'isPublic';
+    id: 'category' | 'title' | 'products' | 'industry' | 'scale' | 'description' | 'unitPrice' | 'duration' | 'isPublic';
     label: string;
     minWidth?: number;
     align?: 'right';
@@ -25,6 +28,8 @@ interface Column {
   }
 
   const columns: Column[] = [
+    { id: 'category', label: 'カテゴリー', minWidth: 170 },
+    { id: 'title', label: 'タイトル', minWidth: 170 },
     { id: 'products', label: 'プロダクト', minWidth: 170 },
     { id: 'industry', label: '業界', minWidth: 100 },
     { id: 'scale', label: '規模', align: 'right', minWidth: 70 },
@@ -37,6 +42,7 @@ interface Column {
 const BizPackIndex: React.FC = () => {
     const asyncDispatch = useAppDispatch();
     const bizpacks = useSelector(selectBizpacks)
+    const history = useHistory()
     const useStyles = makeStyles({
         root: {
           width: '100%',
@@ -50,9 +56,11 @@ const BizPackIndex: React.FC = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const initReshapeBizpackState = [{
         id: 0,
+        category: 1,
         products: [{name: ""}],
         industry: "",
         scale: 0,
+        title: "",
         description: "",
         unitPrice: 0,
         duration: 0,
@@ -71,6 +79,8 @@ const BizPackIndex: React.FC = () => {
     const createData = (bizpack: bizpack): typeof initReshapeBizpackState[0] => {
         return {
             id: bizpack.ID,
+            category: bizpack.category.type,
+            title: bizpack.title,
             products: bizpack.products.map(p => {return {name: p.name}}),
             industry: bizpack.industry,
             scale: bizpack.scale,
@@ -80,12 +90,24 @@ const BizPackIndex: React.FC = () => {
             isPublic: bizpack.isPublic
         }
     }
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = (method: string) => {
+      setAnchorEl(null);
+      const user_id = Cookies.get('bd-uid')
+      history.push(`/mypage/bizpack/${method}/${user_id}`)
+    };
 
     useEffect(()=>{
         asyncDispatch(fetchAsyncGetBizpacks())
         const rbps = bizpacks.data.map((bizpack: bizpack) => {
             return createData(bizpack)
         })
+        console.log(bizpacks)
         setReshapeBizpacks(rbps)
         // console.log(bizpacks)
     },[bizpacks, asyncDispatch])
@@ -128,6 +150,21 @@ const BizPackIndex: React.FC = () => {
                           </TableCell>
                         );
                       })}
+                      <TableCell>
+                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <MoreVertIcon />
+                        </Button>
+                        <Menu
+                          id="simple-menu"
+                          anchorEl={anchorEl}
+                          keepMounted
+                          open={Boolean(anchorEl)}
+                          onClose={handleClose}
+                        >
+                          <MenuItem onClick={() => handleClose('edit')}>編集</MenuItem>
+                          <MenuItem onClick={() => handleClose('delete')}>削除</MenuItem>
+                        </Menu>
+                      </TableCell>
                     </TableRow>
                   );
                 })}

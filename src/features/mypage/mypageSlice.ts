@@ -18,8 +18,8 @@ export const fetchAsyncCreateBizpack = createAsyncThunk("bizpack/create", async 
     const token = Cookies.get('bdt')
     const res = await axios.post<{data: string, status:number}>(`${apiUrl}/mypage/bizpack/create`, bizpack, {
         headers: {
+            "Authorization": `bearer ${token}`,
             "Content-Type": "application/json",
-            "Authorization": `bearer ${token}`
         }
     }).catch((err) => {
         console.error(err)
@@ -39,7 +39,6 @@ export const fetchAsyncGetBizpacks = createAsyncThunk("bizpack/get", async ()=> 
     const token = Cookies.get('bdt')
     const res = await axios.get<resGetBizpacks>(`${apiUrl}/mypage/bizpack`, {
         headers: {
-            "Content-Type": "application/json",
             "Authorization": `bearer ${token}`
         }
     }).catch((err) => {
@@ -60,6 +59,9 @@ const mypageSlice = createSlice({
     name: "mypage",
     initialState: {
         bizpack: {
+            id: 0,
+            category: {type: 1},
+            title: "",
             products: [{name: "sample"}],
             userId: Number(Cookies.get('bd-uid')),
             industry: "",
@@ -75,6 +77,12 @@ const mypageSlice = createSlice({
         editProduct(state, action: {payload: string[], type: string;}) {
             const products = action.payload.map(product =>  { return {name: product}})
             state.bizpack.products = products;
+        },
+        editCategory(state, action) {
+            state.bizpack.category = action.payload;
+        },
+        editTitle(state, action) {
+            state.bizpack.title = action.payload;
         },
         editUserId(state, action) {
             state.bizpack.userId = action.payload;
@@ -114,7 +122,7 @@ const mypageSlice = createSlice({
     }
 })
 
-export const { editProduct,  editUserId, editIndustry, editScale, editDescription, editUnitPrice, editDuration, editIsPublic} = mypageSlice.actions
+export const { editProduct,  editCategory, editTitle, editUserId, editIndustry, editScale, editDescription, editUnitPrice, editDuration, editIsPublic} = mypageSlice.actions
 export const selectBizpack = (state: RootState) => state.mypage.bizpack
 export const selectBizpacks = (state: RootState) => state.mypage.bizpacks
 

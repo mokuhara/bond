@@ -10,6 +10,8 @@ import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLa
 import { useAppDispatch } from "../../../../src/app/storeHelper";
 
 import {
+    editCategory,
+    editTitle,
     editProduct,
     editIndustry,
     editScale,
@@ -31,7 +33,7 @@ const BizPackCreate: React.FC = () => {
       mode: 'onBlur',
       reValidateMode: 'onChange'
     })
-    const btnDisabler = Boolean(errors.industry) || Boolean(errors.scale) || Boolean(errors.description) || Boolean(errors.unitPrice) || Boolean(errors.duration) 
+    const btnDisabler = Boolean(errors.category) || Boolean(errors.title) || Boolean(errors.industry) || Boolean(errors.scale) || Boolean(errors.description) || Boolean(errors.unitPrice) || Boolean(errors.duration) 
     const handleIsPublicChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editIsPublic(event.target.checked))
     }
@@ -45,6 +47,23 @@ const BizPackCreate: React.FC = () => {
         <Grid container component="main" >
             <CssBaseline />
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    required
+                    type="number"
+                    id="category"
+                    label="category"
+                    name="category"
+                    autoComplete="category"
+                    autoFocus
+                    value={bizpack.category.type}
+                    onChange={(e)=> dispatch(editCategory(e.target.value))}
+                    inputRef={register({ required: true })}
+                    error={Boolean(errors.category)}
+                    helperText={errors.category && "入力必須です"}
+                />
                 <ReactTagInput
                     placeholder="input SaaS tools"
                     tags={bizpack.products.map(product => { return product.name})}
@@ -82,6 +101,22 @@ const BizPackCreate: React.FC = () => {
                     inputRef={register({ required: true })}
                     error={Boolean(errors.scale)}
                     helperText={errors.scale && "入力必須です"}
+                />
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    required
+                    id="title"
+                    label="title"
+                    name="title"
+                    autoComplete="title"
+                    autoFocus
+                    value={bizpack.title}
+                    onChange={(e)=> dispatch(editTitle(e.target.value))}
+                    inputRef={register({ required: true })}
+                    error={Boolean(errors.title)}
+                    helperText={errors.title && "入力必須です"}
                 />
                 <TextField
                     variant="outlined"

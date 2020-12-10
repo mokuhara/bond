@@ -25,12 +25,13 @@
                 "type": 1
             },
             "userId": 1,
-            "industry": "fefef",
+            "industry": "xxxx",
             "scale": 6,
-            "description": "eeeeee",
+            "description": "xxxx",
             "unitPrice": 3,
             "duration": 6,
             "isPublic": true,
+            "title": "xxxx",
             "Party": {
                 "ID": 0,
                 "CreatedAt": "0001-01-01T00:00:00Z",
@@ -38,6 +39,14 @@
                 "DeletedAt": null,
                 "users": null,
                 "bizpacks": null
+            },
+            "category": {
+                "ID": 0,
+                "CreatedAt": "0001-01-01T00:00:00Z",
+                "UpdatedAt": "0001-01-01T00:00:00Z",
+                "DeletedAt": null,
+                "type": 1,
+                "BizpackID": 0
             },
             "partyId": 0
         }

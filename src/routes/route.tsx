@@ -24,11 +24,11 @@ const RootRouter: React.FC = () => {
         <Router>
             <Switch>
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                <PrivateRoute  path='/mypage/bizpack'>
-                    <Mypage><BizpackIndex /></Mypage>
-                </PrivateRoute>
                 <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute  path='/mypage/bizpack'>
+                    <Mypage><BizpackIndex /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
