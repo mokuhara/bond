@@ -15,7 +15,7 @@ import Profile from "../features/mypage/profile/profile"
 import PortfolioCreate from "../features/mypage/portfolio/portfolioCreate"
 import PortfolioIndex from "../features/mypage/portfolio/portfolioIndex"
 import TransactionIndex from "../features/mypage/transaction/transactionIndex"
-
+import BizpackEdit from "../features/mypage/bizpack/bizpackEdit"
 
 
 const RootRouter: React.FC = () => {
@@ -26,6 +26,9 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/userinfo' component={UserInfo} />
                 <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/bizpack/edit'>
+                    <Mypage><BizpackEdit /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute  path='/mypage/bizpack'>
                     <Mypage><BizpackIndex /></Mypage>

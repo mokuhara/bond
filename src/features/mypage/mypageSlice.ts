@@ -5,12 +5,14 @@ import httpStatus from "../auth/httpStatus.json"
 import { RootState } from '../../app/store';
 import Cookies from 'js-cookie'
 import resGetBizpacksType from './resGetBizpacks.json'
+import resGetBizpackType from './resGetBizpack.json'
 
 
 const apiUrl = "http://localhost:3000/v1";
 
 type sendBizpack = typeof bizpack
 type resGetBizpacks = typeof resGetBizpacksType
+type resGetBizpack = typeof resGetBizpackType
 
 const initBizpacks: resGetBizpacks = resGetBizpacksType
 
@@ -28,9 +30,9 @@ export const fetchAsyncCreateBizpack = createAsyncThunk("bizpack/create", async 
     const data = res && res.data
     if(!data) return
     if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
-        console.error("action=fetchAsyncLogin error: auth response error")
+        console.error("action=fetchAsyncCreateBizpack error: auth response error")
         //TODO errorHanling
-        throw new Error('action=fetchAsyncLogin error: auth response error');
+        throw new Error('action=fetchAsyncCreateBizpack error: auth response error');
     }
     return
 })
@@ -48,11 +50,89 @@ export const fetchAsyncGetBizpacks = createAsyncThunk("bizpack/get", async ()=> 
     const data = res && res.data
     if(!data) return
     if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
-        console.error("action=fetchAsyncLogin error: auth response error")
+        console.error("action=fetchAsyncGetBizpacks error: auth response error")
         //TODO errorHanling
-        throw new Error('action=fetchAsyncLogin error: auth response error');
+        throw new Error('action=fetchAsyncGetBizpacks error: auth response error');
     }
     return data
+})
+
+export const fetchAsyncGetBizpack = createAsyncThunk("bizpack/getById", async (bizpackId: number) => {
+    const token = Cookies.get('bdt')
+    const userId = Number(Cookies.get('bd-uid'))
+    const res = await axios.get<resGetBizpack>(`${apiUrl}/mypage/bizpack/get/${bizpackId}`, {
+        headers: {
+            "Authorization": `bearer ${token}`
+        }
+    }).catch((err) => {
+        console.error(err)
+        return null
+    })
+    const data = res && res.data
+    if(!data) return
+    if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
+        console.error("action=fetchAsyncGetBizpack error: auth response error")
+        //TODO errorHanling
+        throw new Error('action=fetchAsyncGetBizpack error: auth response error');
+    }
+    return {
+        id: data.data.ID,
+        products: data.data.products.map(product => { return { name: product.name}}),
+        industry: data.data.industry,
+        scale: data.data.scale,
+        title: data.data.title,
+        userId: userId,
+        category: {type: data.data.category.type},
+        description: data.data.description,
+        unitPrice: data.data.unitPrice,
+        duration: data.data.duration,
+        isPublic: data.data.isPublic,
+        // TODO: party追加修正する
+        // Party: data.data.Party.use rs,
+    }
+})
+
+
+
+export const fetchAsyncUpdateBizpack = createAsyncThunk("bizpack/update", async (bizpackId:number) => {
+    const token = Cookies.get('bdt')
+    const res = await axios.put(`${apiUrl}/mypage/bizpack/${bizpackId}/update`, {
+        headers: {
+            "Authorization": `bearer ${token}`
+        }
+    }).catch((err) => {
+        console.error(err)
+        return null
+    })
+    const data = res && res.data
+    if(!data) return
+    if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
+        console.error("action=fetchAsyncUpdateBizpack error: auth response error")
+        //TODO errorHanling
+        throw new Error('action=fetchAsyncUpdateBizpack error: auth response error');
+    }
+    return
+})
+
+
+export const fetchAsyncDeleteBizpack = createAsyncThunk("bizpack/delete", async (bizpackId: number) => {
+    const token = Cookies.get('bdt')
+    const res = await axios.delete(`${apiUrl}/mypage/bizpack/${bizpackId}/delete`, {
+        headers: {
+            "Authorization": `bearer ${token}`
+        }
+    }).catch((err) => {
+        console.error(err)
+        return null
+    })
+    const data = res && res.data
+    if(!data) return
+    if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
+        console.error("action=fetchAsyncDeleteBizpack error: auth response error")
+        //TODO errorHanling
+        throw new Error('action=fetchAsyncDeleteBizpack error: auth response error');
+    }
+    return
 })
 
 const mypageSlice = createSlice({
@@ -77,6 +157,9 @@ const mypageSlice = createSlice({
         editProduct(state, action: {payload: string[], type: string;}) {
             const products = action.payload.map(product =>  { return {name: product}})
             state.bizpack.products = products;
+        },
+        editId(state, action) {
+            state.bizpack.id = action.payload
         },
         editCategory(state, action) {
             state.bizpack.category = action.payload;
@@ -119,10 +202,19 @@ const mypageSlice = createSlice({
                   };
             }
         })
+        builder.addCase(fetchAsyncGetBizpack.fulfilled, (state, action) => {
+            const bizpack = action.payload
+            if(bizpack) {
+                return {
+                    ...state,
+                    bizpack: bizpack
+                }
+            }
+        })
     }
 })
 
-export const { editProduct,  editCategory, editTitle, editUserId, editIndustry, editScale, editDescription, editUnitPrice, editDuration, editIsPublic} = mypageSlice.actions
+export const { editProduct,  editId, editCategory, editTitle, editUserId, editIndustry, editScale, editDescription, editUnitPrice, editDuration, editIsPublic} = mypageSlice.actions
 export const selectBizpack = (state: RootState) => state.mypage.bizpack
 export const selectBizpacks = (state: RootState) => state.mypage.bizpacks
 

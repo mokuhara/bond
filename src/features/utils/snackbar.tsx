@@ -31,7 +31,7 @@ export const SnackBar:React.FC<profile> = ({severity, message, isOpen, stateFunc
     useEffect(()=>{
         stateFunc(isOpen)
         return
-    },[isOpen])
+    },[isOpen, stateFunc])
 
     const handleClose = () => {
         // setOpen(false);

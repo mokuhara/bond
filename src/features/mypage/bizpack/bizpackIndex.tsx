@@ -1,21 +1,20 @@
 import React, { useEffect }  from 'react'
-import { useSelector } from "react-redux"
-import { Grid, CssBaseline, Paper,Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Chip, Button, Menu, MenuItem } from '@material-ui/core';
+import { useSelector, useDispatch } from "react-redux"
+import { Paper,Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Chip, Button, Menu, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie'
 
 
 import { useAppDispatch } from "../../../../src/app/storeHelper";
 
 import {
     selectBizpacks,
-    fetchAsyncGetBizpacks
+    fetchAsyncGetBizpacks,
+    fetchAsyncDeleteBizpack,
+    editId
 } from "../mypageSlice"
 import resGetBizpacksType from '../resGetBizpacks.json'
-import { random } from 'lodash';
 
 type bizpack = typeof resGetBizpacksType.data[0]
 
@@ -41,6 +40,7 @@ interface Column {
 
 const BizPackIndex: React.FC = () => {
     const asyncDispatch = useAppDispatch();
+    const dispatch = useDispatch()
     const bizpacks = useSelector(selectBizpacks)
     const history = useHistory()
     const useStyles = makeStyles({
@@ -76,33 +76,43 @@ const BizPackIndex: React.FC = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    const createData = (bizpack: bizpack): typeof initReshapeBizpackState[0] => {
-        return {
-            id: bizpack.ID,
-            category: bizpack.category.type,
-            title: bizpack.title,
-            products: bizpack.products.map(p => {return {name: p.name}}),
-            industry: bizpack.industry,
-            scale: bizpack.scale,
-            description: bizpack.description,
-            unitPrice: bizpack.unitPrice,
-            duration: bizpack.duration,
-            isPublic: bizpack.isPublic
-        }
-    }
+    
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (method: string) => {
+    const handleClose = () => {
       setAnchorEl(null);
-      const user_id = Cookies.get('bd-uid')
-      history.push(`/mypage/bizpack/${method}/${user_id}`)
     };
 
+    const moveEditBizpack = (bizpackId: number) => {
+      setAnchorEl(null);
+      dispatch(editId(bizpackId))
+      history.push("/mypage/bizpack/edit")
+    };
+
+    const DeleteBizpack = (bizpackId: number) => {
+      asyncDispatch(fetchAsyncDeleteBizpack(bizpackId))
+    }
+
     useEffect(()=>{
+          const createData = (bizpack: bizpack): typeof initReshapeBizpackState[0] => {
+            return {
+                id: bizpack.ID,
+                category: bizpack.category.type,
+                title: bizpack.title,
+                products: bizpack.products.map(p => {return {name: p.name}}),
+                industry: bizpack.industry,
+                scale: bizpack.scale,
+                description: bizpack.description,
+                unitPrice: bizpack.unitPrice,
+                duration: bizpack.duration,
+                isPublic: bizpack.isPublic
+            }
+        }
+
         asyncDispatch(fetchAsyncGetBizpacks())
         const rbps = bizpacks.data.map((bizpack: bizpack) => {
             return createData(bizpack)
@@ -161,8 +171,8 @@ const BizPackIndex: React.FC = () => {
                           open={Boolean(anchorEl)}
                           onClose={handleClose}
                         >
-                          <MenuItem onClick={() => handleClose('edit')}>編集</MenuItem>
-                          <MenuItem onClick={() => handleClose('delete')}>削除</MenuItem>
+                          <MenuItem onClick={() => moveEditBizpack(row.id)}>編集</MenuItem>
+                          <MenuItem onClick={() => DeleteBizpack(row.id)}>削除</MenuItem>
                         </Menu>
                       </TableCell>
                     </TableRow>
@@ -172,7 +182,7 @@ const BizPackIndex: React.FC = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[50,100]}
+            rowsPerPageOptions={[10, 50,100]}
             component="div"
             count={reshapeBizpacks.length}
             rowsPerPage={rowsPerPage}
