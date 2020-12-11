@@ -6,17 +6,16 @@ import {
   } from 'react-router-dom';
 
 import PrivateRoute from './privateRoute'
-import Auth from '../features/auth/authen/auth'
-import UserInfo from "../features/auth/userInfo/userInfo"
-import Mypage  from "../features/mypage/mypage"
-import BizpackIndex from "../features/mypage/bizpack/bizpackIndex"
-import BizpackCreate from "../features/mypage/bizpack/bizpackCreate"
-import Profile from "../features/mypage/profile/profile"
-import PortfolioCreate from "../features/mypage/portfolio/portfolioCreate"
-import PortfolioIndex from "../features/mypage/portfolio/portfolioIndex"
-import TransactionIndex from "../features/mypage/transaction/transactionIndex"
+import Auth from '../pages/auth/authen/auth'
+import UserInfo from "../pages/auth/userInfo/userInfo"
+import Mypage  from "../pages/mypage/mypage"
+import BizpackIndex from "../pages/mypage/specialist/bizpack/bizpackIndex"
+import BizpackCreate from "../pages/mypage/specialist/bizpack/bizpackCreate"
 import BizpackEdit from "../features/mypage/bizpack/bizpackEdit"
-
+import Profile from "../pages/mypage/specialist/profile/profile"
+import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
+import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
+import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
 
 const RootRouter: React.FC = () => {
     return (

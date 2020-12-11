@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Profile:React.FC = () => {
+const Account:React.FC = () => {
     return (
         <>
             account
@@ -8,4 +8,4 @@ const Profile:React.FC = () => {
     )
 }
 
-export default Profile
+export default Account

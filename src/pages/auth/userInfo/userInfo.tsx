@@ -10,7 +10,7 @@ import { unwrapResult } from '@reduxjs/toolkit';
 
 import { selectUserInfo,  fetchAsyncSendUserInfo} from "../authSlice"
 import { SnackBar } from "../../utils/snackbar"
-import { useAppDispatch } from "../../../../src/app/storeHelper";
+import { useAppDispatch } from "../../../app/storeHelper";
 
 
 const useStyles = makeStyles((theme: Theme) => ({

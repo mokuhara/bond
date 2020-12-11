@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { unwrapResult } from '@reduxjs/toolkit';
 
-import { useAppDispatch } from "../../../../src/app/storeHelper";
+import { useAppDispatch } from "../../../app/storeHelper";
 import { SnackBar } from "../../utils/snackbar"
 
 import {
