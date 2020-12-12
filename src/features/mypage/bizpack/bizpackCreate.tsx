@@ -10,15 +10,15 @@ import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLa
 import { useAppDispatch } from "../../../../src/app/storeHelper";
 
 import {
-    editCategory,
-    editTitle,
-    editProduct,
-    editIndustry,
-    editScale,
-    editDescription,
-    editUnitPrice,
-    editDuration,
-    editIsPublic,
+    editBizpackCategory,
+    editBizpackTitle,
+    editBizpackProduct,
+    editBizpackIndustry,
+    editBizpackScale,
+    editBizpackDescription,
+    editBizpackUnitPrice,
+    editBizpackDuration,
+    editBizpackIsPublic,
     selectBizpack,
     fetchAsyncCreateBizpack
 } from "../mypageSlice"
@@ -35,7 +35,7 @@ const BizPackCreate: React.FC = () => {
     })
     const btnDisabler = Boolean(errors.category) || Boolean(errors.title) || Boolean(errors.industry) || Boolean(errors.scale) || Boolean(errors.description) || Boolean(errors.unitPrice) || Boolean(errors.duration) 
     const handleIsPublicChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(editIsPublic(event.target.checked))
+        dispatch(editBizpackIsPublic(event.target.checked))
     }
     const createBizpack = async () => {
         asyncDispatch(fetchAsyncCreateBizpack(bizpack))
@@ -59,7 +59,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="category"
                     autoFocus
                     value={bizpack.category.type}
-                    onChange={(e)=> dispatch(editCategory(e.target.value))}
+                    onChange={(e)=> dispatch(editBizpackCategory(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.category)}
                     helperText={errors.category && "入力必須です"}
@@ -67,7 +67,7 @@ const BizPackCreate: React.FC = () => {
                 <ReactTagInput
                     placeholder="input SaaS tools"
                     tags={bizpack.products.map(product => { return product.name})}
-                    onChange={(newTags) => dispatch(editProduct(newTags))}
+                    onChange={(newTags) => dispatch(editBizpackProduct(newTags))}
                 />
                 <TextField
                     variant="outlined"
@@ -80,7 +80,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="industry"
                     autoFocus
                     value={bizpack.industry}
-                    onChange={(e)=> dispatch(editIndustry(e.target.value))}
+                    onChange={(e)=> dispatch(editBizpackIndustry(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.industry)}
                     helperText={errors.industry && "入力必須です"}
@@ -97,7 +97,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="scale"
                     autoFocus
                     value={bizpack.scale}
-                    onChange={(e)=> dispatch(editScale(Number(e.target.value)))}
+                    onChange={(e)=> dispatch(editBizpackScale(Number(e.target.value)))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.scale)}
                     helperText={errors.scale && "入力必須です"}
@@ -113,7 +113,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="title"
                     autoFocus
                     value={bizpack.title}
-                    onChange={(e)=> dispatch(editTitle(e.target.value))}
+                    onChange={(e)=> dispatch(editBizpackTitle(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.title)}
                     helperText={errors.title && "入力必須です"}
@@ -129,7 +129,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="description"
                     autoFocus
                     value={bizpack.description}
-                    onChange={(e)=> dispatch(editDescription(e.target.value))}
+                    onChange={(e)=> dispatch(editBizpackDescription(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.description)}
                     helperText={errors.description && "入力必須です"}
@@ -146,7 +146,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="unitPrice"
                     autoFocus
                     value={bizpack.unitPrice}
-                    onChange={(e)=> dispatch(editUnitPrice(Number(e.target.value)))}
+                    onChange={(e)=> dispatch(editBizpackUnitPrice(Number(e.target.value)))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.unitPrice)}
                     helperText={errors.unitPrice && "入力必須です"}
@@ -163,7 +163,7 @@ const BizPackCreate: React.FC = () => {
                     autoComplete="duration"
                     autoFocus
                     value={bizpack.duration}
-                    onChange={(e)=> dispatch(editDuration(Number(e.target.value)))}
+                    onChange={(e)=> dispatch(editBizpackDuration(Number(e.target.value)))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.duration)}
                     helperText={errors.duration && "入力必須です"}

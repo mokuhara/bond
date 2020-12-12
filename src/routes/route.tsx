@@ -16,6 +16,7 @@ import PortfolioCreate from "../features/mypage/portfolio/portfolioCreate"
 import PortfolioIndex from "../features/mypage/portfolio/portfolioIndex"
 import TransactionIndex from "../features/mypage/transaction/transactionIndex"
 import BizpackEdit from "../features/mypage/bizpack/bizpackEdit"
+import PortfolioEdit from "../features/mypage/portfolio/portfolioEdit"
 
 
 const RootRouter: React.FC = () => {
@@ -33,14 +34,14 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute  path='/mypage/bizpack'>
                     <Mypage><BizpackIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/bizpack/create'>
-                    <Mypage><BizpackCreate /></Mypage>
+                <PrivateRoute path='/mypage/portfolio/create'>
+                    <Mypage><PortfolioCreate /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/portfolio/edit'>
+                    <Mypage><PortfolioEdit /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/profile'>
                     <Mypage><Profile /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/portfolio/create'>
-                    <Mypage><PortfolioCreate /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/portfolio'>
                     <Mypage><PortfolioIndex /></Mypage>

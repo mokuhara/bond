@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button} from "@material-ui/core"
+import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button } from "@material-ui/core"
 
 
 import { useAppDispatch } from "../../../../src/app/storeHelper";
+import { SnackBar } from "../../utils/snackbar"
 
 import {
     editPortfolioCategory,
@@ -20,15 +21,17 @@ import {
     editPortfolioDuration,
     editPortfolioIsPublic,
     selectPortfolio,
-    fetchAsyncCreatePortfolio
+    fetchAsyncGetPortfolio,
+    fetchAsyncUpdatePortfolio
 } from "../mypageSlice"
 
-const PortfolioCreate: React.FC = () => {
+const PortfolioEdit: React.FC = () => {
     const dispatch = useDispatch();
     const asyncDispatch = useAppDispatch();
-    const bizpack = useSelector(selectPortfolio)
+    const portfolio = useSelector(selectPortfolio)
     const history = useHistory()
-    // const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const changeOpenStatus = (openStatus: boolean) => { setErrMessage({...errMessage, isOpen: openStatus})}
     const { register, errors } = useForm({
       mode: 'onBlur',
       reValidateMode: 'onChange'
@@ -37,11 +40,18 @@ const PortfolioCreate: React.FC = () => {
     const handleIsPublicChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editPortfolioIsPublic(event.target.checked))
     }
-    const createBizpack = async () => {
-        asyncDispatch(fetchAsyncCreatePortfolio(bizpack))
-        history.push("/mypage/portfolio")
+    const updatePortfolio = async (PortfolioId: number) => {
+        asyncDispatch(fetchAsyncUpdatePortfolio(PortfolioId))
+            .catch(error => {
+                console.error(error)
+                setErrMessage({...errMessage, message: "更新に失敗しました", isOpen: true})
+            });
+        history.push("/mypage/Portfolio")
     }
 
+    useEffect(() => {
+        asyncDispatch(fetchAsyncGetPortfolio(portfolio.id))
+    },[asyncDispatch, portfolio.id])
 
     return (
         <Grid container component="main" >
@@ -58,7 +68,7 @@ const PortfolioCreate: React.FC = () => {
                     name="category"
                     autoComplete="category"
                     autoFocus
-                    value={bizpack.category.type}
+                    value={portfolio.category.type}
                     onChange={(e)=> dispatch(editPortfolioCategory(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.category)}
@@ -66,7 +76,7 @@ const PortfolioCreate: React.FC = () => {
                 />
                 <ReactTagInput
                     placeholder="input SaaS tools"
-                    tags={bizpack.products.map(product => { return product.name})}
+                    tags={portfolio.products.map(product => { return product.name})}
                     onChange={(newTags) => dispatch(editPortfolioProduct(newTags))}
                 />
                 <TextField
@@ -79,7 +89,7 @@ const PortfolioCreate: React.FC = () => {
                     name="industry"
                     autoComplete="industry"
                     autoFocus
-                    value={bizpack.industry}
+                    value={portfolio.industry}
                     onChange={(e)=> dispatch(editPortfolioIndustry(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.industry)}
@@ -96,7 +106,7 @@ const PortfolioCreate: React.FC = () => {
                     name="scale"
                     autoComplete="scale"
                     autoFocus
-                    value={bizpack.scale}
+                    value={portfolio.scale}
                     onChange={(e)=> dispatch(editPortfolioScale(Number(e.target.value)))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.scale)}
@@ -112,7 +122,7 @@ const PortfolioCreate: React.FC = () => {
                     name="title"
                     autoComplete="title"
                     autoFocus
-                    value={bizpack.title}
+                    value={portfolio.title}
                     onChange={(e)=> dispatch(editPortfolioTitle(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.title)}
@@ -128,7 +138,7 @@ const PortfolioCreate: React.FC = () => {
                     name="description"
                     autoComplete="description"
                     autoFocus
-                    value={bizpack.description}
+                    value={portfolio.description}
                     onChange={(e)=> dispatch(editPortfolioDescription(e.target.value))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.description)}
@@ -145,7 +155,7 @@ const PortfolioCreate: React.FC = () => {
                     name="unitPrice"
                     autoComplete="unitPrice"
                     autoFocus
-                    value={bizpack.unitPrice}
+                    value={portfolio.unitPrice}
                     onChange={(e)=> dispatch(editPortfolioUnitPrice(Number(e.target.value)))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.unitPrice)}
@@ -162,7 +172,7 @@ const PortfolioCreate: React.FC = () => {
                     name="duration"
                     autoComplete="duration"
                     autoFocus
-                    value={bizpack.duration}
+                    value={portfolio.duration}
                     onChange={(e)=> dispatch(editPortfolioDuration(Number(e.target.value)))}
                     inputRef={register({ required: true })}
                     error={Boolean(errors.duration)}
@@ -170,8 +180,8 @@ const PortfolioCreate: React.FC = () => {
                 />
                 <FormControl component="label">
                 <FormControlLabel
-                    control={<Switch checked={bizpack.isPublic} onChange={handleIsPublicChange} name="gilad" />}
-                    label={bizpack.isPublic ? "公開": "下書き保存"}
+                    control={<Switch checked={portfolio.isPublic} onChange={handleIsPublicChange} name="gilad" />}
+                    label={portfolio.isPublic ? "公開": "下書き保存"}
                 />
                 </FormControl>
                 <Button
@@ -180,13 +190,14 @@ const PortfolioCreate: React.FC = () => {
                     variant="contained"
                     color="primary"
                     disabled={btnDisabler}
-                    onClick={createBizpack}
+                    onClick={()=>updatePortfolio(portfolio.id)}
                 >
-                    portfolioを作成する
+                    Portfolioを更新する
                 </Button>
+                {errMessage.isOpen && <SnackBar severity={errMessage.severity} message={errMessage.message} isOpen={errMessage.isOpen} stateFunc={changeOpenStatus}/>}
             </Grid>
         </Grid>
     )
 }
 
-export default PortfolioCreate
+export default PortfolioEdit

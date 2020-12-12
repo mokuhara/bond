@@ -12,7 +12,7 @@ import {
     selectBizpacks,
     fetchAsyncGetBizpacks,
     fetchAsyncDeleteBizpack,
-    editId
+    editBizpackId
 } from "../mypageSlice"
 import resGetBizpacksType from '../resGetBizpacks.json'
 
@@ -89,7 +89,7 @@ const BizPackIndex: React.FC = () => {
 
     const moveEditBizpack = (bizpackId: number) => {
       setAnchorEl(null);
-      dispatch(editId(bizpackId))
+      dispatch(editBizpackId(bizpackId))
       history.push("/mypage/bizpack/edit")
     };
 

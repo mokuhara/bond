@@ -1,0 +1,46 @@
+{
+    "data": [
+        {
+            "ID": 6,
+            "CreatedAt": "2020-12-06T23:48:14.873001+09:00",
+            "UpdatedAt": "2020-12-06T23:48:14.873001+09:00",
+            "DeletedAt": null,
+            "products": [
+                {
+                    "ID": 0,
+                    "CreatedAt": "2020-12-06T23:48:14.873433+09:00",
+                    "UpdatedAt": "2020-12-06T23:48:14.873433+09:00",
+                    "DeletedAt": null,
+                    "name": "sample",
+                    "BizpackID": 6
+                }
+            ],
+            "User": {
+                "ID": 1,
+                "CreatedAt": "2020-12-06T14:20:40.981428+09:00",
+                "UpdatedAt": "2020-12-06T14:20:40.981428+09:00",
+                "DeletedAt": null,
+                "email": "xxxx",
+                "password": "xxxxx",
+                "type": 1
+            },
+            "userId": 1,
+            "industry": "xxxx",
+            "scale": 6,
+            "description": "xxxx",
+            "unitPrice": 3,
+            "duration": 6,
+            "isPublic": true,
+            "title": "xxxx",
+            "category": {
+                "ID": 0,
+                "CreatedAt": "0001-01-01T00:00:00Z",
+                "UpdatedAt": "0001-01-01T00:00:00Z",
+                "DeletedAt": null,
+                "type": 1,
+                "BizpackID": 0
+            }
+        }
+    ],
+    "status": 200
+}
