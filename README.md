@@ -35,9 +35,9 @@ yarn test
 ├── public # buildの出力用ディレクトリ
 │  
 └── src # 開発用ディレクトリ
-    ├── store # reduxのstoreを配置するディレクトリ
-    ├── components # コンポーネントを配置するディレクトリ
-    ├── pages # viewを配置するディレクトリ, 配下のディレクトリ構成はroutesに合わせる
+    ├── components # コンポーネントを配置するディレクトリ
     ├── layouts # 共通layoutコンポーネントを配置する
+    ├── pages # viewを配置するディレクトリ, 配下のディレクトリ構成はroutesに合わせる
     └── routes # ルーティングファイルを配置する
+    ├── store # reduxのstoreを配置するディレクトリ
 ```
