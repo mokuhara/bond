@@ -23,20 +23,18 @@ type auth = {
 }
 
 export const fetchAsyncLogin = createAsyncThunk("auth/login", async (auth: auth) => {
-    const res = await axios.post<AUTHRESPONSE>(`${apiUrl}/auth/login`, auth, {
+    const res = await fetch(`${apiUrl}/auth/login`, {
+        mode: 'no-cors',
+        method: 'POST',
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
         }
-    }).catch((err) => {
-        console.error(err)
-        return {data:{
-            data: {
-                token: "",
-                userId: -1,
-            },
-            status: 500,
-            }}
     })
+    .then(res => {
+        return res.json();
+    })
+
     const data = res.data
     if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
         console.error("action=fetchAsyncLogin error: auth response error")
@@ -56,19 +54,27 @@ export const fetchAsyncLogin = createAsyncThunk("auth/login", async (auth: auth)
 
 
 export const fetchAsyncSignup = createAsyncThunk("auth/signup", async(auth: auth)=>{
-    const res = await axios.post<AUTHRESPONSE>(`${apiUrl}/auth/signup`, auth, {
+    const res = await fetch(`${apiUrl}/auth/signup`, {
+        mode: 'no-cors',
+        method: 'POST',
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
         }
+    })
+    .then(res => {
+        return res.json();
     }).catch((err) => {
         console.error(err)
-        return {data:{
+        return {
             data: {
-                token: "",
-                userId: -1,
-            },
+                data: {
+                    token: "",
+                    userId: -1,
+                },
             status: 500,
-            }}
+            }
+        }
     })
 
     const data = res.data
