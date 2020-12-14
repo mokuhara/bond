@@ -5,10 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button} from "@material-ui/core"
-
-
-import { useAppDispatch } from "../../../../src/app/storeHelper";
-
+import { useAppDispatch } from "../../../../store/storeHelper";
 import {
     editCategory,
     editTitle,
@@ -21,7 +18,7 @@ import {
     editIsPublic,
     selectBizpack,
     fetchAsyncCreateBizpack
-} from "../mypageSlice"
+} from "../../mypageSlice"
 
 const BizPackCreate: React.FC = () => {
     const dispatch = useDispatch();
@@ -33,7 +30,7 @@ const BizPackCreate: React.FC = () => {
       mode: 'onBlur',
       reValidateMode: 'onChange'
     })
-    const btnDisabler = Boolean(errors.category) || Boolean(errors.title) || Boolean(errors.industry) || Boolean(errors.scale) || Boolean(errors.description) || Boolean(errors.unitPrice) || Boolean(errors.duration) 
+    const btnDisabler = Boolean(errors.category) || Boolean(errors.title) || Boolean(errors.industry) || Boolean(errors.scale) || Boolean(errors.description) || Boolean(errors.unitPrice) || Boolean(errors.duration)
     const handleIsPublicChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editIsPublic(event.target.checked))
     }

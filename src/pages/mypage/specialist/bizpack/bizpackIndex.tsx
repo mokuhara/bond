@@ -4,17 +4,14 @@ import { Paper,Table, TableBody, TableCell, TableContainer, TableHead, TablePagi
 import { makeStyles } from '@material-ui/core/styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
-
-
-import { useAppDispatch } from "../../../../src/app/storeHelper";
-
+import { useAppDispatch } from "../../../../store/storeHelper";
 import {
     selectBizpacks,
     fetchAsyncGetBizpacks,
     fetchAsyncDeleteBizpack,
     editId
-} from "../mypageSlice"
-import resGetBizpacksType from '../resGetBizpacks.json'
+} from "../../mypageSlice"
+import resGetBizpacksType from './resGetBizpacks.json'
 
 type bizpack = typeof resGetBizpacksType.data[0]
 

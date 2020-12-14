@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import bizpack from "./bizpack.json"
+import bizpack from "./specialist/bizpack/bizpack.json"
 import httpStatus from "../auth/httpStatus.json"
-import { RootState } from '../../app/store';
+import { RootState } from '../../store/store';
 import Cookies from 'js-cookie'
-import resGetBizpacksType from './resGetBizpacks.json'
-import resGetBizpackType from './resGetBizpack.json'
+import resGetBizpacksType from './specialist/bizpack/resGetBizpacks.json'
+import resGetBizpackType from './specialist/bizpack/resGetBizpack.json'
 
 
 const apiUrl = "http://localhost:8000/v1";

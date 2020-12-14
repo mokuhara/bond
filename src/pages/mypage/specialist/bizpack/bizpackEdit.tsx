@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button } from "@material-ui/core"
 
 
-import { useAppDispatch } from "../../../store/storeHelper";
-import { SnackBar } from "../../utils/snackbar"
+import { useAppDispatch } from "../../../../store/storeHelper";
+import { SnackBar } from "../../../utils/snackbar"
 
 import {
     editCategory,
@@ -23,7 +23,7 @@ import {
     selectBizpack,
     fetchAsyncGetBizpack,
     fetchAsyncUpdateBizpack
-} from "../mypageSlice"
+} from "../../mypageSlice"
 
 const BizPackEdit: React.FC = () => {
     const dispatch = useDispatch();
