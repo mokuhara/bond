@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import  axios from 'axios'
 import Cookies from 'js-cookie'
-import { RootState } from "../../app/store"
+import { RootState } from "../../store/store"
 import authResponse from "./authen/auth.json"
 import httpStatus from "./httpStatus.json"
 import postUserInfo from "./userInfo.json"
