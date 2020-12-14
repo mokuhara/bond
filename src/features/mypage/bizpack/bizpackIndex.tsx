@@ -76,7 +76,7 @@ const BizPackIndex: React.FC = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -117,9 +117,7 @@ const BizPackIndex: React.FC = () => {
         const rbps = bizpacks.data.map((bizpack: bizpack) => {
             return createData(bizpack)
         })
-        console.log(bizpacks)
         setReshapeBizpacks(rbps)
-        // console.log(bizpacks)
     },[bizpacks, asyncDispatch])
 
     return (

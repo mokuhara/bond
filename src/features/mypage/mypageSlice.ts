@@ -8,7 +8,7 @@ import resGetBizpacksType from './resGetBizpacks.json'
 import resGetBizpackType from './resGetBizpack.json'
 
 
-const apiUrl = "http://localhost:3000/v1";
+const apiUrl = "http://localhost:8000/v1";
 
 type sendBizpack = typeof bizpack
 type resGetBizpacks = typeof resGetBizpacksType
@@ -39,14 +39,19 @@ export const fetchAsyncCreateBizpack = createAsyncThunk("bizpack/create", async 
 
 export const fetchAsyncGetBizpacks = createAsyncThunk("bizpack/get", async ()=> {
     const token = Cookies.get('bdt')
-    const res = await axios.get<resGetBizpacks>(`${apiUrl}/mypage/bizpack`, {
+    const res = await fetch(`${apiUrl}/mypage/bizpack`, {
+        mode: 'no-cors',
+        credentials: 'include',
+        method: 'GET',
+        cache: "no-cache",
         headers: {
-            "Authorization": `bearer ${token}`
+            "Authorization": `bearer ${token}`,
         }
-    }).catch((err) => {
-        console.error(err)
-        return null
     })
+    .then(res => {
+        return res.json();
+    })
+
     const data = res && res.data
     if(!data) return
     if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
@@ -62,7 +67,7 @@ export const fetchAsyncGetBizpack = createAsyncThunk("bizpack/getById", async (b
     const userId = Number(Cookies.get('bd-uid'))
     const res = await axios.get<resGetBizpack>(`${apiUrl}/mypage/bizpack/get/${bizpackId}`, {
         headers: {
-            "Authorization": `bearer ${token}`
+            "Authorization": `bearer ${token}`,
         }
     }).catch((err) => {
         console.error(err)
