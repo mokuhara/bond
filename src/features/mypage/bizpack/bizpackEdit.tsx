@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
 import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button} from "@material-ui/core"
+import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button } from "@material-ui/core"
 
 
 import { useAppDispatch } from "../../../../src/app/storeHelper";
+import { SnackBar } from "../../utils/snackbar"
 
 import {
     editCategory,
@@ -20,15 +21,17 @@ import {
     editDuration,
     editIsPublic,
     selectBizpack,
-    fetchAsyncCreateBizpack
+    fetchAsyncGetBizpack,
+    fetchAsyncUpdateBizpack
 } from "../mypageSlice"
 
-const BizPackCreate: React.FC = () => {
+const BizPackEdit: React.FC = () => {
     const dispatch = useDispatch();
     const asyncDispatch = useAppDispatch();
     const bizpack = useSelector(selectBizpack)
     const history = useHistory()
-    // const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const [errMessage, setErrMessage] = useState({severity: "error", message: "", isOpen: false})
+    const changeOpenStatus = (openStatus: boolean) => { setErrMessage({...errMessage, isOpen: openStatus})}
     const { register, errors } = useForm({
       mode: 'onBlur',
       reValidateMode: 'onChange'
@@ -37,11 +40,18 @@ const BizPackCreate: React.FC = () => {
     const handleIsPublicChange = (event:  React.ChangeEvent<HTMLInputElement>) => {
         dispatch(editIsPublic(event.target.checked))
     }
-    const createBizpack = async () => {
-        asyncDispatch(fetchAsyncCreateBizpack(bizpack))
+    const updateBizpack = async (bizpackId: number) => {
+        asyncDispatch(fetchAsyncUpdateBizpack(bizpackId))
+            .catch(error => {
+                console.error(error)
+                setErrMessage({...errMessage, message: "更新に失敗しました", isOpen: true})
+            });
         history.push("/mypage/bizpack")
     }
 
+    useEffect(() => {
+        asyncDispatch(fetchAsyncGetBizpack(bizpack.id))
+    },[asyncDispatch, bizpack.id])
 
     return (
         <Grid container component="main" >
@@ -180,13 +190,14 @@ const BizPackCreate: React.FC = () => {
                     variant="contained"
                     color="primary"
                     disabled={btnDisabler}
-                    onClick={createBizpack}
+                    onClick={()=>updateBizpack(bizpack.id)}
                 >
-                    bizpackを作成する
+                    bizpackを更新する
                 </Button>
+                {errMessage.isOpen && <SnackBar severity={errMessage.severity} message={errMessage.message} isOpen={errMessage.isOpen} stateFunc={changeOpenStatus}/>}
             </Grid>
         </Grid>
     )
 }
 
-export default BizPackCreate
+export default BizPackEdit

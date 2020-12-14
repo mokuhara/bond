@@ -1,0 +1,53 @@
+{
+    "data": {
+        "ID": 2,
+        "CreatedAt": "2020-12-09T01:29:52.298914+09:00",
+        "UpdatedAt": "2020-12-09T01:29:52.298914+09:00",
+        "DeletedAt": null,
+        "products": [
+            {
+                "ID": 2,
+                "CreatedAt": "2020-12-09T01:29:52.299221+09:00",
+                "UpdatedAt": "2020-12-09T01:29:52.299221+09:00",
+                "DeletedAt": null,
+                "name": "sample",
+                "BizpackID": 2
+            }
+        ],
+        "User": {
+            "ID": 1,
+            "CreatedAt": "2020-12-09T01:28:30.668998+09:00",
+            "UpdatedAt": "2020-12-09T01:28:30.668998+09:00",
+            "DeletedAt": null,
+            "email": "hoge1@gmail.com",
+            "password": "$2a$10$XlWOGsd7vACxMOMjLX0ZU.3t8AwJv3QcfZn88Djm.zqnJX7AYGMqG",
+            "type": 1
+        },
+        "userId": 1,
+        "industry": "feefefef",
+        "scale": 4,
+        "title": "title",
+        "category": {
+            "ID": 2,
+            "CreatedAt": "2020-12-09T01:29:52.299322+09:00",
+            "UpdatedAt": "2020-12-09T01:29:52.299322+09:00",
+            "DeletedAt": null,
+            "type": 1,
+            "BizpackID": 2
+        },
+        "description": "gegegeg",
+        "unitPrice": 33333333,
+        "duration": 20,
+        "isPublic": true,
+        "Party": {
+            "ID": 0,
+            "CreatedAt": "0001-01-01T00:00:00Z",
+            "UpdatedAt": "0001-01-01T00:00:00Z",
+            "DeletedAt": null,
+            "users": null,
+            "bizpacks": null
+        },
+        "partyId": 0
+    },
+    "status": 200
+}
