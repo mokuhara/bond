@@ -1,0 +1,43 @@
+{
+    "id": 0,
+    "bizpackId": 0,
+    "bizpack": {
+        "products": [
+            {
+                "name": "xxxx"
+            },
+            {
+                "name": "xxxx"
+            }
+        ],
+        "category": {
+            "type": 1
+        },
+        "title": "",
+        "userId": 1,
+        "industry": "xxxxxx",
+        "scale": 100,
+        "description": "xxxxx",
+        "unitPrice": 10000,
+        "duration": 5,
+        "isPublic": false
+    },
+    "status": 1,
+    "videoMeetings": [{
+        "id": 0,
+        "name": "hoge",
+        "url": "http://www.hoge.co.jp",
+        "startAt": "2014-03-18T23:05:45.477Z"
+    }],
+    "payments": [{
+        "id": 0,
+        "transactionId": 0,
+        "isPaid": false
+    }],
+    "reviews": [{
+        "id": 0,
+        "transactionId": 0,
+        "userId": 0,
+        "message": "hoge"
+    }]
+}
