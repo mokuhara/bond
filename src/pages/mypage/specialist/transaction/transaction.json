@@ -25,9 +25,9 @@
     "status": 1,
     "videoMeetings": [{
         "id": 0,
-        "name": "hoge",
-        "url": "http://www.hoge.co.jp",
-        "startAt": "2014-03-18T23:05:45.477Z"
+        "topic": "",
+        "join_url": "",
+        "start_time": ""
     }],
     "payments": [{
         "id": 0,
@@ -35,9 +35,9 @@
         "isPaid": false
     }],
     "reviews": [{
-        "id": 0,
         "transactionId": 0,
         "userId": 0,
-        "message": "hoge"
+        "message": "hoge",
+        "rating": 0
     }]
 }
