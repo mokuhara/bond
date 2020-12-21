@@ -23,6 +23,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }))
 
+const statusArr = [
+    {id: 1, name: "面談前"},
+    {id: 2, name: "承認前"},
+    {id: 3, name: "失注"},
+    {id: 4, name: "見積書送付前"},
+    {id: 5, name: "申込書送付前"},
+    {id: 6, name: "契約中(申込完了)"},
+    {id: 7, name: "契約終了"},
+]
+
 const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({transaction, setTransaction}) => {
     const classes = useStyles()
     const [status, setStatus] = useState(transaction.status)
@@ -62,10 +72,10 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
                         onChange={handleStatusChange}
                         className={classes.selectEmpty}
                         >
-                            <MenuItem selected={true} value={transaction.status}>aaaa</MenuItem>
-                            <MenuItem value={2}>hoge</MenuItem>
-                            <MenuItem value={3}>piyo</MenuItem>
-                            <MenuItem value={4}>fuga</MenuItem>
+                            {statusArr.map(status => {
+                                if(status.id === transaction.status) return (<MenuItem selected={true} value={status.id}>{status.name}</MenuItem>)
+                                return (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            })}
                         </Select>
                     </FormControl>
                 </Grid>

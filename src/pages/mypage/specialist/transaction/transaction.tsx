@@ -54,7 +54,7 @@ const TransactionIndex: React.FC = () => {
                     {transaction.bizpack.description}
                 </Grid>
                 <Status transaction={transaction} setTransaction={setTransaction}/>
-                {transaction.status === 4 && (
+                {transaction.status === 7 && (
                     <Review transaction={transaction} />
                 )}
             </Grid>
