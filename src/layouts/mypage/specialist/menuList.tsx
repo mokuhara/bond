@@ -1,5 +1,3 @@
-// TODO: 削除予定, layoutsに移動
-
 import React, { MouseEvent } from 'react';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HelpIcon from '@material-ui/icons/Help';
@@ -21,7 +19,6 @@ import {
     List
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -129,7 +126,7 @@ const MenuList: React.FC = () =>{
                 </Grid>
             </Grid>
         </>
-)
+  )
 }
 
 export default MenuList

@@ -1,4 +1,3 @@
-// TODO: 削除予定, layoutsに移動
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -103,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Mypage: React.FC =  ({children})  => {
+const Layout: React.FC =  ({children})  => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -165,4 +164,4 @@ const Mypage: React.FC =  ({children})  => {
   );
 }
 
-export default Mypage
+export default Layout

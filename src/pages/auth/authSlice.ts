@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import  axios from 'axios'
 import Cookies from 'js-cookie'
 import { RootState } from "../../store/store"
+import { post } from "../../libs/fetch"
 import authResponse from "./authen/auth.json"
 import httpStatus from "./httpStatus.json"
 import postUserInfo from "./userInfo.json"
@@ -23,99 +23,84 @@ type auth = {
 }
 
 export const fetchAsyncLogin = createAsyncThunk("auth/login", async (auth: auth) => {
-    const res = await fetch(`${apiUrl}/auth/login`, {
-        mode: 'no-cors',
-        method: 'POST',
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
-    .then(res => {
-        return res.json();
-    })
+    const res = await post(`${apiUrl}/auth/login`, auth)
+        .then(res => {
+            return res.json();
+        })
 
-    const data = res.data
-    if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
+    if(res.status !== httpStatus.StatusOK && res.status !== httpStatus.StatusCreated){
         console.error("action=fetchAsyncLogin error: auth response error")
         //TODO errorHanling
         throw new Error('action=fetchAsyncLogin error: auth response error');
     }
-    if (!data.data || !data.data.token){
+
+    if (!res.data || !res.data.token){
         console.error("action=fetchAsyncLogin error: token is not found")
         //TODO errorHanling
         throw new Error('action=fetchAsyncLogin error: token is not found');
     }
+
     return {
-        token: data.data.token,
-        userId: data.data.userId
+        token: res.data.token,
+        userId: res.data.userId
     }
 })
 
 
-export const fetchAsyncSignup = createAsyncThunk("auth/signup", async(auth: auth)=>{
-    const res = await fetch(`${apiUrl}/auth/signup`, {
-        mode: 'no-cors',
-        method: 'POST',
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        }
-    })
-    .then(res => {
-        return res.json();
-    }).catch((err) => {
-        console.error(err)
-        return {
-            data: {
-                data: {
-                    token: "",
-                    userId: -1,
-                },
-            status: 500,
-            }
-        }
-    })
+export const fetchAsyncSignup = createAsyncThunk("auth/signup", async (auth: auth) => {
+    const res = await post(`${apiUrl}/auth/signup`, auth)
+        .then(res => {
+            return res.json();
+        })
+        .catch(err => {
+            console.error(err)
+            return (
+                {
+                    data: {
+                        token: "",
+                        userId: -1,
+                    },
+                    status: 500
+                }
+            )
+        })
 
-    const data = res.data
-    if(data.status !== httpStatus.StatusOK && data.status !== httpStatus.StatusCreated){
+    if(res.status !== httpStatus.StatusOK && res.status !== httpStatus.StatusCreated){
+        debugger;
         //TODO errorHanling
         throw new Error('action=fetchAsyncSignup error: auth response error');
     }
-    if (!data.data || !data.data.token){
+
+    if (!res.data || !res.data.token){
         //TODO errorHanling
         throw new Error('action=fetchAsyncSignup error: token is not found');
     }
+
     return {
-        token: data.data.token,
-        userId: data.data.userId
+        token: res.data.token,
+        userId: res.data.userId
     }
 })
 
 export const fetchAsyncSendUserInfo = createAsyncThunk("auth/sendUserInfo", async(userInfo: sendUserInfo)=>{
     const token = Cookies.get('bdt')
+
     if(!token){
         //TODO errorHanling
         throw new Error('action=fetchAsyncSendUserInfo error: token is not found in cookie');
     }
-    const res = await axios.post<USERINFORESPONSE>(`${apiUrl}/userInfo/create`, userInfo, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `bearer ${token}`
-        }
-    }).catch((err) => {
-        console.error(err)
-        return {data: {
-            data: "",
-            status: 500
-        }}
-    })
-    const data = res.data
-    if(data.status !== httpStatus.StatusOK ){
+
+    const res = await post(`${apiUrl}/userInfo/create`, userInfo, { "Authorization": `bearer ${token}` })
+        .then(res => res.json())
+        .catch(err => {
+            console.error(err)
+            return { status: 500 }
+        })
+
+    if(res.status !== httpStatus.StatusOK ){
         //TODO errorHanling
         throw new Error('action=fetchAsyncLogin error: auth response error');
     }
-    return
 })
 
 const authSlice = createSlice({

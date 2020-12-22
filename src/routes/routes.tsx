@@ -9,9 +9,10 @@ import PrivateRoute from './privateRoute'
 import Auth from '../pages/auth/authen/auth'
 import UserInfo from "../pages/auth/userInfo/userInfo"
 import Mypage  from "../pages/mypage/mypage"
-import BizpackIndex from "../pages/mypage/specialist/bizpack/bizpackIndex"
-import BizpackCreate from "../pages/mypage/specialist/bizpack/bizpackCreate"
-import BizpackEdit from "../pages/mypage/specialist/bizpack/bizpackEdit"
+// import BizpackIndex from "../pages/mypage/specialist/bizpack/bizpackIndex"
+// import BizpackCreate from "../pages/mypage/specialist/bizpack/bizpackCreate"
+// import BizpackEdit from "../pages/mypage/specialist/bizpack/bizpackEdit"
+import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
 import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
@@ -19,11 +20,12 @@ import TransactionIndex from "../pages/mypage/specialist/transaction/transaction
 
 const RootRouter: React.FC = () => {
     return (
-      <>
         <Router>
             <Switch>
+                <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                <PrivateRoute path='/mypage/bizpack/create'>
+                <BizpackRoutes/>
+                {/* <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/bizpack/edit'>
@@ -34,7 +36,7 @@ const RootRouter: React.FC = () => {
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
-                </PrivateRoute>
+                </PrivateRoute> */}
                 <PrivateRoute path='/mypage/profile'>
                     <Mypage><Profile /></Mypage>
                 </PrivateRoute>
@@ -48,11 +50,9 @@ const RootRouter: React.FC = () => {
                     <Mypage><TransactionIndex /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage' component={Mypage} />
-                <Route exact path='/'  component={Auth} />
             </Switch>
         </Router>
-      </>
     );
-  };
+};
 
 export default RootRouter;
