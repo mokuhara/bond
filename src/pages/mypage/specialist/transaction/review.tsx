@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import {Grid, TextField, Typography, Button} from '@material-ui/core'
-import {makeStyles, Theme, withStyles} from "@material-ui/core/styles";
+import {makeStyles, Theme } from "@material-ui/core/styles";
 import Rating, { IconContainerProps } from '@material-ui/lab/Rating';
 import {SentimentVeryDissatisfied, SentimentDissatisfied, SentimentSatisfied, SentimentSatisfiedAlt, SentimentVerySatisfied} from "@material-ui/icons"
 
@@ -8,21 +8,8 @@ import transactionJson from './transaction.json'
 import respReviewJson from './resReview.json'
 import fetcher from '../../../utils/fetcher'
 
-type transaction = typeof transactionJson
-type review = typeof transactionJson.reviews[0]
-type respReview = typeof respReviewJson
 
-
-const StyledRating = withStyles({
-    iconFilled: {
-      color: '#ff6d75',
-    },
-    iconHover: {
-      color: '#ff3d47',
-    },
-  })(Rating);
-
-  const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     label: {
         fontWeight:'bold'
     },
@@ -58,18 +45,22 @@ const customIcons: { [index: string]: { icon: React.ReactElement; label: string 
       icon: <SentimentVerySatisfied />,
       label: 'Very Satisfied',
     },
-  };
+};
 
-  function IconContainer(props: IconContainerProps) {
+const IconContainer = (props: IconContainerProps) => {
     const { value, ...other } = props;
     return <span {...other}>{customIcons[value].icon}</span>;
-  }
+}
 
-  const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
-    const [review, setReview] = useState({rating:0, message:""})
+type transaction = typeof transactionJson
+const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
     const apiUrl = "http://localhost:8000/v1";
     const classes = useStyles()
 
+
+    type review = typeof transactionJson.reviews[0]
+    type respReview = typeof respReviewJson
+    const [review, setReview] = useState({rating:0, message:""})
     const asyncCreateReview = async (review: review) => {
         const res = await fetcher<review>(`${apiUrl}/mypage/transaction/review/create`, {
             mode: 'cors',
@@ -124,7 +115,7 @@ const customIcons: { [index: string]: { icon: React.ReactElement; label: string 
     return (
         <>
             <Grid item xs={12} className={classes.label}>
-            <Typography component="legend">　レビュー</Typography>
+                <Typography component="legend">レビュー</Typography>
             </Grid>
             <Grid item xs={6} className={classes.label}>
                 評価
@@ -165,11 +156,11 @@ const customIcons: { [index: string]: { icon: React.ReactElement; label: string 
                 color="primary"
                 onClick={handleSendReview}
             >
-            送信する
+                送信する
             </Button>
         </>
     )
 
-  }
+}
 
-  export default Review
+export default Review

@@ -15,18 +15,17 @@ interface Column {
     minWidth?: number;
     align?: 'right';
     format?: (value: number) => string;
-  }
+}
 
-  const columns: Column[] = [
+const columns: Column[] = [
     { id: 'category', label: 'カテゴリー', minWidth: 170 },
     { id: 'title', label: 'タイトル', minWidth: 170 },
     { id: 'status', label: 'ステータス', minWidth: 170 },
     { id: 'description', label: '詳細', minWidth: 300 },
     { id: 'other', label: 'その他', minWidth: 50}
-  ];
+];
 
 const TransactionIndex: React.FC = () => {
-    const demoData = [transactionJson, transactionJson, transactionJson]
     const history = useHistory()
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -45,30 +44,17 @@ const TransactionIndex: React.FC = () => {
         description: "description",
         transaction: transactionJson
     }
-    const { register, errors } = useForm({
-        mode: 'onBlur',
-        reValidateMode: 'onChange'
-      })
-    type tableData = typeof initTableData[]
-    type transaction = typeof transactionJson
-    type transactions = transaction[]
-    type payment = typeof transactionJson.payments[0]
-
     const apiUrl = "http://localhost:3000/v1";
 
 
-    const asyncGetTransactions = async () => {
-        const res = await fetcher<transactions>(`${apiUrl}/mypage/transaction`, {
-            mode: 'cors',
-            method: 'GET',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-        return res
-    }
+    // form validation
+    const { register, errors } = useForm({
+        mode: 'onBlur',
+        reValidateMode: 'onChange'
+    })
 
+    //  payment
+    type payment = typeof transactionJson.payments[0]
     // const asyncCreatePayment = async (payment: payment) => {
     //     const res = await fetcher<payment>(`${apiUrl}/mypage/transaction/payment/create`, {
     //         mode: 'cors',
@@ -82,39 +68,24 @@ const TransactionIndex: React.FC = () => {
     //     return res
     // }
 
+
+    // transaction data
+    type transaction = typeof transactionJson
+    type transactions = transaction[]
     const [transactions, setTransactions] = useState([transactionJson])
+    type tableData = typeof initTableData[]
     const [tableData, setTableData] = useState([initTableData])
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpenModal = () => {
-        setOpen(true);
-      };
-
-    const handleCloseModal = () => {
-    setOpen(false);
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
-
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-
+    const asyncGetTransactions = async () => {
+        const res = await fetcher<transactions>(`${apiUrl}/mypage/transaction`, {
+            mode: 'cors',
+            method: 'GET',
+            cache: "no-cache",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return res
+    }
     const createTableData = (transactions: transactions) => {
         const result =  transactions.map(transaction => {
             return {
@@ -128,6 +99,45 @@ const TransactionIndex: React.FC = () => {
         })
         return result
     }
+    const demoData = [transactionJson, transactionJson, transactionJson]
+    // asyncGetTransactions().then(res=> setTransactions(res))
+    useEffect(() => {
+        const hoge = createTableData(demoData)
+        console.log(hoge)
+        setTableData(hoge)
+    },[])
+
+
+    // modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpenModal = () => {
+        setOpen(true);
+      };
+    const handleCloseModal = () => {
+    setOpen(false);
+    };
+
+
+    // pagenation
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+
+    // moreMenue
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     const moveTransaction = (transaction: transaction) => {
         history.push({
@@ -136,13 +146,8 @@ const TransactionIndex: React.FC = () => {
         })
     }
 
-    // asyncGetTransactions().then(res=> setTransactions(res))
-    useEffect(() => {
-        const hoge = createTableData(demoData)
-        console.log(hoge)
-        setTableData(hoge)
-    },[])
 
+    // accept button
     const dummy = () => {}
 
     return (
@@ -174,18 +179,18 @@ const TransactionIndex: React.FC = () => {
                                     return (
                                         <TableCell>
                                             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                                            <MoreVertIcon />
+                                                <MoreVertIcon />
                                             </Button>
                                             <Menu
-                                            id="simple-menu"
-                                            anchorEl={anchorEl}
-                                            keepMounted
-                                            open={Boolean(anchorEl)}
-                                            onClose={handleClose}
+                                                id="simple-menu"
+                                                anchorEl={anchorEl}
+                                                keepMounted
+                                                open={Boolean(anchorEl)}
+                                                onClose={handleClose}
                                             >
-                                            <MenuItem onClick={() => moveTransaction(row.transaction)}>詳細</MenuItem>
-                                            {row["status"]===0 && <MenuItem onClick={() => dummy()}>受注</MenuItem>}
-                                            <MenuItem onClick={handleOpenModal}>web会議作成</MenuItem>
+                                                <MenuItem onClick={() => moveTransaction(row.transaction)}>詳細</MenuItem>
+                                                {row["status"]===0 && <MenuItem onClick={() => dummy()}>受注</MenuItem>}
+                                                <MenuItem onClick={handleOpenModal}>web会議作成</MenuItem>
                                             </Menu>
                                         </TableCell>
                                     )

@@ -35,9 +35,10 @@ const statusArr = [
 
 const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({transaction, setTransaction}) => {
     const classes = useStyles()
-    const [status, setStatus] = useState(transaction.status)
     const apiUrl = "http://localhost:8000/v1"
 
+
+    const [status, setStatus] = useState(transaction.status)
     const handleStatusChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const status = event.target.value
         if (typeof status === 'number'){
@@ -47,7 +48,7 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
         }
     };
 
-        const asyncChangeStatus = async (transaction: transaction) => {
+    const asyncChangeStatus = async (transaction: transaction) => {
         const res = await fetcher<transaction>(`${apiUrl}/mypage/transaction/${transaction.id}/update`, {
             mode: 'no-cors',
             method: 'PUT',
@@ -64,21 +65,21 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
         <>
             <Grid item xs={6} className={classes.label}>
                     ステータス
-                </Grid>
-                <Grid item xs={6} className={classes.data}>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                        <Select
-                        value={transaction.status}
-                        onChange={handleStatusChange}
-                        className={classes.selectEmpty}
-                        >
-                            {statusArr.map(status => {
-                                if(status.id === transaction.status) return (<MenuItem selected={true} value={status.id}>{status.name}</MenuItem>)
-                                return (<MenuItem value={status.id}>{status.name}</MenuItem>)
-                            })}
-                        </Select>
-                    </FormControl>
-                </Grid>
+            </Grid>
+            <Grid item xs={6} className={classes.data}>
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <Select
+                    value={transaction.status}
+                    onChange={handleStatusChange}
+                    className={classes.selectEmpty}
+                    >
+                        {statusArr.map(status => {
+                            if(status.id === transaction.status) return (<MenuItem selected={true} value={status.id}>{status.name}</MenuItem>)
+                            return (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                        })}
+                    </Select>
+                </FormControl>
+            </Grid>
         </>
     )
 }
