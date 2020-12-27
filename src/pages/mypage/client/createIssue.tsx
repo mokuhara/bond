@@ -3,12 +3,9 @@ import Cookies from 'js-cookie'
 import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-import DateFnsUtils from '@date-io/date-fns';
 
 import issueJson from './issue.json'
 import fetcher from '../../utils/fetcher'
-
-
 
 const useStyles = makeStyles((theme) => ({
     paper: {

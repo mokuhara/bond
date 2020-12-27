@@ -1,4 +1,3 @@
-Routes.tsx
 import React from 'react'
 import {
     BrowserRouter as Router,
@@ -17,8 +16,8 @@ import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
 import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
-import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
-import Transaction from "../pages/mypage/specialist/transaction/transaction"
+// import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
+// import Transaction from "../pages/mypage/specialist/transaction/transaction"
 import IssueCreate from "../pages/mypage/client/createIssue"
 
 const RootRouter: React.FC = () => {
@@ -49,12 +48,12 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/mypage/portfolio'>
                     <Mypage><PortfolioIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/transactions'>
+                {/* <PrivateRoute path='/mypage/transactions'>
                     <Mypage><TransactionIndex /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/transaction'>
                     <Mypage><Transaction /></Mypage>
-                </PrivateRoute>
+                </PrivateRoute> */}
                 <PrivateRoute path='/mypage/issue/create'>
                     <Mypage><IssueCreate /></Mypage>
                 </PrivateRoute>
