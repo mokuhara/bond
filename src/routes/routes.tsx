@@ -21,6 +21,8 @@ import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreat
 import IssueCreate from "../pages/mypage/client/issue/createIssue"
 import IssueIndex from "../pages/mypage/client/issue/issueIndex"
 import Issue from "../pages/mypage/client/issue/issue"
+import EditIssue from "../pages/mypage/client/issue/editIssue"
+
 
 const RootRouter: React.FC = () => {
     return (
@@ -61,6 +63,9 @@ const RootRouter: React.FC = () => {
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/issue/index'>
                     <Mypage><IssueIndex /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/issue/edit'>
+                    <Mypage><EditIssue /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/issue'>
                     <Mypage><Issue /></Mypage>
