@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Cookies from 'js-cookie'
-import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button} from '@material-ui/core'
+import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 
 import issueJson from './issue.json'
-import fetcher from '../../utils/fetcher'
+import fetcher from '../../../utils/fetcher'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -127,6 +127,7 @@ const CreateIssue: React.FC = () => {
             <CssBaseline />
             <Grid item xs={12} sm={10} md={10} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
+                    <Typography component="h1" variant="h6">公募作成</Typography>
                     <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
