@@ -87,11 +87,18 @@ const MenuList: React.FC = () =>{
                             </ListItemIcon>
                             <ListItemText primary="過去事例一覧" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/transaction`}>
+                        <ListItem button component={Link} to={`/mypage/transactions`}>
                             <ListItemIcon>
                                 <SupervisorAccountIcon />
                             </ListItemIcon>
                             <ListItemText primary="取引一覧" />
+                        </ListItem>
+                        {/* client */}
+                        <ListItem button component={Link} to={`/mypage/issue/create`}>
+                            <ListItemIcon>
+                                <SupervisorAccountIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="公募作成" />
                         </ListItem>
                     </List>
                 </Grid>

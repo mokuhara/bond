@@ -1,3 +1,4 @@
+Routes.tsx
 import React from 'react'
 import {
     BrowserRouter as Router,
@@ -17,6 +18,8 @@ import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
 import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
+import Transaction from "../pages/mypage/specialist/transaction/transaction"
+import IssueCreate from "../pages/mypage/client/createIssue"
 
 const RootRouter: React.FC = () => {
     return (
@@ -24,7 +27,7 @@ const RootRouter: React.FC = () => {
             <Switch>
                 <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                <BizpackRoutes/>
+                {/* <BizpackRoutes/> */}
                 {/* <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
                 </PrivateRoute>
@@ -46,10 +49,16 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/mypage/portfolio'>
                     <Mypage><PortfolioIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/transaction'>
+                <PrivateRoute path='/mypage/transactions'>
                     <Mypage><TransactionIndex /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage' component={Mypage} />
+                <PrivateRoute path='/mypage/transaction'>
+                    <Mypage><Transaction /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/issue/create'>
+                    <Mypage><IssueCreate /></Mypage>
+                </PrivateRoute>
+                <Route path='/mypage' component={Mypage} />
             </Switch>
         </Router>
     );
