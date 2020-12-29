@@ -3,9 +3,8 @@ import { Button, TextField} from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 
-import transactionJson from './transaction.json'
-import fetcher from '../../../utils/fetcher'
-import respVideoMeetingJson from  './resVideoMeeting.json'
+import { post } from '../../../../../../libs//fetch';
+import videoMeetingState from './store'
 
 
 const VideoMeetingForm: React.FC = () => {
@@ -31,7 +30,6 @@ const VideoMeetingForm: React.FC = () => {
         },
     }));
     const classes = useStyles();
-    const apiUrl = "http://localhost:3000/v1";
 
 
     // from validation
@@ -43,11 +41,16 @@ const VideoMeetingForm: React.FC = () => {
 
 
     // videoMeeting
-    type videoMeeting = typeof transactionJson.videoMeetings[0]
-    type respVideoMeeting = typeof respVideoMeetingJson
-    const [videoMeeting, setVideoMeeting] = useState(transactionJson.videoMeetings[0])
+    type videoMeeting = typeof videoMeetingState
+    const [videoMeeting, setVideoMeeting] = useState(videoMeetingState)
+
+    const extractJoinUrl = (videoMeeting: videoMeeting) => {
+        return videoMeeting.join_url
+    }
+
     const asyncCreateVideoMeeting = async () => {
-        const body =  {
+        const apiUrl = "http://localhost:3000/v1";
+        const vidoMeeting =  {
             topic: videoMeeting.topic,
             type: "2",
             start_time: videoMeeting.start_time,
@@ -57,18 +60,11 @@ const VideoMeetingForm: React.FC = () => {
             }
         }
 
-        const res = await fetcher<respVideoMeeting>(`${apiUrl}/mypage/videomeeting/create`, {
-            mode: 'cors',
-            method: 'POST',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body)
-        })
-        if(res.data){
-            setVideoMeeting({ ...videoMeeting, join_url: res.data.join_url})
-        }
+        post(`${apiUrl}/mypage/videomeeting/create`, vidoMeeting, {}, true)
+            .then(res => res.json())
+            .then(json => {
+                setVideoMeeting({ ...videoMeeting, join_url: extractJoinUrl(json)})
+            })
     }
 
 

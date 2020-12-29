@@ -16,7 +16,7 @@ import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
 import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
-import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
+import TransactionIndex from "../pages/mypage/specialist/transaction/index"
 import Transaction from "../pages/mypage/specialist/transaction/transaction"
 
 const RootRouter: React.FC = () => {
@@ -25,7 +25,7 @@ const RootRouter: React.FC = () => {
             <Switch>
                 <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                <BizpackRoutes/>
+                {/* <BizpackRoutes/> */}
                 {/* <PrivateRoute path='/mypage/bizpack/create'>
                     <Mypage><BizpackCreate /></Mypage>
                 </PrivateRoute>
@@ -53,7 +53,7 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/mypage/transaction'>
                     <Mypage><Transaction /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage' component={Mypage} />
+                <Route path='/mypage' component={Mypage} />
             </Switch>
         </Router>
     );

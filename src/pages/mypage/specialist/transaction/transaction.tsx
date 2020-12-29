@@ -5,7 +5,7 @@ import {makeStyles, Theme } from "@material-ui/core/styles";
 
 
 import transactionJson from './transaction.json'
-import Review from './review'
+import Review from './review/new'
 import Status from './status'
 
 type transactionState = {transaction: typeof transactionJson}

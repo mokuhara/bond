@@ -4,9 +4,9 @@ import {makeStyles, Theme } from "@material-ui/core/styles";
 import Rating, { IconContainerProps } from '@material-ui/lab/Rating';
 import {SentimentVeryDissatisfied, SentimentDissatisfied, SentimentSatisfied, SentimentSatisfiedAlt, SentimentVerySatisfied} from "@material-ui/icons"
 
-import transactionJson from './transaction.json'
-import respReviewJson from './resReview.json'
-import fetcher from '../../../utils/fetcher'
+import { post } from '../../../../../../libs/fetch'
+import { transactionState } from '../../index/store'
+import reviewState from './store'
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -52,39 +52,40 @@ const IconContainer = (props: IconContainerProps) => {
     return <span {...other}>{customIcons[value].icon}</span>;
 }
 
-type transaction = typeof transactionJson
+type transaction = typeof transactionState[0]
 const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
     const apiUrl = "http://localhost:8000/v1";
     const classes = useStyles()
 
 
-    type review = typeof transactionJson.reviews[0]
-    type respReview = typeof respReviewJson
+    type review = typeof reviewState
     const [review, setReview] = useState({rating:0, message:""})
     const asyncCreateReview = async (review: review) => {
-        const res = await fetcher<review>(`${apiUrl}/mypage/transaction/review/create`, {
-            mode: 'cors',
-            method: 'POST',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(review)
-        })
-        return res
+        const apiUrl = "http://localhost:3000/v1";
+
+        post(`${apiUrl}/mypage/transaction/review/create`, review, {}, true)
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+            })
     }
 
+    //TODO update未実装
+    type respReview = {
+        id: number,
+        transactionId: number,
+        userId: number,
+        message: string,
+        rating: number
+    }
     const asyncUpdateReview = async (review: respReview) => {
-        const res = await fetcher<review>(`${apiUrl}/mypage/transaction/review/${review.data.ID}/update`, {
-            mode: 'cors',
-            method: 'POST',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(review)
-        })
-        return res
+        const apiUrl = "http://localhost:3000/v1";
+
+        post(`${apiUrl}/mypage/transaction/review/${review.id}/update`, review, {}, true)
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+            })
     }
 
     const handleReviewMessageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -108,7 +109,6 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
             message: review.message,
             rating: review.rating,
         }
-
         asyncCreateReview(payload)
     }
 

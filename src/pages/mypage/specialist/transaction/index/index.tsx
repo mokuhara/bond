@@ -5,9 +5,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import transactionJson from './transaction.json'
-import fetcher from '../../../utils/fetcher'
-import VideoMeetingForm from './videoMeeting'
+
+import VideoMeetingForm from '../videMeeting/new'
+import { get } from '../../../../../libs/fetch';
+import { transactionState,  summrizedTransactionState } from './store'
 
 interface Column {
     id: 'category' | 'title' | 'status' | 'description' | 'other';
@@ -36,15 +37,6 @@ const TransactionIndex: React.FC = () => {
         },
       }));
     const classes = useStyles();
-    const initTableData = {
-        id: 0,
-        category: 0,
-        title: "title",
-        status: 0,
-        description: "description",
-        transaction: transactionJson
-    }
-    const apiUrl = "http://localhost:3000/v1";
 
 
     // form validation
@@ -53,40 +45,23 @@ const TransactionIndex: React.FC = () => {
         reValidateMode: 'onChange'
     })
 
-    //  payment
-    type payment = typeof transactionJson.payments[0]
-    // const asyncCreatePayment = async (payment: payment) => {
-    //     const res = await fetcher<payment>(`${apiUrl}/mypage/transaction/payment/create`, {
-    //         mode: 'cors',
-    //         method: 'POST',
-    //         cache: "no-cache",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(payment)
-    //     })
-    //     return res
-    // }
-
 
     // transaction data
-    type transaction = typeof transactionJson
-    type transactions = transaction[]
-    const [transactions, setTransactions] = useState([transactionJson])
-    type tableData = typeof initTableData[]
-    const [tableData, setTableData] = useState([initTableData])
-    const asyncGetTransactions = async () => {
-        const res = await fetcher<transactions>(`${apiUrl}/mypage/transaction`, {
-            mode: 'cors',
-            method: 'GET',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-        return res
+    type transaction = typeof transactionState[0]
+    type tableData = typeof summrizedTransactionState[]
+    const [tableData, setTableData] = useState([summrizedTransactionState])
+    const asyncGetTransactions = () => {
+        const apiUrl = "http://localhost:3000/v1";
+
+        get(`${apiUrl}/mypage/transaction`, {}, true)
+            .then(res => res.json())
+            .then(json => {
+                setTableData(createTableData(json))
+                console.log(json)
+            })
     }
-    const createTableData = (transactions: transactions) => {
+
+    const createTableData = (transactions: transaction[]) => {
         const result =  transactions.map(transaction => {
             return {
                 id: transaction.id,
@@ -99,12 +74,12 @@ const TransactionIndex: React.FC = () => {
         })
         return result
     }
-    const demoData = [transactionJson, transactionJson, transactionJson]
-    // asyncGetTransactions().then(res=> setTransactions(res))
+    // const demoData = [transactionJson, transactionJson, transactionJson]
     useEffect(() => {
-        const hoge = createTableData(demoData)
-        console.log(hoge)
-        setTableData(hoge)
+        asyncGetTransactions()
+        // const hoge = createTableData(demoData)
+        // console.log(hoge)
+        // setTableData(hoge)
     },[])
 
 
@@ -197,7 +172,7 @@ const TransactionIndex: React.FC = () => {
                                 } else {
                                     value = row[column.id]
                                     return (
-                                    <TableCell key={column.id} align={column.align}>
+                                    <TableCell align={column.align}>
                                         {value}
                                     </TableCell>
                                     );
