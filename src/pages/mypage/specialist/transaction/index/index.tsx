@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import VideoMeetingForm from '../videMeeting/new'
 import { get } from '../../../../../libs/fetch';
-import { transactionState,  summrizedTransactionState } from './store'
+import { transactionState,  summrizedTransactionState, statusState, categoryState } from './store'
 
 interface Column {
     id: 'category' | 'title' | 'status' | 'description' | 'other';
@@ -51,35 +51,40 @@ const TransactionIndex: React.FC = () => {
     type tableData = typeof summrizedTransactionState[]
     const [tableData, setTableData] = useState([summrizedTransactionState])
     const asyncGetTransactions = () => {
-        const apiUrl = "http://localhost:3000/v1";
-
-        get(`${apiUrl}/mypage/transaction`, {}, true)
+        const apiUrl = "http://localhost:8000/v1";
+        get(`${apiUrl}/mypage/transaction/`, {}, true)
             .then(res => res.json())
             .then(json => {
-                setTableData(createTableData(json))
-                console.log(json)
+                setTableData(createTableData(json.data))
+            })
+            .catch(e => {
+                console.error(e)
             })
     }
 
-    const createTableData = (transactions: transaction[]) => {
-        const result =  transactions.map(transaction => {
+    const createTableData = (transactions:transaction[] ) => {
+        console.log('transactions')
+        console.log(transactions)
+        const createData = (transaction: transaction) => {
+            console.log(transaction.Bizpack.category.type)
             return {
-                id: transaction.id,
-                category: transaction.bizpack.category.type,
-                title: transaction.bizpack.title,
-                status: transaction.status,
-                description: transaction.bizpack.description,
+                id: transaction.ID,
+                category: (categoryState.filter(category => category.id === transaction.Bizpack.category.type))[0].name,
+                title: transaction.Bizpack.title,
+                status: (statusState.filter(status => status.id === transaction.status))[0].name,
+                description: transaction.Bizpack.description,
                 transaction: transaction
             }
+        }
+        const result =  transactions.map(transaction => {
+            return createData(transaction)
         })
         return result
     }
-    // const demoData = [transactionJson, transactionJson, transactionJson]
+
     useEffect(() => {
+        console.log('component did moouted')
         asyncGetTransactions()
-        // const hoge = createTableData(demoData)
-        // console.log(hoge)
-        // setTableData(hoge)
     },[])
 
 
@@ -115,6 +120,8 @@ const TransactionIndex: React.FC = () => {
     };
 
     const moveTransaction = (transaction: transaction) => {
+        console.log('moveTransaction')
+        console.log(transaction)
         history.push({
             pathname: '/mypage/transaction',
             state: {transaction}
@@ -163,8 +170,9 @@ const TransactionIndex: React.FC = () => {
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleClose}
                                             >
+                                                {/* TODO: moveTransactionクリックしても最後の行の詳細画面に飛ぶ現象を直す */}
                                                 <MenuItem onClick={() => moveTransaction(row.transaction)}>詳細</MenuItem>
-                                                {row["status"]===0 && <MenuItem onClick={() => dummy()}>受注</MenuItem>}
+                                                {row["transaction"].status < 6 && <MenuItem onClick={() => dummy()}>受注</MenuItem>}
                                                 <MenuItem onClick={handleOpenModal}>web会議作成</MenuItem>
                                             </Menu>
                                         </TableCell>

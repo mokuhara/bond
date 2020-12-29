@@ -4,7 +4,6 @@ import {makeStyles, Theme } from "@material-ui/core/styles";
 
 import { post } from '../../../../../libs/fetch'
 import { transactionState } from '../index/store'
-import fetcher from '../../../../utils/fetcher'
 
 type transaction = typeof transactionState[0]
 
@@ -26,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 const statusArr = [
     {id: 1, name: "面談前"},
     {id: 2, name: "承認前"},
-    {id: 3, name: "失注"},
-    {id: 4, name: "見積書送付前"},
-    {id: 5, name: "申込書送付前"},
-    {id: 6, name: "契約中(申込完了)"},
-    {id: 7, name: "契約終了"},
+    {id: 3, name: "見積書送付前"},
+    {id: 4, name: "申込書送付前"},
+    {id: 5, name: "契約中(申込完了)"},
+    {id: 6, name: "契約終了"},
+    {id: 7, name: "失注"},
 ]
 
 const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({transaction, setTransaction}) => {
@@ -42,13 +41,13 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
         if (typeof status === 'number'){
             setTransaction({...transaction, status: status})
             setStatus(status)
-            // asyncChangeStatus(transaction)
+            asyncChangeStatus(transaction)
         }
     };
 
     const asyncChangeStatus = async (transaction: transaction) => {
         const apiUrl = "http://localhost:8000/v1";
-        post(`${apiUrl}/mypage/transaction/${transaction.id}/update`, transaction, {}, true)
+        post(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, transaction, {}, true)
             .then(res => res.json())
             .then(json => {
                 console.log(json)

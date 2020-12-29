@@ -39,19 +39,19 @@ const TransactionIndex: React.FC = () => {
                     タイトル
                 </Grid>
                 <Grid item xs={6} className={classes.data}>
-                    {transaction.bizpack.title}
+                    {transaction.Bizpack.title}
                 </Grid>
                 <Grid item xs={6} className={classes.label}>
                     カテゴリ
                 </Grid>
                 <Grid item xs={6} className={classes.data}>
-                    {transaction.bizpack.category.type}
+                    {transaction.Bizpack.category.type}
                 </Grid>
                 <Grid item xs={6} className={classes.label}>
                     詳細
                 </Grid>
                 <Grid item xs={6} className={classes.data}>
-                    {transaction.bizpack.description}
+                    {transaction.Bizpack.description}
                 </Grid>
                 <Status transaction={transaction} setTransaction={setTransaction}/>
                 {transaction.status === 7 && (

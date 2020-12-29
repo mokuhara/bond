@@ -104,8 +104,8 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
 
     const handleSendReview = () => {
         const payload = {
-            transactionId: transaction.id,
-            userId: transaction.bizpack.userId,
+            transactionId: transaction.ID,
+            userId: transaction.Bizpack.userId,
             message: review.message,
             rating: review.rating,
         }
