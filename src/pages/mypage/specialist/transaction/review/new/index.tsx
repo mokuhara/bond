@@ -3,6 +3,7 @@ import {Grid, TextField, Typography, Button} from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 import Rating, { IconContainerProps } from '@material-ui/lab/Rating';
 import {SentimentVeryDissatisfied, SentimentDissatisfied, SentimentSatisfied, SentimentSatisfiedAlt, SentimentVerySatisfied} from "@material-ui/icons"
+import Cookies from 'js-cookie'
 
 import { post } from '../../../../../../libs/fetch'
 import { transactionState } from '../../index/store'
@@ -53,17 +54,16 @@ const IconContainer = (props: IconContainerProps) => {
 }
 
 type transaction = typeof transactionState[0]
-const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
-    const apiUrl = "http://localhost:8000/v1";
+const CreateReview: React.FC<{transaction: transaction}> = ({transaction}) => {
     const classes = useStyles()
 
 
     type review = typeof reviewState
     const [review, setReview] = useState({rating:0, message:""})
     const asyncCreateReview = async (review: review) => {
-        const apiUrl = "http://localhost:3000/v1";
+        const apiUrl = "http://localhost:8000/v1";
 
-        post(`${apiUrl}/mypage/transaction/review/create`, review, {}, true)
+        post(`${apiUrl}/mypage/review/create`, review, {}, true)
             .then(res => res.json())
             .then(json => {
                 console.log(json)
@@ -103,9 +103,11 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
     }
 
     const handleSendReview = () => {
+        const userId = Cookies.get('bd-uid')
+        if(!userId) return
         const payload = {
             transactionId: transaction.ID,
-            userId: transaction.Bizpack.userId,
+            userId: parseInt(userId, 10),
             message: review.message,
             rating: review.rating,
         }
@@ -163,4 +165,4 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
 
 }
 
-export default Review
+export default CreateReview

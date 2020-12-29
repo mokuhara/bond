@@ -63,10 +63,7 @@ const TransactionIndex: React.FC = () => {
     }
 
     const createTableData = (transactions:transaction[] ) => {
-        console.log('transactions')
-        console.log(transactions)
         const createData = (transaction: transaction) => {
-            console.log(transaction.Bizpack.category.type)
             return {
                 id: transaction.ID,
                 category: (categoryState.filter(category => category.id === transaction.Bizpack.category.type))[0].name,
@@ -83,7 +80,6 @@ const TransactionIndex: React.FC = () => {
     }
 
     useEffect(() => {
-        console.log('component did moouted')
         asyncGetTransactions()
     },[])
 
@@ -120,8 +116,6 @@ const TransactionIndex: React.FC = () => {
     };
 
     const moveTransaction = (transaction: transaction) => {
-        console.log('moveTransaction')
-        console.log(transaction)
         history.push({
             pathname: '/mypage/transaction',
             state: {transaction}
@@ -131,6 +125,9 @@ const TransactionIndex: React.FC = () => {
 
     // accept button
     const dummy = () => {}
+
+    //videoMeeting
+    const [transactionId, setTransactionId] = useState(0)
 
     return (
         <>
@@ -160,7 +157,7 @@ const TransactionIndex: React.FC = () => {
                                 if(column.id === 'other'){
                                     return (
                                         <TableCell>
-                                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                            <Button data-transaction={JSON.stringify(row.transaction)} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                                 <MoreVertIcon />
                                             </Button>
                                             <Menu
@@ -170,10 +167,22 @@ const TransactionIndex: React.FC = () => {
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleClose}
                                             >
-                                                {/* TODO: moveTransactionクリックしても最後の行の詳細画面に飛ぶ現象を直す */}
-                                                <MenuItem onClick={() => moveTransaction(row.transaction)}>詳細</MenuItem>
-                                                {row["transaction"].status < 6 && <MenuItem onClick={() => dummy()}>受注</MenuItem>}
-                                                <MenuItem onClick={handleOpenModal}>web会議作成</MenuItem>
+                                                <MenuItem onClick={() => {
+                                                    const data = anchorEl? anchorEl.dataset.transaction : ''
+                                                    if (data) {
+                                                        const transaction = JSON.parse(data)
+                                                        moveTransaction(transaction)
+                                                    }
+                                                }}>詳細</MenuItem>
+                                                {/* {row["transaction"].status < 6 && <MenuItem onClick={() => dummy()}>受注</MenuItem>} */}
+                                                <MenuItem onClick={() => {
+                                                    const data = anchorEl? anchorEl.dataset.transaction : ''
+                                                    if (data) {
+                                                        const transaction = JSON.parse(data)
+                                                        setTransactionId(transaction.ID)
+                                                        handleOpenModal()
+                                                    }
+                                                }}>web会議作成</MenuItem>
                                             </Menu>
                                         </TableCell>
                                     )
@@ -206,7 +215,7 @@ const TransactionIndex: React.FC = () => {
                 open={open}
                 onClose={handleCloseModal}
             >
-                <VideoMeetingForm />
+                <VideoMeetingForm transactionId={transactionId}/>
             </Modal>
         </>
       );

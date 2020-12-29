@@ -20,12 +20,12 @@ export const transactionState = [{
         join_url: "",
         start_time: ""
     }],
-    Payments: [{
+    payments: [{
         id: 0,
         transactionId: 0,
         isPaid: false
     }],
-    Reviews: [{
+    reviews: [{
         transactionId: 0,
         userId: 0,
         message: "",

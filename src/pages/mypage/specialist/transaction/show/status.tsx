@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 import {Grid, FormControl, MenuItem, Select } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 
-import { post } from '../../../../../libs/fetch'
+import { put } from '../../../../../libs/fetch'
 import { transactionState } from '../index/store'
+import { SignalCellularNoSimOutlined } from '@material-ui/icons';
 
 type transaction = typeof transactionState[0]
 
@@ -41,13 +42,13 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
         if (typeof status === 'number'){
             setTransaction({...transaction, status: status})
             setStatus(status)
-            asyncChangeStatus(transaction)
+            asyncChangeStatus({...transaction, status: status})
         }
     };
 
     const asyncChangeStatus = async (transaction: transaction) => {
         const apiUrl = "http://localhost:8000/v1";
-        post(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, transaction, {}, true)
+        put(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, transaction, {}, true)
             .then(res => res.json())
             .then(json => {
                 console.log(json)

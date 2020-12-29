@@ -3,11 +3,11 @@ import { Button, TextField} from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 
-import { post } from '../../../../../../libs//fetch';
+import { post } from '../../../../../../libs/fetch';
 import videoMeetingState from './store'
 
 
-const VideoMeetingForm: React.FC = () => {
+const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) => {
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
           width: '100%',
@@ -49,7 +49,7 @@ const VideoMeetingForm: React.FC = () => {
     }
 
     const asyncCreateVideoMeeting = async () => {
-        const apiUrl = "http://localhost:3000/v1";
+        const apiUrl = "http://localhost:8000/v1";
         const vidoMeeting =  {
             topic: videoMeeting.topic,
             type: "2",
@@ -57,13 +57,13 @@ const VideoMeetingForm: React.FC = () => {
             timezone: "Asia/Tokyo",
             settings: {
                 use_pmi: "false"
-            }
+            },
+            transactionId: transactionId
         }
-
         post(`${apiUrl}/mypage/videomeeting/create`, vidoMeeting, {}, true)
             .then(res => res.json())
             .then(json => {
-                setVideoMeeting({ ...videoMeeting, join_url: extractJoinUrl(json)})
+                setVideoMeeting({ ...videoMeeting, join_url: extractJoinUrl(json.data)})
             })
     }
 

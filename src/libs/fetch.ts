@@ -31,11 +31,30 @@ export const get = (path: string, additionalOptions: object = {}, isCredential: 
   })
 }
 
+export const destroy = (path: string, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+  const options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
+
+  return fetch(path, {
+      method: "DELETE",
+      ...options
+  })
+}
+
 export const post = (path: string, body: object, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
   let options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
 
   return fetch(path, {
       method: 'POST',
+      ...options,
+      body: JSON.stringify(body),
+  })
+}
+
+export const put = (path: string, body: object, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+  let options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
+
+  return fetch(path, {
+      method: 'PUT',
       ...options,
       body: JSON.stringify(body),
   })
