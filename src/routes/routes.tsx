@@ -18,10 +18,10 @@ import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
 // import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
 // import Transaction from "../pages/mypage/specialist/transaction/transaction"
-import IssueCreate from "../pages/mypage/client/issue/createIssue"
-import IssueIndex from "../pages/mypage/client/issue/issueIndex"
-import Issue from "../pages/mypage/client/issue/issue"
-import EditIssue from "../pages/mypage/client/issue/editIssue"
+import IssueCreate from "../pages/mypage/client/issue/new"
+import IssueIndex from "../pages/mypage/client/issue/index"
+import Issue from "../pages/mypage/client/issue/show"
+import EditIssue from "../pages/mypage/client/issue/edit"
 
 
 const RootRouter: React.FC = () => {

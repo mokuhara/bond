@@ -6,11 +6,10 @@ import {format} from 'date-fns'
 import { useHistory } from 'react-router-dom';
 
 
-import resIssueJson from './resIssue.json'
-import fetcher from '../../../utils/fetcher'
+import { post } from '../../../../../libs/fetch'
+import issueState from './store'
 
-type issueState = {issue: typeof resIssueJson}
-type resIssue = typeof resIssueJson
+type issueState = {issue: typeof issueState}
 
 const useStyles = makeStyles((theme: Theme) => ({
     label: {
@@ -40,7 +39,6 @@ const Issue: React.FC = () => {
         {id: 2, name: "導入"},
         {id: 3, name: "運用"},
     ]
-    const apiUrl = "http://localhost:3000/v1";
     const category = (categoryTypes.filter(category => category.id === issue.categoryId))[0]
 
     const moveEditIssue = () => {
@@ -52,18 +50,13 @@ const Issue: React.FC = () => {
     }
 
     const deleteIssue = async () => {
-        const res = await fetcher<resIssue[]>(`${apiUrl}/mypage/issues/${issue.id}/delete`, {
-            mode: 'cors',
-            method: 'DELETE',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-        console.log(res)
-        if(res) {
-            history.push('/mypage/issue/index')
-        }
+        const apiUrl = "http://localhost:3000/v1";
+        post(`${apiUrl}/mypage/issues/${issue.id}/delete`, issue, {}, true)
+              .then(res => res.json())
+              .then(json => {
+                console.log(json)
+                if(json) { history.push('/mypage/issue/index') }
+              })
     }
 
 

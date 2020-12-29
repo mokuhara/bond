@@ -6,10 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom'
 import {format} from 'date-fns'
 
-import resIssueJson from './resIssue.json'
-import fetcher from '../../../utils/fetcher'
+import editIssueState from './store'
+import { post } from '../../../../../libs/fetch'
 
-type issueState = {issue: typeof resIssueJson}
+type editIssueState = {issue: typeof editIssueState}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -40,8 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const EditIssue: React.FC = () => {
     const classes = useStyles();
-    const apiUrl = "http://localhost:3000/v1";
-    const location = useLocation<issueState>();
+    const location = useLocation<editIssueState>();
     const [issue, setIssue] = useState(location.state.issue)
 
     const handleChangeTitle = (title: string) => {
@@ -106,16 +105,10 @@ const EditIssue: React.FC = () => {
     }
 
     const asyncUpdateIssue = async () => {
-        const res = await fetcher<any>(`${apiUrl}/mypage/issue/${issue.id}/update`, {
-            mode: 'cors',
-            method: 'PUT',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(issue)
-        })
-        console.log(res.data)
+        const apiUrl = "http://localhost:3000/v1";
+        post(`${apiUrl}/mypage/issue/${issue.id}/update`, issue, {}, true)
+              .then(res => res.json())
+              .then(json => console.log(json))
     }
     // const { register, errors } = useForm({
     //     mode: 'onBlur',

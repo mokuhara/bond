@@ -4,8 +4,8 @@ import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, Inpu
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 
-import issueJson from './issue.json'
-import fetcher from '../../../utils/fetcher'
+import { post } from '../../../../../libs/fetch'
+import issueState from './store'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,15 +34,12 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const initIssue = issueJson
 const userId = Number(Cookies.get('bd-uid'))
-initIssue.userId = userId
+issueState.userId = userId
 
 const CreateIssue: React.FC = () => {
     const classes = useStyles();
-    const apiUrl = "http://localhost:3000/v1";
-    type issueType = typeof issueJson
-    const [issue, setIssue] = useState(initIssue)
+    const [issue, setIssue] = useState(issueState)
 
     const handleChangeTitle = (title: string) => {
         setIssue({...issue, title: title})
@@ -106,16 +103,10 @@ const CreateIssue: React.FC = () => {
     }
 
     const asyncCreateIssue = async () => {
-        const res = await fetcher<any>(`${apiUrl}/mypage/issue/create`, {
-            mode: 'cors',
-            method: 'POST',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(issue)
-        })
-        console.log(res.data)
+        const apiUrl = "http://localhost:3000/v1";
+        post(`${apiUrl}/mypage/bizpack/create`, issue, {}, true)
+              .then(res => res.json())
+              .then(json => console.log(json))
     }
     // const { register, errors } = useForm({
     //     mode: 'onBlur',

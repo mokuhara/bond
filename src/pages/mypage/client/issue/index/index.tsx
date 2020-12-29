@@ -5,8 +5,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
 import {format} from 'date-fns'
 
-import resIssueJson from './resIssue.json'
-import fetcher from '../../../utils/fetcher'
+import { issueState, tableDataState } from './store'
+import { get } from '../../../../../libs/fetch'
+
 
 interface Column {
     id: 'category' | 'title' | 'description' | 'budget' | 'startAt' | 'applicationDeadline' | 'other';
@@ -37,41 +38,27 @@ const IssueIndex: React.FC = () => {
         },
       }));
     const classes = useStyles();
-    const initTableData = {
-        id: 0,
-        category: "",
-        title: "title",
-        description: "",
-        budget: 0,
-        startAt: "2020-12-27T10:31:04.447893+09:00",
-        applicationDeadline: "2020-12-27T10:31:04.447893+09:00",
-        issue: resIssueJson
-    }
     const categoryTypes = [
         {id: 1, name: "選定"},
         {id: 2, name: "導入"},
         {id: 3, name: "運用"},
     ]
-    const apiUrl = "http://localhost:3000/v1";
-
 
     // transaction data
-    type resIssue = typeof resIssueJson
-    const [issues, setIssues] = useState([resIssueJson])
-    type tableData = typeof initTableData[]
-    const [tableData, setTableData] = useState([initTableData])
+    type resIssue = typeof issueState
+    type tableData = typeof tableDataState[]
+    const [tableData, setTableData] = useState([tableDataState])
+
     const asyncGetIssues = async () => {
-        const res = await fetcher<resIssue[]>(`${apiUrl}/mypage/issues`, {
-            mode: 'cors',
-            method: 'GET',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            }
-        })
-        console.log(res)
-        return res
+        const apiUrl = "http://localhost:3000/v1";
+        get(`${apiUrl}/mypage/issues`, {}, true)
+              .then(res => res.json())
+              .then(json => {
+                // setTableData(createTableData(json))
+                console.log(json)
+              })
     }
+
     const createTableData = (issues: resIssue[]) => {
         const result =  issues.map(issue => {
             const category = (categoryTypes.filter(category => category.id === issue.categoryId))[0]
@@ -88,9 +75,10 @@ const IssueIndex: React.FC = () => {
         })
         return result
     }
-    const demoData = [resIssueJson, resIssueJson, resIssueJson]
-    // asyncGetIssues().then(res=> setIssues(res))
+
+    const demoData = [issueState, issueState, issueState]
     useEffect(() => {
+        // asyncGetIssues()
         const hoge = createTableData(demoData)
         setTableData(hoge)
     },[])
