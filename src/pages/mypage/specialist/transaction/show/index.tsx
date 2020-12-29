@@ -4,11 +4,11 @@ import {Grid, CssBaseline } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 
 
-import transactionJson from './transaction.json'
-import Review from './review/new'
+import Review from '../review/new'
 import Status from './status'
+import { transactionState } from '../index/store'
 
-type transactionState = {transaction: typeof transactionJson}
+type transaction = {transaction: typeof transactionState[0]}
 
 const useStyles = makeStyles((theme: Theme) => ({
     label: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const TransactionIndex: React.FC = () => {
     const classes = useStyles()
-    const location = useLocation<transactionState>();
+    const location = useLocation<transaction>();
     const [transaction, setTransaction] = useState(location.state.transaction)
 
 

@@ -17,7 +17,7 @@ import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
 import TransactionIndex from "../pages/mypage/specialist/transaction/index"
-import Transaction from "../pages/mypage/specialist/transaction/transaction"
+import Transaction from "../pages/mypage/specialist/transaction/show"
 
 const RootRouter: React.FC = () => {
     return (

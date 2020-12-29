@@ -2,11 +2,11 @@ import React, {useState} from 'react'
 import {Grid, FormControl, MenuItem, Select } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 
+import { post } from '../../../../../libs/fetch'
+import { transactionState } from '../index/store'
+import fetcher from '../../../../utils/fetcher'
 
-import transactionJson from './transaction.json'
-import fetcher from '../../../utils/fetcher'
-
-type transaction = typeof transactionJson
+type transaction = typeof transactionState[0]
 
 const useStyles = makeStyles((theme: Theme) => ({
     label: {
@@ -35,8 +35,6 @@ const statusArr = [
 
 const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({transaction, setTransaction}) => {
     const classes = useStyles()
-    const apiUrl = "http://localhost:8000/v1"
-
 
     const [status, setStatus] = useState(transaction.status)
     const handleStatusChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -49,16 +47,12 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
     };
 
     const asyncChangeStatus = async (transaction: transaction) => {
-        const res = await fetcher<transaction>(`${apiUrl}/mypage/transaction/${transaction.id}/update`, {
-            mode: 'no-cors',
-            method: 'PUT',
-            cache: "no-cache",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(transaction)
-        })
-        return res
+        const apiUrl = "http://localhost:8000/v1";
+        post(`${apiUrl}/mypage/transaction/${transaction.id}/update`, transaction, {}, true)
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+            })
     }
 
     return (
