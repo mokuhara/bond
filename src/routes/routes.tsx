@@ -18,10 +18,7 @@ import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
 // import TransactionIndex from "../pages/mypage/specialist/transaction/transactionIndex"
 // import Transaction from "../pages/mypage/specialist/transaction/transaction"
-import IssueCreate from "../pages/mypage/client/issue/new"
-import IssueIndex from "../pages/mypage/client/issue/index"
-import Issue from "../pages/mypage/client/issue/show"
-import EditIssue from "../pages/mypage/client/issue/edit"
+import IssueRoutes from './mypage/client/IssueRoutes'
 
 
 const RootRouter: React.FC = () => {
@@ -58,18 +55,7 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/mypage/transaction'>
                     <Mypage><Transaction /></Mypage>
                 </PrivateRoute> */}
-                <PrivateRoute path='/mypage/issue/create'>
-                    <Mypage><IssueCreate /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/issue/index'>
-                    <Mypage><IssueIndex /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/issue/edit'>
-                    <Mypage><EditIssue /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/issue'>
-                    <Mypage><Issue /></Mypage>
-                </PrivateRoute>
+                { IssueRoutes }
                 <Route path='/mypage' component={Mypage} />
             </Switch>
         </Router>
