@@ -87,7 +87,7 @@ const MenuList: React.FC = () =>{
                             </ListItemIcon>
                             <ListItemText primary="過去事例一覧" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/transaction`}>
+                        <ListItem button component={Link} to={`/mypage/transactions`}>
                             <ListItemIcon>
                                 <SupervisorAccountIcon />
                             </ListItemIcon>
