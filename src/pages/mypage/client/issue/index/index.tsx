@@ -50,12 +50,11 @@ const IssueIndex: React.FC = () => {
     const [tableData, setTableData] = useState([tableDataState])
 
     const asyncGetIssues = async () => {
-        const apiUrl = "http://localhost:3000/v1";
-        get(`${apiUrl}/mypage/issues`, {}, true)
+        const apiUrl = "http://localhost:8000/v1";
+        get(`${apiUrl}/mypage/issue/`, {}, true)
               .then(res => res.json())
               .then(json => {
-                // setTableData(createTableData(json))
-                console.log(json)
+                setTableData(createTableData(json.data))
               })
     }
 
@@ -63,7 +62,7 @@ const IssueIndex: React.FC = () => {
         const result =  issues.map(issue => {
             const category = (categoryTypes.filter(category => category.id === issue.categoryId))[0]
             return {
-                id: issue.id,
+                id: issue.ID,
                 category: category.name,
                 title: issue.title,
                 description: issue.description,
@@ -78,9 +77,9 @@ const IssueIndex: React.FC = () => {
 
     const demoData = [issueState, issueState, issueState]
     useEffect(() => {
-        // asyncGetIssues()
-        const hoge = createTableData(demoData)
-        setTableData(hoge)
+        asyncGetIssues()
+        // const hoge = createTableData(demoData)
+        // setTableData(hoge)
     },[])
 
     // pagenation
@@ -143,7 +142,7 @@ const IssueIndex: React.FC = () => {
                                 if(column.id === 'other'){
                                     return (
                                         <TableCell>
-                                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                            <Button data-issue={JSON.stringify(row.issue)} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                                 <MoreVertIcon />
                                             </Button>
                                             <Menu
@@ -153,7 +152,13 @@ const IssueIndex: React.FC = () => {
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleClose}
                                             >
-                                                <MenuItem onClick={() => moveIssue(row.issue)}>詳細</MenuItem>
+                                                <MenuItem onClick={() => {
+                                                    const data = anchorEl? anchorEl.dataset.issue : ''
+                                                    if(data){
+                                                        const issue = JSON.parse(data)
+                                                        moveIssue(issue)
+                                                    }}
+                                                }>詳細</MenuItem>
                                             </Menu>
                                         </TableCell>
                                     )

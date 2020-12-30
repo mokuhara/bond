@@ -1,5 +1,5 @@
 const editIssueState = {
-    id: 0,
+    ID: 0,
     userId: 0,
     title: "",
     background: "",

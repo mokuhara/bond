@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 const userId = Number(Cookies.get('bd-uid'))
 issueState.userId = userId
 
+// TODO validation作成（開始時間や終了時間、募集期間の関係等）
 const CreateIssue: React.FC = () => {
     const classes = useStyles();
     const [issue, setIssue] = useState(issueState)
@@ -77,11 +78,11 @@ const CreateIssue: React.FC = () => {
     }
 
     const handleChangeBudget = (budget: any) => {
-        setIssue({...issue, budget: budget})
+        setIssue({...issue, budget: parseInt(budget, 10)})
     }
 
     const handleChangeRecruitmentCapacity = (recruitmentCapacity: any) => {
-        setIssue({...issue, recruitmentCapacity: recruitmentCapacity})
+        setIssue({...issue, recruitmentCapacity: parseInt(recruitmentCapacity, 10)})
     }
 
     const handleChangeStartAt = (startAt: any) => {
@@ -103,11 +104,19 @@ const CreateIssue: React.FC = () => {
     }
 
     const asyncCreateIssue = async () => {
-        const apiUrl = "http://localhost:3000/v1";
-        post(`${apiUrl}/mypage/bizpack/create`, issue, {}, true)
+        const apiUrl = "http://localhost:8000/v1";
+        if(issue.userId === 0) alert('ログインしなおしてください')
+        post(`${apiUrl}/mypage/issue/create`, issue, {}, true)
               .then(res => res.json())
               .then(json => console.log(json))
     }
+
+    useEffect(() => {
+        const userId = Cookies.get('bd-uid')
+        if(userId) {
+            setIssue({...issue, userId: parseInt(userId, 10)})
+        }
+    }, [])
     // const { register, errors } = useForm({
     //     mode: 'onBlur',
     //     reValidateMode: 'onChange'

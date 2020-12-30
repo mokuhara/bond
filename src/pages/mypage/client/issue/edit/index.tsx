@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Cookies from 'js-cookie'
 import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -7,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 import {format} from 'date-fns'
 
 import editIssueState from './store'
-import { post } from '../../../../../libs/fetch'
+import { put } from '../../../../../libs/fetch'
 
 type editIssueState = {issue: typeof editIssueState}
 
@@ -38,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+  // TODO validation作成（開始時間や終了時間、募集期間の関係等）
 const EditIssue: React.FC = () => {
     const classes = useStyles();
     const location = useLocation<editIssueState>();
@@ -79,11 +79,11 @@ const EditIssue: React.FC = () => {
     }
 
     const handleChangeBudget = (budget: any) => {
-        setIssue({...issue, budget: budget})
+        setIssue({...issue, budget: parseInt(budget, 10)})
     }
 
     const handleChangeRecruitmentCapacity = (recruitmentCapacity: any) => {
-        setIssue({...issue, recruitmentCapacity: recruitmentCapacity})
+        setIssue({...issue, recruitmentCapacity: parseInt(recruitmentCapacity, 10)})
     }
 
     const handleChangeStartAt = (startAt: any) => {
@@ -105,8 +105,8 @@ const EditIssue: React.FC = () => {
     }
 
     const asyncUpdateIssue = async () => {
-        const apiUrl = "http://localhost:3000/v1";
-        post(`${apiUrl}/mypage/issue/${issue.id}/update`, issue, {}, true)
+        const apiUrl = "http://localhost:8000/v1";
+        put(`${apiUrl}/mypage/issue/${issue.ID}/update`, issue, {}, true)
               .then(res => res.json())
               .then(json => console.log(json))
     }
@@ -114,7 +114,6 @@ const EditIssue: React.FC = () => {
     //     mode: 'onBlur',
     //     reValidateMode: 'onChange'
     // })
-    console.log(issue)
 
     return (
         <Grid container component="main" alignItems="center" justify="center">
