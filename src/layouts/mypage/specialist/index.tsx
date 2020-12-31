@@ -1,3 +1,4 @@
+// TODO: 削除予定, layoutsに移動
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,7 +18,7 @@ import MenuList from './menuList';
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 170;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Layout: React.FC =  ({children})  => {
+const Mypage: React.FC =  ({children})  => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -152,11 +153,6 @@ const Layout: React.FC =  ({children})  => {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             {children}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
-              </Paper>
-            </Grid>
           </Grid>
         </Container>
       </main>
@@ -164,4 +160,4 @@ const Layout: React.FC =  ({children})  => {
   );
 }
 
-export default Layout
+export default Mypage

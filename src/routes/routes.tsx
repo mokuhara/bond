@@ -8,7 +8,7 @@ import {
 import PrivateRoute from './privateRoute'
 import Auth from '../pages/auth/authen/auth'
 import UserInfo from "../pages/auth/userInfo/userInfo"
-import Mypage  from "../pages/mypage/mypage"
+import Mypage from '../layouts/mypage/specialist'
 // import BizpackIndex from "../pages/mypage/specialist/bizpack/bizpackIndex"
 // import BizpackCreate from "../pages/mypage/specialist/bizpack/bizpackCreate"
 // import BizpackEdit from "../pages/mypage/specialist/bizpack/bizpackEdit"

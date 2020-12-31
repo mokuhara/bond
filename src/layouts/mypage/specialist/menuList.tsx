@@ -5,6 +5,10 @@ import CreateIcon from '@material-ui/icons/Create';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
+import NextWeekIcon from '@material-ui/icons/NextWeek';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { Link, useHistory } from 'react-router-dom';
 import {
     ListItemAvatar,
@@ -16,9 +20,11 @@ import {
     Menu,
     MenuItem,
     Grid,
-    List
+    List,
+    CssBaseline
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import styles from './menuList.module.css';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,7 +44,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuList: {
         height: '100%',
+        fontSize: '30px'
     },
+    menuText: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        textDecoration: 'none',
+    }
   }),
 );
 
@@ -55,42 +67,31 @@ const MenuList: React.FC = () =>{
         history.push(`/mypage/${category}`)
       };
 
+    const actionList = [
+        {link: "/mypage/bizpack/create", text: "BizBack作成", icon: <PersonAddIcon />},
+        {link: "/mypage/portfolio/create", text: "過去事例作成", icon: <NoteAddIcon />},
+        {link: "/mypage/bizpack", text: "BizBack一覧", icon: <AssignmentIndIcon />},
+        {link: "/mypage/portfolio", text: "過去事例一覧", icon: <LibraryBooksIcon />},
+        {link: "/mypage/transaction", text: "取引一覧", icon: <NextWeekIcon />},
+    ]
+
     return (
         <>
             <Grid justify="space-between" direction="column" container className={classes.menuList}>
+                <CssBaseline />
                 <Grid item>
-                    <List>
-                        <ListItem button component={Link} to={`/mypage/bizpack/create`} >
-                            <ListItemIcon>
-                                <CreateIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="BizBack作成" />
-                        </ListItem>
-                        <ListItem button component={Link} to={`/mypage/portfolio/create`}>
-                            <ListItemIcon>
-                                <CreateIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="過去事例作成" />
-                        </ListItem>
-                        <ListItem button component={Link} to={`/mypage/bizpack`}>
-                            <ListItemIcon>
-                                <AssignmentIndIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="BizBack一覧" />
-                        </ListItem>
-                        <ListItem button component={Link} to={`/mypage/portfolio`}>
-                            <ListItemIcon>
-                                <InsertDriveFileIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="過去事例一覧" />
-                        </ListItem>
-                        <ListItem button component={Link} to={`/mypage/transaction`}>
-                            <ListItemIcon>
-                                <SupervisorAccountIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="取引一覧" />
-                        </ListItem>
-                    </List>
+                    <ul>
+                        {actionList && actionList.map(action =>(
+                            <li key={action.link} className={styles.list}>
+                                <a href={action.link} className={styles.link}>
+                                    <div className={styles.list}>
+                                        <div>{action.icon}</div>
+                                        <div className={styles.text}>{action.text}</div>
+                                    </div>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </Grid>
                 <Grid item>
                     <List>
