@@ -9,9 +9,6 @@ import PrivateRoute from './privateRoute'
 import Auth from '../pages/auth/authen/auth'
 import UserInfo from "../pages/auth/userInfo/userInfo"
 import Mypage  from "../pages/mypage/mypage"
-// import BizpackIndex from "../pages/mypage/specialist/bizpack/bizpackIndex"
-// import BizpackCreate from "../pages/mypage/specialist/bizpack/bizpackCreate"
-// import BizpackEdit from "../pages/mypage/specialist/bizpack/bizpackEdit"
 import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
 import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
@@ -25,19 +22,7 @@ const RootRouter: React.FC = () => {
             <Switch>
                 <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                {/* <BizpackRoutes/> */}
-                {/* <PrivateRoute path='/mypage/bizpack/create'>
-                    <Mypage><BizpackCreate /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/bizpack/edit'>
-                    <Mypage><BizpackEdit /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute  path='/mypage/bizpack'>
-                    <Mypage><BizpackIndex /></Mypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/bizpack/create'>
-                    <Mypage><BizpackCreate /></Mypage>
-                </PrivateRoute> */}
+                <BizpackRoutes/>
                 <PrivateRoute path='/mypage/profile'>
                     <Mypage><Profile /></Mypage>
                 </PrivateRoute>

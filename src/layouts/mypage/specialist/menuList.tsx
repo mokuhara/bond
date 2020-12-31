@@ -60,7 +60,7 @@ const MenuList: React.FC = () =>{
             <Grid justify="space-between" direction="column" container className={classes.menuList}>
                 <Grid item>
                     <List>
-                        <ListItem button component={Link} to={`/mypage/bizpack/create`} >
+                        <ListItem button component={Link} to={`/mypage/bizpack/new`} >
                             <ListItemIcon>
                                 <CreateIcon />
                             </ListItemIcon>
@@ -72,7 +72,7 @@ const MenuList: React.FC = () =>{
                             </ListItemIcon>
                             <ListItemText primary="過去事例作成" />
                         </ListItem>
-                        <ListItem button component={Link} to={`/mypage/bizpack`}>
+                        <ListItem button component={Link} to={`/mypage/bizpacks`}>
                             <ListItemIcon>
                                 <AssignmentIndIcon />
                             </ListItemIcon>
