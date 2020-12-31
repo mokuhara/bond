@@ -4,6 +4,10 @@ import { makeStyles , Theme} from '@material-ui/core/styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import SearchIcon from '@material-ui/icons/Search';
+import { Chip } from '@material-ui/core'
+import LoopIcon from '@material-ui/icons/Loop';
+import BuildIcon from '@material-ui/icons/Build';
 
 
 import VideoMeetingForm from '../videMeeting/new'
@@ -35,6 +39,21 @@ const TransactionIndex: React.FC = () => {
         container: {
           maxHeight: 440,
         },
+        tabaleHeader: {
+            fontSize: '13px',
+            color: 'rgba(0,16,14,0.55)',
+        },
+        categoryLabel: {
+            fontSize: '10px',
+        },
+        tableBody: {
+            fontSize: '13px',
+        },
+        moreMenue: {
+            fontSize: '13px',
+            fontWeight: 'bold',
+            padding: '10px'
+        }
       }));
     const classes = useStyles();
 
@@ -66,7 +85,7 @@ const TransactionIndex: React.FC = () => {
         const createData = (transaction: transaction) => {
             return {
                 id: transaction.ID,
-                category: (categoryState.filter(category => category.id === transaction.Bizpack.category.type))[0].name,
+                category: transaction.Bizpack.category.type,
                 title: transaction.Bizpack.title,
                 status: (statusState.filter(status => status.id === transaction.status))[0].name,
                 description: transaction.Bizpack.description,
@@ -129,18 +148,44 @@ const TransactionIndex: React.FC = () => {
     //videoMeeting
     const [transactionId, setTransactionId] = useState(0)
 
+    const makeCategoryLabel = (categoryId: number) => {
+        console.log(categoryId)
+        const text = (categoryState.filter(category => category.id === categoryId))[0].name
+        const makeChip = (payload: {component: JSX.Element, text: string}) => {
+            console.log(payload)
+            return (
+                <Chip
+                    size="small"
+                    icon={payload.component}
+                    label={payload.text}
+                    className={classes.categoryLabel}
+                    // color="primary"
+                />
+            )
+        }
+        if(categoryId === 0) {
+            console.log(text)
+            return makeChip({component: <SearchIcon />, text: text})
+        } else if (categoryId === 1) {
+            return makeChip({component: <BuildIcon />, text: text})
+        } else if (categoryId === 2) {
+            return makeChip({component: <LoopIcon />, text: text})
+        }
+    }
+
     return (
         <>
             <Paper className={classes.root}>
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                         {columns.map((column) => (
                             <TableCell
                             key={column.id}
                             align={column.align}
                             style={{ minWidth: column.minWidth }}
+                            className={classes.tabaleHeader}
                             >
                             {column.label}
                             </TableCell>
@@ -156,7 +201,7 @@ const TransactionIndex: React.FC = () => {
                                 let value : string | number | JSX.Element[] | JSX.Element
                                 if(column.id === 'other'){
                                     return (
-                                        <TableCell>
+                                        <TableCell >
                                             <Button data-transaction={JSON.stringify(row.transaction)} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                                 <MoreVertIcon />
                                             </Button>
@@ -167,7 +212,7 @@ const TransactionIndex: React.FC = () => {
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleClose}
                                             >
-                                                <MenuItem onClick={() => {
+                                                <MenuItem className={classes.moreMenue} onClick={() => {
                                                     const data = anchorEl? anchorEl.dataset.transaction : ''
                                                     if (data) {
                                                         const transaction = JSON.parse(data)
@@ -175,7 +220,7 @@ const TransactionIndex: React.FC = () => {
                                                     }
                                                 }}>詳細</MenuItem>
                                                 {/* {row["transaction"].status < 6 && <MenuItem onClick={() => dummy()}>受注</MenuItem>} */}
-                                                <MenuItem onClick={() => {
+                                                <MenuItem className={classes.moreMenue}  onClick={() => {
                                                     const data = anchorEl? anchorEl.dataset.transaction : ''
                                                     if (data) {
                                                         const transaction = JSON.parse(data)
@@ -186,10 +231,14 @@ const TransactionIndex: React.FC = () => {
                                             </Menu>
                                         </TableCell>
                                     )
+                                } else if(column.id === 'category') {
+                                    return (<TableCell align={column.align}>
+                                        { makeCategoryLabel(row[column.id])}
+                                    </TableCell>)
                                 } else {
                                     value = row[column.id]
                                     return (
-                                    <TableCell align={column.align}>
+                                    <TableCell align={column.align}  className={classes.tableBody}>
                                         {value}
                                     </TableCell>
                                     );

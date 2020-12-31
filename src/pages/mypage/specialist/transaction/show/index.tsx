@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }))
 
-const TransactionIndex: React.FC = () => {
+const Transaction: React.FC = () => {
     const classes = useStyles()
     const location = useLocation<transaction>();
     const [transaction, setTransaction] = useState(location.state.transaction)
@@ -84,4 +84,4 @@ const TransactionIndex: React.FC = () => {
     )
 }
 
-export default TransactionIndex
+export default Transaction

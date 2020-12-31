@@ -72,7 +72,7 @@ const MenuList: React.FC = () =>{
         {link: "/mypage/portfolio/create", text: "過去事例作成", icon: <NoteAddIcon />},
         {link: "/mypage/bizpack", text: "BizBack一覧", icon: <AssignmentIndIcon />},
         {link: "/mypage/portfolio", text: "過去事例一覧", icon: <LibraryBooksIcon />},
-        {link: "/mypage/transaction", text: "取引一覧", icon: <NextWeekIcon />},
+        {link: "/mypage/transactions", text: "取引一覧", icon: <NextWeekIcon />},
     ]
 
     return (
