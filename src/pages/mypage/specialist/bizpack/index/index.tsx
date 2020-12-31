@@ -59,18 +59,19 @@ const BizPackIndex: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const moveEditBizpack = (bizpackId: number) => {
+  const moveEditBizpack = (bizpackId: string) => {
     setAnchorEl(null);
-    history.push(`/mypage/bizpack/${bizpackId}/edit`)
+    history.push(`/mypage/bizpacks/${bizpackId}/edit`)
   };
 
-  const DeleteBizpack = async (bizpackId: number) => {
+  const DeleteBizpack = async (bizpackId: string) => {
     // bizpack削除
     const res = await destroy(`${apiUrl}/mypage/bizpacks/${bizpackId}`)
                         .then(result => result.json())
+
     if (res.result) {
       // bizpacksから該当のIDのオブジェクトを除く
-      const newBizpacks = bizpacks.filter(bizpack => bizpack.id != bizpackId)
+      const newBizpacks = bizpacks.filter(bizpack => bizpack.id != Number(bizpackId))
       setBizpacks(newBizpacks)
     }
   }
@@ -156,7 +157,7 @@ const BizPackIndex: React.FC = () => {
                       );
                     })}
                     <TableCell>
-                      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                      <Button data-bizpack-id={row.id} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         <MoreVertIcon />
                       </Button>
                       <Menu
@@ -166,8 +167,18 @@ const BizPackIndex: React.FC = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={() => moveEditBizpack(row.id)}>編集</MenuItem>
-                        <MenuItem onClick={() => DeleteBizpack(row.id)}>削除</MenuItem>
+                        <MenuItem onClick={() => {
+                          const bizpackId = anchorEl ? anchorEl.dataset.bizpackId : '';
+                          if (bizpackId) {
+                            moveEditBizpack(bizpackId)
+                          }
+                        }}>編集</MenuItem>
+                        <MenuItem onClick={() => {
+                          const bizpackId = anchorEl ? anchorEl.dataset.bizpackId : '';
+                          if (bizpackId) {
+                            DeleteBizpack(bizpackId)
+                          }
+                        }}>削除</MenuItem>
                       </Menu>
                     </TableCell>
                   </TableRow>
