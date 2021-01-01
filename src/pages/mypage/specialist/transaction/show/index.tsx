@@ -84,41 +84,27 @@ const Transaction: React.FC = () => {
                                         {transaction.Bizpack.description}
                                     </Grid>
                                     <Status transaction={transaction} setTransaction={setTransaction}/>
-                                    {transaction.status === 6 && !existOwnReview() && transaction.reviews.length < 1 && (
-                                        <CreateReview transaction={transaction} />
-                                    )}
                                 </Grid>
                             </CardContent>
                         </Card>
+                        {transaction.status === 6 && !existOwnReview() && transaction.reviews.length < 1 && (
+                            <CreateReview transaction={transaction} />
+                        )}
                     </Grid>
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="h6" component="h2" className={classes.title}>レビュー一覧</Typography>
-                    <Grid item xs={12}>
-                        <Card  className={classes.container} variant="outlined">
-                            <CardContent>
-                                { transaction.reviews.length > 0 && (
-                                    <Grid item xs={12} className={classes.data}>
-                                        {transaction.reviews && (<Review transaction={transaction}/>)}
-                                    </Grid>
-                                )}
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                    { transaction.reviews.length > 0 && (
+                        <Grid item xs={12} className={classes.data}>
+                            {transaction.reviews && (<Review transaction={transaction}/>)}
+                        </Grid>
+                    )}
                 </Grid>
                 <Grid item xs={10}>
-                    <Typography variant="h6" component="h2" className={classes.title}>設定されたミーティング一覧</Typography>
-                    <Grid item xs={12}>
-                        <Card  className={classes.container} variant="outlined">
-                            <CardContent>
-                                {transaction.videoMeetings.length > 0 && (
-                                    <Grid item xs={12} >
-                                    <VideoMeetings transactionId={transaction.ID}/>
-                                    </Grid>
-                                )}
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                    {transaction.videoMeetings.length > 0 && (
+                        <Grid item xs={12} >
+                        <VideoMeetings transactionId={transaction.ID}/>
+                        </Grid>
+                    )}
                 </Grid>
             </Grid>
         </>

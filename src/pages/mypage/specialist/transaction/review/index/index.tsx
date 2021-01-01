@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Grid, CssBaseline, Paper, Avatar } from '@material-ui/core'
+import {Grid, CssBaseline, Paper, Avatar, CardContent, Card, Typography } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
@@ -70,7 +70,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     review: {
         margin: theme.spacing(1),
-    }
+    },
+    container: {
+        width: '100%',
+        marginBottom: '10px'
+    },
+    title: {
+        fontSize: '14px',
+        margin: '15px',
+        fontWeight: 'bold'
+    },
 }))
 
 const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
@@ -113,30 +122,37 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
 
     return (
         <>
-            <Grid container component="main" spacing={1} justify="center">
-                <CssBaseline />
-                {reviews.length > 0 && reviews.map(review => {
-                    return (<Grid container component="main" spacing={2} key={review.ID} className={classes.review}>
-                        {/* ICON とかにする */}
-                        <Grid item xs={4}>
-                            <div className={classes.user}>
-                                <Avatar className={classes.icon}>H</Avatar>
-                                <span className={classes.name}>hoge</span>
-                            </div>
+            <Typography variant="h6" component="h2" className={classes.title}>レビュー一覧</Typography>
+            <Grid item xs={12}>
+                <Card  className={classes.container} variant="outlined">
+                    <CardContent>
+                    <Grid container component="main" spacing={1} justify="center">
+                        <CssBaseline />
+                        {reviews.length > 0 && reviews.map(review => {
+                            return (<Grid container component="main" spacing={2} key={review.ID} className={classes.review}>
+                                {/* ICON とかにする */}
+                                <Grid item xs={4}>
+                                    <div className={classes.user}>
+                                        <Avatar className={classes.icon}>H</Avatar>
+                                        <span className={classes.name}>hoge</span>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={8} className={classes.rating}>
+                                    <div className={classes.user}>
+                                        { (getCustomIcon(review.rating))?.icon}
+                                        <span className={classes.label}>{ (getCustomIcon(review.rating))?.label}</span>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <div className={classes.message}>
+                                    {review.message}
+                                    </div>
+                                </Grid>
+                            </Grid>)
+                        })}
                         </Grid>
-                        <Grid item xs={8} className={classes.rating}>
-                            <div className={classes.user}>
-                                { (getCustomIcon(review.rating))?.icon}
-                                <span className={classes.label}>{ (getCustomIcon(review.rating))?.label}</span>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={classes.message}>
-                             {review.message}
-                            </div>
-                        </Grid>
-                    </Grid>)
-                })}
+                    </CardContent>
+                </Card>
             </Grid>
         </>
     )
