@@ -22,7 +22,9 @@ const defaultOptions = (isCredential: boolean) => {
   return options
 }
 
-export const get = (path: string, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+export const apiUrl = "http://localhost:8000/v1";
+
+export const get = (path: string, additionalOptions: object = {}, isCredential: boolean = true): Promise<Response> => {
   const options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
 
   return fetch(path, {
@@ -31,7 +33,7 @@ export const get = (path: string, additionalOptions: object = {}, isCredential: 
   })
 }
 
-export const destroy = (path: string, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+export const destroy = (path: string, additionalOptions: object = {}, isCredential: boolean = true): Promise<Response> => {
   const options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
 
   return fetch(path, {
@@ -40,7 +42,7 @@ export const destroy = (path: string, additionalOptions: object = {}, isCredenti
   })
 }
 
-export const post = (path: string, body: object, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+export const post = (path: string, body: object, additionalOptions: object = {}, isCredential: boolean = true): Promise<Response> => {
   let options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
 
   return fetch(path, {
@@ -50,7 +52,7 @@ export const post = (path: string, body: object, additionalOptions: object = {},
   })
 }
 
-export const put = (path: string, body: object, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+export const put = (path: string, body: object, additionalOptions: object = {}, isCredential: boolean = true): Promise<Response> => {
   let options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
 
   return fetch(path, {

@@ -6,9 +6,10 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button} from "@material-ui/core"
 import Layout from  '../../../../../layouts/mypage/specialist'
-import { post } from '../../../../../libs/fetch';
+import { apiUrl, post } from '../../../../../libs/fetch';
 
 const BizpackNew: React.FC = (_props) => {
+  const history = useHistory();
   const [bizpack, setBizpack] = useState(bizpackState);
 
   const { register, errors } = useForm({
@@ -23,12 +24,13 @@ const BizpackNew: React.FC = (_props) => {
   }
 
   // TODO: エラーハンドリング
-  const onSubmit = () => {
-    const apiUrl = "http://localhost:8000/v1";
+  const onSubmit = async () => {
+    const res = await post(`${apiUrl}/mypage/bizpacks`, bizpack, {}, true)
+                        .then(res => res.json())
 
-    post(`${apiUrl}/mypage/bizpack/create`, bizpack, {}, true)
-      .then(res => res.json())
-      .then(json => console.log(json))
+    if (res.status == 200) {
+      history.push(`/mypage/bizpacks`)
+    }
   }
 
   return (
