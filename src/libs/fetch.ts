@@ -31,7 +31,7 @@ export const get = (path: string, additionalOptions: object = {}, isCredential: 
   })
 }
 
-export const destory = (path: string, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
+export const destroy = (path: string, additionalOptions: object = {}, isCredential: boolean = false): Promise<Response> => {
   const options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
 
   return fetch(path, {
