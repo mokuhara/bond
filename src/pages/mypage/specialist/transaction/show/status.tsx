@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     data: {}
     ,
     formControl: {
-        margin: theme.spacing(1),
         minWidth: 120,
+        marginLeft: 0,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -57,10 +57,10 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
 
     return (
         <>
-            <Grid item xs={6} className={classes.label}>
+            <Grid item xs={4} className={classes.label}>
                     ステータス
             </Grid>
-            <Grid item xs={6} className={classes.data}>
+            <Grid item xs={8} className={classes.data}>
                 <FormControl variant="outlined" className={classes.formControl}>
                     <Select
                     value={transaction.status}

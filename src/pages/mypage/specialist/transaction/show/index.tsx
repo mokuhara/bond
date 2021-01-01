@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { useLocation } from 'react-router-dom'
-import {Grid, CssBaseline } from '@material-ui/core'
+import {Grid, CssBaseline, Card, CardContent, Typography } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 
 
@@ -14,11 +14,23 @@ import VideoMeetings from '../videMeeting/index'
 type transaction = {transaction: typeof transactionState[0]}
 
 const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+        justifyContent: 'center'
+    },
+    title: {
+        fontSize: '14px',
+        margin: '15px',
+        fontWeight: 'bold'
+    },
     label: {
-        fontWeight:'bold'
+        fontWeight:'bold',
     },
     data: {}
     ,
+    container: {
+        width: '100%',
+        marginBottom: '10px'
+    },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
@@ -45,40 +57,69 @@ const Transaction: React.FC = () => {
 
     return (
         <>
-            <Grid container component="main" spacing={2}>
-                <CssBaseline />
-                <Grid item xs={6} className={classes.label}>
-                    タイトル
-                </Grid>
-                <Grid item xs={6} className={classes.data}>
-                    {transaction.Bizpack.title}
-                </Grid>
-                <Grid item xs={6} className={classes.label}>
-                    カテゴリ
-                </Grid>
-                <Grid item xs={6} className={classes.data}>
-                    {transaction.Bizpack.category.type}
-                </Grid>
-                <Grid item xs={6} className={classes.label}>
-                    詳細
-                </Grid>
-                <Grid item xs={6} className={classes.data}>
-                    {transaction.Bizpack.description}
-                </Grid>
-                <Status transaction={transaction} setTransaction={setTransaction}/>
-                {transaction.status === 6 && !existOwnReview() && transaction.reviews.length < 1 && (
-                    <CreateReview transaction={transaction} />
-                )}
-                { transaction.reviews.length > 0 && (
-                    <Grid item xs={12} className={classes.data}>
-                        {transaction.reviews && (<Review transaction={transaction}/>)}
+            <Grid container component="main" className={classes.root}>
+                <Grid item xs={10}>
+                    <Typography variant="h6" component="h2" className={classes.title}>案件詳細</Typography>
+                    <Grid item xs={12}>
+                        <Card  className={classes.container} variant="outlined">
+                            <CardContent>
+                                <Grid container spacing={2} alignItems="center">
+                                    <CssBaseline />
+                                    <Grid item xs={4} className={classes.label}>
+                                        タイトル
+                                    </Grid>
+                                    <Grid item xs={8} className={classes.data}>
+                                        {transaction.Bizpack.title}
+                                    </Grid>
+                                    <Grid item xs={4} className={classes.label}>
+                                        カテゴリ
+                                    </Grid>
+                                    <Grid item xs={8} className={classes.data}>
+                                        {transaction.Bizpack.category.type}
+                                    </Grid>
+                                    <Grid item xs={4} className={classes.label}>
+                                        詳細
+                                    </Grid>
+                                    <Grid item xs={8} className={classes.data}>
+                                        {transaction.Bizpack.description}
+                                    </Grid>
+                                    <Status transaction={transaction} setTransaction={setTransaction}/>
+                                    {transaction.status === 6 && !existOwnReview() && transaction.reviews.length < 1 && (
+                                        <CreateReview transaction={transaction} />
+                                    )}
+                                </Grid>
+                            </CardContent>
+                        </Card>
                     </Grid>
-                )}
-                {transaction.videoMeetings.length > 0 && (
-                    <Grid item xs={12} >
-                      <VideoMeetings transactionId={transaction.ID}/>
+                </Grid>
+                <Grid item xs={10}>
+                    <Typography variant="h6" component="h2" className={classes.title}>レビュー一覧</Typography>
+                    <Grid item xs={12}>
+                        <Card  className={classes.container} variant="outlined">
+                            <CardContent>
+                                { transaction.reviews.length > 0 && (
+                                    <Grid item xs={12} className={classes.data}>
+                                        {transaction.reviews && (<Review transaction={transaction}/>)}
+                                    </Grid>
+                                )}
+                            </CardContent>
+                        </Card>
                     </Grid>
-                )}
+                </Grid>
+                <Grid item xs={10}>
+                    <Typography variant="h6" component="h2" className={classes.title}>設定されたミーティング一覧</Typography>
+                    <Grid item xs={12}>
+                        <Card  className={classes.container} variant="outlined">
+                            <CardContent>
+                                {transaction.videoMeetings.length > 0 && (
+                                    <Grid item xs={12} >
+                                    <VideoMeetings transactionId={transaction.ID}/>
+                                    </Grid>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
             </Grid>
         </>
     )
