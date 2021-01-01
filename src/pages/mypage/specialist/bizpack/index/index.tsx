@@ -9,6 +9,7 @@ import bizpacksState from './store'
 import { apiUrl, get, destroy } from '../../../../../libs/fetch';
 import { nanoid } from 'nanoid'
 
+
 type bizpack = typeof resGetBizpacksType.data[0]
 
 interface Column {
