@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography} from '@material-ui/core'
+import {Grid, CssBaseline, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography, Card} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom'
@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme) => ({
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1),
     },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
     formControl: {
         margin: theme.spacing(2, 0),
         minWidth: 120,
@@ -35,6 +32,25 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         margin:  theme.spacing(1, 0),
     },
+    dateField: {
+        margin:  theme.spacing(1, 0),
+        width: '60%'
+    },
+    label: {
+        fontSize: '2px'
+    },
+    title: {
+        fontSize: '14px',
+        margin: '15px',
+        fontWeight: 'bold'
+    },
+    container: {
+        width: '100%',
+        margin: '20px'
+    },
+    buttonContainer: {
+        margin: '20px',
+    }
   }));
 
   // TODO validation作成（開始時間や終了時間、募集期間の関係等）
@@ -118,9 +134,12 @@ const EditIssue: React.FC = () => {
     return (
         <Grid container component="main" alignItems="center" justify="center">
             <CssBaseline />
-            <Grid item xs={12} sm={10} md={10} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h6">公募作成</Typography>
+
+            <Grid item xs={7} sm={7} md={7} >
+                <Typography variant="h6" component="h2" className={classes.title}>公募更新</Typography>
+                <Card variant="outlined">
+                    <Grid container alignItems="center" justify="center">
+                    <Grid item xs={10} sm={10} md={10} className={classes.container} >
                     <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
@@ -280,7 +299,7 @@ const EditIssue: React.FC = () => {
                             name="startAt"
                             type="date"
                             label="開始時期"
-                            className={classes.textField}
+                            className={classes.dateField}
                             defaultValue={format(new Date(issue.startAt), 'yyyy-MM-dd')}
                             InputLabelProps={{
                             shrink: true,
@@ -295,7 +314,7 @@ const EditIssue: React.FC = () => {
                             name="endAt"
                             type="date"
                             label="終了時期"
-                            className={classes.textField}
+                            className={classes.dateField}
                             defaultValue={format(new Date(issue.endAt), 'yyyy-MM-dd')}
                             InputLabelProps={{
                             shrink: true,
@@ -310,7 +329,7 @@ const EditIssue: React.FC = () => {
                             name="applicationDeadline"
                             type="date"
                             label="募集期限"
-                            className={classes.textField}
+                            className={classes.dateField}
                             defaultValue={format(new Date(issue.applicationDeadline), 'yyyy-MM-dd')}
                             InputLabelProps={{
                             shrink: true,
@@ -320,18 +339,22 @@ const EditIssue: React.FC = () => {
                             // error={Boolean(errors.applicationDeadline)}
                             // helperText={errors.applicationDeadline && "入力必須です"}
                         />
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            // disabled={btnDisabler}
-                            onClick={()=>asyncUpdateIssue()}
-                        >
-                          公募を更新する
-                        </Button>
-                    </form>
-                 </div>
-                 </Grid>
+                       <Grid className={classes.buttonContainer}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                // disabled={btnDisabler}
+                                onClick={()=>asyncUpdateIssue()}
+                            >
+                            公募を更新する
+                            </Button>
+                        </Grid>
+                        </form>
+                    </Grid>
+                    </Grid>
+                </Card>
+            </Grid>
         </Grid>
     )
 
