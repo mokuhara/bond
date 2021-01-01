@@ -58,13 +58,13 @@ const Transaction: React.FC = () => {
     return (
         <>
             <Grid container component="main" className={classes.root}>
+                <CssBaseline />
                 <Grid item xs={10}>
                     <Typography variant="h6" component="h2" className={classes.title}>案件詳細</Typography>
                     <Grid item xs={12}>
                         <Card  className={classes.container} variant="outlined">
                             <CardContent>
                                 <Grid container spacing={2} alignItems="center">
-                                    <CssBaseline />
                                     <Grid item xs={4} className={classes.label}>
                                         タイトル
                                     </Grid>

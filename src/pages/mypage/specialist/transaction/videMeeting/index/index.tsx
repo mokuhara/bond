@@ -57,8 +57,7 @@ const VideoMeetings : React.FC<{transactionId: number}> = ({transactionId}) => {
     const deleteHandler = (videoMeetingId: number) => {
         const apiUrl = "http://localhost:8000/v1";
         destroy(`${apiUrl}/mypage/videomeeting/${videoMeetingId}/delete`, {}, true)
-            .then(res => res.json())
-            .then(json => {
+            .then(() => {
                 setVideoMeetings(videoMeetings.filter(videoMeeting => videoMeeting.ID != videoMeetingId))
             })
     }

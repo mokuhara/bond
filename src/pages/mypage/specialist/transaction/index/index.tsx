@@ -52,7 +52,7 @@ const TransactionIndex: React.FC = () => {
         moreMenue: {
             fontSize: '13px',
             fontWeight: 'bold',
-            padding: '10px'
+            padding: '10px 20px'
         }
       }));
     const classes = useStyles();
