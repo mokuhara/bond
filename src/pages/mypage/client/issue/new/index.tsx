@@ -141,7 +141,7 @@ const CreateIssue: React.FC = () => {
         <Grid container component="main" alignItems="center" justify="center">
             <CssBaseline />
 
-            <Grid item xs={7} sm={7} md={7} >
+            <Grid item xs={12} sm={7} md={5} >
                 <Typography variant="h6" component="h2" className={classes.title}>公募作成</Typography>
                 <Card variant="outlined">
                     <Grid container alignItems="center" justify="center">

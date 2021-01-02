@@ -28,6 +28,7 @@ const columns: Column[] = [
 ];
 
 const IssueIndex: React.FC = () => {
+    console.log('bizpackIndex')
     const history = useHistory()
     const useStyles = makeStyles((theme: Theme) => ({
         root: {

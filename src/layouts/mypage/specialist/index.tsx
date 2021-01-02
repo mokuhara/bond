@@ -105,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Mypage: React.FC =  ({children})  => {
   const classes = useStyles();
+  console.log('hoge')
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);

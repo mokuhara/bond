@@ -70,13 +70,13 @@ const MenuList: React.FC = () =>{
       };
 
     const actionList = [
-        {link: "/mypage/bizpack/create", text: "BizBack作成", icon: <PersonAddIcon />},
-        {link: "/mypage/portfolio/create", text: "過去事例作成", icon: <NoteAddIcon />},
-        {link: "/mypage/bizpack", text: "BizBack一覧", icon: <AssignmentIndIcon />},
+        {link: "/mypage/bizpacks/new", text: "BizBack作成", icon: <PersonAddIcon />},
+        {link: "/mypage/portfolio/new", text: "過去事例作成", icon: <NoteAddIcon />},
+        {link: "/mypage/bizpacks", text: "BizBack一覧", icon: <AssignmentIndIcon />},
         {link: "/mypage/portfolio", text: "過去事例一覧", icon: <LibraryBooksIcon />},
         {link: "/mypage/transactions", text: "取引一覧", icon: <NextWeekIcon />},
         // TODO client側に移す
-        {link: "/mypage/issue/create", text: "公募作成", icon: <CloudUploadIcon />},
+        {link: "/mypage/issue/new", text: "公募作成", icon: <CloudUploadIcon />},
         {link: "/mypage/issue/index", text: "公募一覧", icon: <CloudDoneIcon />},
     ]
 

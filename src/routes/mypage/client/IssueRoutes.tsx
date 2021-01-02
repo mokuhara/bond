@@ -7,7 +7,7 @@ import IssueEdit from '../../../pages/mypage/client/issue/edit'
 import Mypage from '../../../layouts/mypage/specialist'
 
 const IssueRoutes = [
-        <PrivateRoute path='/mypage/issue/create'>
+        <PrivateRoute path='/mypage/issue/new'>
             <Mypage><IssueNew /></Mypage>
         </PrivateRoute>,
         <PrivateRoute path='/mypage/issue/index'>
