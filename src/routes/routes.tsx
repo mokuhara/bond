@@ -23,11 +23,25 @@ import BizpackNew from "../pages/mypage/specialist/bizpack/new"
 import BizpackIndex from  "../pages/mypage/specialist/bizpack/index"
 import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
 
+import Chat from "../components/chat"
+import ThreadEdit from "../components/chat/thread/edit"
+import ThreadShow from "../components/chat/thread/show"
 
 const RootRouter: React.FC = () => {
     return (
         <Router>
             <Switch>
+                <Route exact path='/chat'>
+                    <Chat transactionId={1} />
+                </Route>
+                <Route exact path='/chat/thread/edit'>
+                    <ThreadEdit />
+                </Route>
+                <Route exact path='/chat/thread'>
+                    <ThreadShow />
+                </Route>
+
+
                 <Route exact path='/' component={Auth} />
                     <PrivateRoute path='/userinfo' component={UserInfo} />
                 {/* <BizpackRoutes/> */}
