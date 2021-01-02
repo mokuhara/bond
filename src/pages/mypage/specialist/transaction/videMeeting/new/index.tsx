@@ -1,5 +1,5 @@
 import React, { useState }  from 'react'
-import { Button, TextField} from '@material-ui/core';
+import { Button, TextField, Typography} from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 
@@ -19,7 +19,7 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
             position: 'absolute',
             width: 400,
             backgroundColor: theme.palette.background.paper,
-            border: '2px solid #000',
+            borderRadius: '4px',
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
           },
@@ -28,6 +28,18 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
             marginRight: theme.spacing(1),
             width: 200,
         },
+        title: {
+            fontSize: '14px',
+            margin: '0',
+            fontWeight: 'bold'
+        },
+        content: {
+            fontSize: '12px',
+            marginBottom: '10px'
+        },
+        button: {
+            marginTop: '15px'
+        }
     }));
     const classes = useStyles();
 
@@ -86,14 +98,13 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
 
     return (
         <div style={modalStyle} className={classes.paper}>
-            <h2>web会議を作成する</h2>
-            <p>
-                タイトルと日付を入力してください
-            </p>
+            <Typography variant="h6" component="h2" className={classes.title}>web会議を作成する</Typography>
+            <p className={classes.content}>タイトルと日付を入力してください</p>
             <form className={classes.container} noValidate>
                 <TextField
                     variant="outlined"
                     margin="normal"
+                    placeholder="タイトル"
                     fullWidth
                     required
                     id="topic"
@@ -122,13 +133,13 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
                 />
                 <Button
                         fullWidth
-                        // type="submit"
+                        className={classes.button}
                         variant="contained"
                         color="primary"
                         disabled={btnDisabler}
                         onClick={()=>asyncCreateVideoMeeting()}
                     >
-                        bizpackを更新する
+                        作成する
                 </Button>
             </form>
             {videoMeeting.join_url && (<a href={videoMeeting.join_url}>video会議はこちら</a>)}

@@ -28,6 +28,7 @@ const columns: Column[] = [
 ];
 
 const IssueIndex: React.FC = () => {
+    console.log('bizpackIndex')
     const history = useHistory()
     const useStyles = makeStyles((theme: Theme) => ({
         root: {
@@ -36,6 +37,18 @@ const IssueIndex: React.FC = () => {
         container: {
           maxHeight: 440,
         },
+        tabaleHeader: {
+            fontSize: '13px',
+            color: 'rgba(0,16,14,0.55)',
+        },
+        tableBody: {
+            fontSize: '13px',
+        },
+        moreMenue: {
+            fontSize: '13px',
+            fontWeight: 'bold',
+            padding: '10px 20px'
+        }
       }));
     const classes = useStyles();
     const categoryTypes = [
@@ -126,6 +139,7 @@ const IssueIndex: React.FC = () => {
                             key={column.id}
                             align={column.align}
                             style={{ minWidth: column.minWidth }}
+                            className={classes.tabaleHeader}
                             >
                             {column.label}
                             </TableCell>
@@ -152,12 +166,14 @@ const IssueIndex: React.FC = () => {
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleClose}
                                             >
-                                                <MenuItem onClick={() => {
-                                                    const data = anchorEl? anchorEl.dataset.issue : ''
-                                                    if(data){
-                                                        const issue = JSON.parse(data)
-                                                        moveIssue(issue)
-                                                    }}
+                                                <MenuItem
+                                                    className={classes.moreMenue}
+                                                    onClick={() => {
+                                                        const data = anchorEl? anchorEl.dataset.issue : ''
+                                                        if(data){
+                                                            const issue = JSON.parse(data)
+                                                            moveIssue(issue)
+                                                        }}
                                                 }>詳細</MenuItem>
                                             </Menu>
                                         </TableCell>
@@ -165,7 +181,7 @@ const IssueIndex: React.FC = () => {
                                 } else {
                                     value = row[column.id]
                                     return (
-                                    <TableCell key={column.id} align={column.align}>
+                                    <TableCell key={column.id} align={column.align} className={classes.tableBody}>
                                         {value}
                                     </TableCell>
                                     );

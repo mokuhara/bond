@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
-import {Grid, CssBaseline, Paper, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography} from '@material-ui/core'
+import {Grid, CssBaseline, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography, Card} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -20,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
       width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
     },
     formControl: {
         margin: theme.spacing(2, 0),
@@ -32,6 +28,25 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         margin:  theme.spacing(1, 0),
     },
+    dateField: {
+        margin:  theme.spacing(1, 0),
+        width: '60%'
+    },
+    label: {
+        fontSize: '2px'
+    },
+    title: {
+        fontSize: '14px',
+        margin: '15px',
+        fontWeight: 'bold'
+    },
+    container: {
+        width: '100%',
+        margin: '20px'
+    },
+    buttonContainer: {
+        margin: '20px',
+    }
   }));
 
 const userId = Number(Cookies.get('bd-uid'))
@@ -125,9 +140,12 @@ const CreateIssue: React.FC = () => {
     return (
         <Grid container component="main" alignItems="center" justify="center">
             <CssBaseline />
-            <Grid item xs={12} sm={10} md={10} component={Paper} elevation={6} square>
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h6">公募作成</Typography>
+
+            <Grid item xs={12} sm={7} md={5} >
+                <Typography variant="h6" component="h2" className={classes.title}>公募作成</Typography>
+                <Card variant="outlined">
+                    <Grid container alignItems="center" justify="center">
+                    <Grid item xs={10} sm={10} md={10} className={classes.container} >
                     <form className={classes.form} noValidate>
                         <TextField
                             variant="outlined"
@@ -139,7 +157,7 @@ const CreateIssue: React.FC = () => {
                             name="title"
                             autoComplete="title"
                             autoFocus
-                            value={issue.title}
+                            className={classes.label}
                             onChange={(e)=> handleChangeTitle(e.target.value)}
                             // inputRef={register({ required: true })}
                             // error={Boolean(errors.title)}
@@ -287,7 +305,8 @@ const CreateIssue: React.FC = () => {
                             name="startAt"
                             type="date"
                             label="開始時期"
-                            className={classes.textField}
+                            // fullWidth
+                            className={classes.dateField}
                             InputLabelProps={{
                             shrink: true,
                             }}
@@ -301,7 +320,8 @@ const CreateIssue: React.FC = () => {
                             name="endAt"
                             type="date"
                             label="終了時期"
-                            className={classes.textField}
+                            // fullWidth
+                            className={classes.dateField}
                             InputLabelProps={{
                             shrink: true,
                             }}
@@ -315,7 +335,8 @@ const CreateIssue: React.FC = () => {
                             name="applicationDeadline"
                             type="date"
                             label="募集期限"
-                            className={classes.textField}
+                            // fullWidth
+                            className={classes.dateField}
                             InputLabelProps={{
                             shrink: true,
                             }}
@@ -324,18 +345,22 @@ const CreateIssue: React.FC = () => {
                             // error={Boolean(errors.applicationDeadline)}
                             // helperText={errors.applicationDeadline && "入力必須です"}
                         />
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            // disabled={btnDisabler}
-                            onClick={()=>asyncCreateIssue()}
-                        >
-                          公募を作成する
-                        </Button>
+                        <Grid className={classes.buttonContainer}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                // disabled={btnDisabler}
+                                onClick={()=>asyncCreateIssue()}
+                            >
+                            公募を作成する
+                            </Button>
+                        </Grid>
                     </form>
-                 </div>
-                 </Grid>
+                    </Grid>
+                    </Grid>
+                </Card>
+            </Grid>
         </Grid>
     )
 

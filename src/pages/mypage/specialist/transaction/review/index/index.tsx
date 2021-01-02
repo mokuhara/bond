@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {Grid, CssBaseline, Typography } from '@material-ui/core'
+import {Grid, CssBaseline, Paper, Avatar, CardContent, Card, Typography } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltOutlined';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 
 
 import { get } from '../../../../../../libs/fetch'
@@ -10,15 +15,71 @@ import reviewsState from './store'
 type transaction = typeof transactionState[0]
 type reviews = typeof reviewsState
 
-const useStyles = makeStyles((theme: Theme) => ({
-    label: {
-        fontWeight:'bold'
+export const customIcons = [
+    {
+        rating: 1,
+        icon: <SentimentVeryDissatisfiedIcon />,
+        label: '大変不満',
     },
-    data: {}
-    ,
-    review: {
-        margin: theme.spacing(2),
+    {
+        rating: 2,
+        icon: <SentimentDissatisfiedIcon />,
+        label: '不満',
+    },
+    {
+        rating: 3,
+        icon: <SentimentSatisfiedIcon />,
+        label: '普通',
+    },
+    {
+        rating: 4,
+        icon: <SentimentSatisfiedAltIcon />,
+        label: '満足',
+    },
+    {
+        rating: 5,
+        icon: <SentimentVerySatisfiedIcon />,
+        label: '大変満足',
     }
+]
+
+const useStyles = makeStyles((theme: Theme) => ({
+    rating: {
+        fontSize: '12px',
+    },
+    data: {
+    },
+    label: {
+        paddingLeft: '5px'
+    },
+    message: {
+        padding: '24px',
+        background: 'rgba(0,16,14,0.03)',
+        borderRadius: '4px'
+    },
+    user: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    icon: {
+        width: theme.spacing(3),
+        height: theme.spacing(3),
+    },
+    name: {
+        paddingLeft: '5px'
+    },
+    review: {
+        margin: theme.spacing(1),
+    },
+    container: {
+        width: '100%',
+        marginBottom: '10px'
+    },
+    title: {
+        fontSize: '14px',
+        margin: '15px',
+        fontWeight: 'bold'
+    },
 }))
 
 const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
@@ -51,37 +112,47 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
 
     useEffect(() => {
        asyncGetRevies()
-       console.log(reviews)
     }, [])
+
+    const getCustomIcon =(rating: number) => {
+        const icon = customIcons.find(customIcon => customIcon.rating === rating)
+        return icon
+    }
 
 
     return (
         <>
-            <Grid container component="main" spacing={2} justify="center">
-                <CssBaseline />
-                <Typography component="h2" variant="h6">レビュー一覧</Typography>
-                {reviews.length > 0 && reviews.map(review => {
-                    return (<Grid container component="main" spacing={1} key={review.ID} className={classes.review}>
-                        <Grid item xs={6} className={classes.label}>
-                            ユーザーID
+            <Typography variant="h6" component="h2" className={classes.title}>レビュー一覧</Typography>
+            <Grid item xs={12}>
+                <Card  className={classes.container} variant="outlined">
+                    <CardContent>
+                    <Grid container component="main" spacing={1} justify="center">
+                        <CssBaseline />
+                        {reviews.length > 0 && reviews.map(review => {
+                            return (<Grid container component="main" spacing={2} key={review.ID} className={classes.review}>
+                                {/* ICON とかにする */}
+                                <Grid item xs={4}>
+                                    <div className={classes.user}>
+                                        <Avatar className={classes.icon}>H</Avatar>
+                                        <span className={classes.name}>hoge</span>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={8} className={classes.rating}>
+                                    <div className={classes.user}>
+                                        { (getCustomIcon(review.rating))?.icon}
+                                        <span className={classes.label}>{ (getCustomIcon(review.rating))?.label}</span>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <div className={classes.message}>
+                                    {review.message}
+                                    </div>
+                                </Grid>
+                            </Grid>)
+                        })}
                         </Grid>
-                        <Grid item xs={6} className={classes.data}>
-                            {review.userId}
-                        </Grid>
-                        <Grid item xs={6} className={classes.label}>
-                            評価
-                        </Grid>
-                        <Grid item xs={6} className={classes.data}>
-                            {review.rating}
-                        </Grid>
-                        <Grid item xs={6} className={classes.label}>
-                            内容
-                        </Grid>
-                        <Grid item xs={6} className={classes.data}>
-                            {review.message}
-                        </Grid>
-                    </Grid>)
-                })}
+                    </CardContent>
+                </Card>
             </Grid>
         </>
     )

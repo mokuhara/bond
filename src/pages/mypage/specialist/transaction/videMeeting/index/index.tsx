@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, CssBaseline, Button, Table, TableHead, TableRow, TableCell, TableContainer, TableBody, Paper, Typography} from '@material-ui/core'
+import { Grid, CssBaseline, Button, Table, TableHead, TableRow, TableCell, TableContainer, TableBody, Paper, CardContent, Card, Typography} from '@material-ui/core'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 
 import { get, destroy } from '../../../../../../libs/fetch'
@@ -7,7 +7,22 @@ import videMeetingsState from './store'
 
 const VideoMeetings : React.FC<{transactionId: number}> = ({transactionId}) => {
     const useStyles = makeStyles((theme: Theme) => ({
-
+        tabaleHeader: {
+            fontSize: '13px',
+            color: 'rgba(0,16,14,0.55)',
+        },
+        tableBody: {
+            fontSize: '13px',
+        },
+        container: {
+            width: '100%',
+            marginBottom: '10px'
+        },
+        title: {
+            fontSize: '14px',
+            margin: '15px',
+            fontWeight: 'bold'
+        },
     }))
     const classes = useStyles()
 
@@ -49,30 +64,36 @@ const VideoMeetings : React.FC<{transactionId: number}> = ({transactionId}) => {
 
     return (
         <>
-            <Grid container component="main" spacing={2} justify="center">
-                <CssBaseline />
-                <Typography component="h2" variant="h6">設定されたミーティング一覧</Typography>
-                <TableContainer component={Paper}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="left">ミーティング名</TableCell>
-                                <TableCell align="left">開始時間</TableCell>
-                                <TableCell align="left">操作</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                             {videoMeetings && videoMeetings.map(videoMeeting => (
-                                 <TableRow key={videoMeeting.ID}>
-                                     <TableCell align="left"><a href={videoMeeting.join_url}>{videoMeeting.topic}</a></TableCell>
-                                    <TableCell align="left">{videoMeeting.start_time}</TableCell>
-                                    <TableCell align="left"><Button color="secondary" variant="contained" onClick={() => deleteHandler(videoMeeting.ID)}>削除</Button></TableCell>
-                                 </TableRow>
-                             ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Grid>
+        <Typography variant="h6" component="h2" className={classes.title}>設定されたミーティング一覧</Typography>
+        <Grid item xs={12}>
+            <Card  className={classes.container} variant="outlined">
+                <CardContent>
+                    <Grid container component="main" spacing={2} justify="center">
+                    <CssBaseline />
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell className={classes.tabaleHeader} align="left">ミーティング名</TableCell>
+                                    <TableCell className={classes.tabaleHeader} align="left">開始時間</TableCell>
+                                    <TableCell className={classes.tabaleHeader} align="left">操作</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {videoMeetings && videoMeetings.map(videoMeeting => (
+                                    <TableRow key={videoMeeting.ID}>
+                                        <TableCell align="left" className={classes.tableBody}><a href={videoMeeting.join_url}>{videoMeeting.topic}</a></TableCell>
+                                        <TableCell align="left" className={classes.tableBody}>{videoMeeting.start_time}</TableCell>
+                                        <TableCell align="left" className={classes.tableBody}><Button color="secondary" variant="contained" onClick={() => deleteHandler(videoMeeting.ID)}>削除</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    </Grid>
+                </CardContent>
+            </Card>
+        </Grid>
         </>
     )
 }

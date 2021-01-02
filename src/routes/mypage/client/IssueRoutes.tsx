@@ -4,10 +4,10 @@ import IssueNew from '../../../pages/mypage/client/issue/new'
 import IssueIndex from '../../../pages/mypage/client/issue/index'
 import IssueShow from '../../../pages/mypage/client/issue/show'
 import IssueEdit from '../../../pages/mypage/client/issue/edit'
-import Mypage from '../../../pages/mypage/mypage'
+import Mypage from '../../../layouts/mypage/specialist'
 
 const IssueRoutes = [
-        <PrivateRoute path='/mypage/issue/create'>
+        <PrivateRoute path='/mypage/issue/new'>
             <Mypage><IssueNew /></Mypage>
         </PrivateRoute>,
         <PrivateRoute path='/mypage/issue/index'>

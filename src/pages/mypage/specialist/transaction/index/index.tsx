@@ -7,8 +7,9 @@ import { useForm } from 'react-hook-form';
 
 
 import VideoMeetingForm from '../videMeeting/new'
+import CategoryIcon from '../../../../../components/categoryIcon'
 import { get } from '../../../../../libs/fetch';
-import { transactionState,  summrizedTransactionState, statusState, categoryState } from './store'
+import { transactionState,  summrizedTransactionState, statusState } from './store'
 
 interface Column {
     id: 'category' | 'title' | 'status' | 'description' | 'other';
@@ -26,16 +27,33 @@ const columns: Column[] = [
     { id: 'other', label: 'その他', minWidth: 50}
 ];
 
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+      width: '100%',
+    },
+    container: {
+      maxHeight: 440,
+    },
+    tabaleHeader: {
+        fontSize: '13px',
+        color: 'rgba(0,16,14,0.55)',
+    },
+    categoryLabel: {
+        fontSize: '10px',
+    },
+    tableBody: {
+        fontSize: '13px',
+    },
+    moreMenue: {
+        fontSize: '13px',
+        fontWeight: 'bold',
+        padding: '10px 20px'
+    }
+}));
+
 const TransactionIndex: React.FC = () => {
     const history = useHistory()
-    const useStyles = makeStyles((theme: Theme) => ({
-        root: {
-          width: '100%',
-        },
-        container: {
-          maxHeight: 440,
-        },
-      }));
     const classes = useStyles();
 
 
@@ -66,7 +84,7 @@ const TransactionIndex: React.FC = () => {
         const createData = (transaction: transaction) => {
             return {
                 id: transaction.ID,
-                category: (categoryState.filter(category => category.id === transaction.Bizpack.category.type))[0].name,
+                category: transaction.Bizpack.category.type,
                 title: transaction.Bizpack.title,
                 status: (statusState.filter(status => status.id === transaction.status))[0].name,
                 description: transaction.Bizpack.description,
@@ -135,12 +153,13 @@ const TransactionIndex: React.FC = () => {
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                         {columns.map((column) => (
                             <TableCell
                             key={column.id}
                             align={column.align}
                             style={{ minWidth: column.minWidth }}
+                            className={classes.tabaleHeader}
                             >
                             {column.label}
                             </TableCell>
@@ -156,7 +175,7 @@ const TransactionIndex: React.FC = () => {
                                 let value : string | number | JSX.Element[] | JSX.Element
                                 if(column.id === 'other'){
                                     return (
-                                        <TableCell>
+                                        <TableCell >
                                             <Button data-transaction={JSON.stringify(row.transaction)} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                                                 <MoreVertIcon />
                                             </Button>
@@ -167,7 +186,7 @@ const TransactionIndex: React.FC = () => {
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleClose}
                                             >
-                                                <MenuItem onClick={() => {
+                                                <MenuItem className={classes.moreMenue} onClick={() => {
                                                     const data = anchorEl? anchorEl.dataset.transaction : ''
                                                     if (data) {
                                                         const transaction = JSON.parse(data)
@@ -175,7 +194,7 @@ const TransactionIndex: React.FC = () => {
                                                     }
                                                 }}>詳細</MenuItem>
                                                 {/* {row["transaction"].status < 6 && <MenuItem onClick={() => dummy()}>受注</MenuItem>} */}
-                                                <MenuItem onClick={() => {
+                                                <MenuItem className={classes.moreMenue}  onClick={() => {
                                                     const data = anchorEl? anchorEl.dataset.transaction : ''
                                                     if (data) {
                                                         const transaction = JSON.parse(data)
@@ -186,10 +205,14 @@ const TransactionIndex: React.FC = () => {
                                             </Menu>
                                         </TableCell>
                                     )
+                                } else if(column.id === 'category') {
+                                    return (<TableCell align={column.align}>
+                                        <CategoryIcon categoryId={row[column.id]}/>
+                                    </TableCell>)
                                 } else {
                                     value = row[column.id]
                                     return (
-                                    <TableCell align={column.align}>
+                                    <TableCell align={column.align}  className={classes.tableBody}>
                                         {value}
                                     </TableCell>
                                     );
