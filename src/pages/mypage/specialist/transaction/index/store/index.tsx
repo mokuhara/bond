@@ -52,9 +52,3 @@ export const statusState = [
     {id: 6, name: "契約終了"},
     {id: 7, name: "失注"},
 ]
-
-export const categoryState = [
-    {id: 0, name: "選択"},
-    {id: 1, name: "構築"},
-    {id: 2, name: "運用"},
-]

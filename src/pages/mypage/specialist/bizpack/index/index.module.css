@@ -1,0 +1,26 @@
+.root {
+    width: 100%
+}
+
+.container {
+    max-height: 440px;
+}
+
+.tableHeader {
+    font-size: 13px;
+    color: rgba(0,16,14,0.55);
+}
+
+.categoryLabel {
+    font-size: '13px';
+}
+
+.tableBody {
+    font-size: 13px;
+}
+
+.moreMenu {
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px 20px;
+}

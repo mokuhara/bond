@@ -39,7 +39,7 @@ const BizpackNew: React.FC = (_props) => {
       <Grid container component="main" >
           <CssBaseline />
           <Grid item xs={12} sm={7} md={5} >
-                <Typography variant="h6" component="h2" className={styles.title}>bizpack作成</Typography>
+                <h1 className={styles.title} >bizpack作成</h1>
                 <Card variant="outlined">
                     <Grid container alignItems="center" justify="center">
                       <Grid item xs={10} sm={10} md={10} className={styles.container} >

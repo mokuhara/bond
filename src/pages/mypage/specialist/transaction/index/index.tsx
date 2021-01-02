@@ -4,15 +4,12 @@ import { makeStyles , Theme} from '@material-ui/core/styles';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import SearchIcon from '@material-ui/icons/Search';
-import { Chip } from '@material-ui/core'
-import LoopIcon from '@material-ui/icons/Loop';
-import BuildIcon from '@material-ui/icons/Build';
 
 
 import VideoMeetingForm from '../videMeeting/new'
+import CategoryIcon from '../../../../../components/categoryIcon'
 import { get } from '../../../../../libs/fetch';
-import { transactionState,  summrizedTransactionState, statusState, categoryState } from './store'
+import { transactionState,  summrizedTransactionState, statusState } from './store'
 
 interface Column {
     id: 'category' | 'title' | 'status' | 'description' | 'other';
@@ -30,31 +27,33 @@ const columns: Column[] = [
     { id: 'other', label: 'その他', minWidth: 50}
 ];
 
+
+const useStyles = makeStyles((theme: Theme) => ({
+    root: {
+      width: '100%',
+    },
+    container: {
+      maxHeight: 440,
+    },
+    tabaleHeader: {
+        fontSize: '13px',
+        color: 'rgba(0,16,14,0.55)',
+    },
+    categoryLabel: {
+        fontSize: '10px',
+    },
+    tableBody: {
+        fontSize: '13px',
+    },
+    moreMenue: {
+        fontSize: '13px',
+        fontWeight: 'bold',
+        padding: '10px 20px'
+    }
+}));
+
 const TransactionIndex: React.FC = () => {
     const history = useHistory()
-    const useStyles = makeStyles((theme: Theme) => ({
-        root: {
-          width: '100%',
-        },
-        container: {
-          maxHeight: 440,
-        },
-        tabaleHeader: {
-            fontSize: '13px',
-            color: 'rgba(0,16,14,0.55)',
-        },
-        categoryLabel: {
-            fontSize: '10px',
-        },
-        tableBody: {
-            fontSize: '13px',
-        },
-        moreMenue: {
-            fontSize: '13px',
-            fontWeight: 'bold',
-            padding: '10px 20px'
-        }
-      }));
     const classes = useStyles();
 
 
@@ -148,31 +147,6 @@ const TransactionIndex: React.FC = () => {
     //videoMeeting
     const [transactionId, setTransactionId] = useState(0)
 
-    const makeCategoryLabel = (categoryId: number) => {
-        console.log(categoryId)
-        const text = (categoryState.filter(category => category.id === categoryId))[0].name
-        const makeChip = (payload: {component: JSX.Element, text: string}) => {
-            console.log(payload)
-            return (
-                <Chip
-                    size="small"
-                    icon={payload.component}
-                    label={payload.text}
-                    className={classes.categoryLabel}
-                    // color="primary"
-                />
-            )
-        }
-        if(categoryId === 0) {
-            console.log(text)
-            return makeChip({component: <SearchIcon />, text: text})
-        } else if (categoryId === 1) {
-            return makeChip({component: <BuildIcon />, text: text})
-        } else if (categoryId === 2) {
-            return makeChip({component: <LoopIcon />, text: text})
-        }
-    }
-
     return (
         <>
             <Paper className={classes.root}>
@@ -233,7 +207,7 @@ const TransactionIndex: React.FC = () => {
                                     )
                                 } else if(column.id === 'category') {
                                     return (<TableCell align={column.align}>
-                                        { makeCategoryLabel(row[column.id])}
+                                        <CategoryIcon categoryId={row[column.id]}/>
                                     </TableCell>)
                                 } else {
                                     value = row[column.id]
