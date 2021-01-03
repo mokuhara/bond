@@ -31,15 +31,12 @@ const RootRouter: React.FC = () => {
     return (
         <Router>
             <Switch>
-                <Route exact path='/chat'>
-                    <Chat transactionId={1} />
-                </Route>
-                <Route exact path='/chat/thread/edit'>
-                    <ThreadEdit />
-                </Route>
-                <Route exact path='/chat/thread'>
-                    <ThreadShow />
-                </Route>
+                <PrivateRoute exact path='/chat/thread/edit'>
+                    <Mypage><ThreadEdit /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute exact path='/chat/thread'>
+                    <Mypage><ThreadShow /></Mypage>
+                </PrivateRoute>
 
 
                 <Route exact path='/' component={Auth} />

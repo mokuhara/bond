@@ -1,4 +1,5 @@
 const messageState = {
+    id: "",
     threadId: "",
     userId: 0,
     iconUrl: "",

@@ -1,64 +1,75 @@
 .root {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 10px 0;
-    align-items: center;
-  }
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  align-items: center;
+}
+
+.hoge {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%
+}
 
 
-  .localContainer {
-    margin-left: auto;
-    display: flex;
-  }
-  
-  .remoteContainer {
-    margin-right: auto;
-    display: flex;
-  }
-  
-  .icon {
-    height: 35px;
-    margin-top: auto;
-  }
-  
-  .icon img {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    padding: 5px;
-  }
-  
-  .content {
-    max-width: 200px;
-    word-wrap: break-word;
-  }
-  
-  .localContainer .content {
-    text-align: right;
-  }
-  
-  .remoteContainer .content {
-    text-align: left;
-  }
-  
-  .name {
-    font-size: 8px;
-    color: rgba(0, 0, 0, 0.6);
-    padding: 2px;
-  }
-  
-  .text {
-    padding: 5px;
-    background-color: rgb(240, 241, 241);
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  .timestamp {
-    padding: 0 3px;
-    margin-top: auto;
-    font-size: 8px;
-    color: rgba(0, 0, 0, 0.6);
-  }
+.localContainer {
+  margin-left: auto;
+  display: flex;
+}
+
+.remoteContainer {
+  margin-right: auto;
+  display: flex;
+}
+
+.icon {
+  height: 35px;
+  margin-top: auto;
+}
+
+.icon img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.content {
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.localContainer .content {
+  text-align: right;
+}
+
+.remoteContainer .content {
+  text-align: left;
+}
+
+.name {
+  font-size: 8px;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 2px;
+}
+
+.text {
+  padding: 5px;
+  background-color: rgb(240, 241, 241);
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.text p{
+  margin: 4px
+}
+
+.timestamp {
+  padding: 0 3px;
+  margin-top: auto;
+  font-size: 8px;
+  color: rgba(0, 0, 0, 0.6);
+}

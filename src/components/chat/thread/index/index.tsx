@@ -73,7 +73,7 @@ const ThreadIndex: React.FC<{transactionId: number}> = ({transactionId}) => {
     return (
         <>
             <Typography variant="h6" component="h2" className={classes.title}>スレッド一覧</Typography>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
                 <Card  className={classes.container} variant="outlined">
                     <CardContent>
                         <Grid container component="main" spacing={2} justify="center">
@@ -82,20 +82,20 @@ const ThreadIndex: React.FC<{transactionId: number}> = ({transactionId}) => {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell className={classes.tabaleHeader} style={{ minWidth: 50 }} align="left">タイトル</TableCell>
-                                        <TableCell className={classes.tabaleHeader} style={{ minWidth: 170 }} align="left">詳細</TableCell>
-                                        <TableCell className={classes.tabaleHeader} style={{ minWidth: 20 }} align="left">操作</TableCell>
+                                        <TableCell className={classes.tabaleHeader} style={{ minWidth: 100 }} align="left">タイトル</TableCell>
+                                        <TableCell className={classes.tabaleHeader} style={{ minWidth: 200 }} align="left">詳細</TableCell>
+                                        <TableCell className={classes.tabaleHeader} style={{ minWidth: 40 }} align="left">操作</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {threads && threads.map(thread => (
                                         <TableRow key={thread.id}>
-                                            <TableCell align="left" className={classes.tableBody} style={{ minWidth: 50 }}>{thread.title}</TableCell>
-                                            <TableCell align="left" className={classes.tableBody} style={{ minWidth: 170 }}>{thread.description}</TableCell>
-                                            <TableCell align="left" className={classes.tableBody} style={{ minWidth: 20 }}>
+                                            <TableCell align="left" className={classes.tableBody} style={{ minWidth: 100 }}>{thread.title}</TableCell>
+                                            <TableCell align="left" className={classes.tableBody} style={{ minWidth: 200 }}>{thread.description}</TableCell>
+                                            <TableCell align="left" className={classes.tableBody} style={{ minWidth: 40 }}>
                                                 <Grid container spacing={2}>
-                                                    <Grid item xs={4}><Button color="primary" variant="contained" onClick={() => editThread(thread)}>編集</Button></Grid>
-                                                    <Grid item xs={4}><Button  variant="contained" onClick={() => moveThread(thread.id)}>詳細</Button></Grid>
+                                                    <Grid item xs={6}><Grid container justify="flex-end"><Button color="primary" variant="contained" onClick={() => editThread(thread)}>編集</Button></Grid></Grid>
+                                                    <Grid item xs={6}><Grid container justify="flex-start"><Button  variant="contained" onClick={() => moveThread(thread.id)}>詳細</Button></Grid></Grid>
                                                 </Grid>
                                             </TableCell>
                                         </TableRow>

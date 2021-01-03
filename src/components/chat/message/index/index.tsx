@@ -13,7 +13,7 @@ const MessageIndex: React.FC<{threadId: number}> = ({threadId}) => {
 
 
     useEffect(() => {
-        const unSub = db.collection("messages").where('threadId', '==', threadId).onSnapshot((snapshot) => {
+        const unSub = db.collection("messages").where('threadId', '==', threadId).orderBy('createdAt','asc').onSnapshot((snapshot) => {
             setMessages(
                 snapshot.docs.map((doc) =>({
                     id: doc.id,

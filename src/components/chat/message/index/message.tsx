@@ -1,16 +1,17 @@
-import React from 'react'
+import React  from 'react'
 import Cookies from 'js-cookie'
 import {format} from 'date-fns'
+import ReactMarkdown from 'react-markdown';
 
 
 import messagesState from './store'
 import styles from './message.module.css'
+import MessageEdit from '../edit'
 
 
 const Message: React.FC<{message: typeof messagesState[0]}> = ({message}) => {
-    console.log(message)
     const userId = Cookies.get('bd-uid') ? parseInt(Cookies.get('bd-uid') as string, 10) : undefined
-    console.log(message.userId === userId)
+    const reg=new RegExp("((https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+))")
 
     const renderRemote = (
             <div className={styles.remoteContainer}>
@@ -18,12 +19,12 @@ const Message: React.FC<{message: typeof messagesState[0]}> = ({message}) => {
                     <img src={message.iconUrl} />
                 </div>
                 <div className={styles.content}>
-                <div className={styles.name}>
-                    { message.userId}
-                </div>
-                <div className={styles.text}>
-                    { message.message }
-                </div>
+                    <div className={styles.name}>
+                        { message.userId}
+                    </div>
+                    <div className={styles.text}>
+                        <ReactMarkdown source={message.message.replace(reg,"[$1]($1)")} />
+                    </div>
                 </div>
                 <div className={styles.timestamp}>
                     {format(message.createdAt, 'MM/dd HH:mm')}
@@ -32,15 +33,17 @@ const Message: React.FC<{message: typeof messagesState[0]}> = ({message}) => {
     )
 
     const renderLocal = (
+            <div className={styles.hoge}>
             <div className={styles.localContainer}>
-            <div className={styles.timestamp}>
-                {format(message.createdAt, 'MM/dd HH:mm')}
+                <div className={styles.timestamp}>
+                    {format(message.createdAt, 'MM/dd HH:mm')}
                 </div>
                 <div className={styles.content}>
-                <div className={styles.text}>
-                    { message.message }
+                    <div className={styles.text}>
+                    <ReactMarkdown source={message.message.replace(reg,"[$1]($1)")} />
+                    </div>
                 </div>
-                </div>
+            </div>
             </div>
     )
 

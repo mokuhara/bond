@@ -10,6 +10,7 @@ import Status from './status'
 import { transactionState } from '../index/store'
 import Cookies from 'js-cookie'
 import VideoMeetings from '../videMeeting/index'
+import Chat from '../../../../../components/chat'
 
 type transaction = {transaction: typeof transactionState[0]}
 
@@ -105,6 +106,11 @@ const Transaction: React.FC = () => {
                         <VideoMeetings transactionId={transaction.ID}/>
                         </Grid>
                     )}
+                </Grid>
+                <Grid item xs={10}>
+                    <Grid item xs={12} >
+                        <Chat transactionId={transaction.ID}/>
+                    </Grid>
                 </Grid>
             </Grid>
         </>

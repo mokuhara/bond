@@ -9,25 +9,30 @@ import messageState from './store'
 import { db } from '../../firebase'
 
 
-const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
+// 設置場所考える
+const MessageNew: React.FC<{messageId: string, userId: number, threadId: number, messageText: string, handleCloseEdit: Function}> = ({messageId, userId, threadId, messageText, handleCloseEdit}) => {
     const history = useHistory()
     const [message, setMessage] = useState(messageState)
 
     useEffect(() => {
-        const userId = Cookies.get('bd-uid') ? parseInt(Cookies.get('bd-uid') as string, 10) : undefined
         // TODO userIdからiconURLとるロジック作成する
         const iconUrl = "https://www.palcloset.jp/shared/pc_pal/event/typy/2019_doraemon/images/dora.png"
         if(!userId){ history.push("/")}
-        setMessage(Object.assign(message, {userId, threadId, iconUrl}))
-    }, [])
+        setMessage(Object.assign(message, {userId, threadId, iconUrl, id: messageId, message: messageText}))
+    }, [message])
 
     const setValue = (obj: object) => {
         setMessage(Object.assign(message, obj))
       }
 
     const onSubmit = async () => {
-    setMessage(Object.assign(message, {createdAt: new Date()}))
-    db.collection("messages").add(message)
+        db.collection("messages")
+        .doc(message.id)
+        .set({
+            message: message.message,
+            updatedAt: new Date(),
+        }, {merge: true})
+        handleCloseEdit()
     }
 
     return (
@@ -40,8 +45,7 @@ const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
                         fullWidth
                         id="message"
                         label="message"
-                        multiline
-                        rows={2}
+                        value={message.message ? message.message: messageText}
                         InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Button, FormControl } from "@material-ui/core"
+import { TextField, Button, Grid } from "@material-ui/core"
 import firebase from "firebase/app"
 
 import threadState from './store'
 import { db } from '../../firebase'
+import styles from './index.module.css'
 
 
 const ThreacNew: React.FC<{transactionId: number}> = ({transactionId}) => {
@@ -25,7 +26,8 @@ const ThreacNew: React.FC<{transactionId: number}> = ({transactionId}) => {
 
     return (
         <>
-            <FormControl>
+            <Grid container justify="center">
+                <p className={styles.title}>新規スレッド作成</p>
                 <TextField
                     variant="outlined"
                     margin="normal"
@@ -44,14 +46,13 @@ const ThreacNew: React.FC<{transactionId: number}> = ({transactionId}) => {
                 />
                 <Button
                     fullWidth
-                    // type="submit"
                     variant="contained"
                     color="primary"
                     onClick={onSubmit}
                 >
                     スレッドを作成する
                 </Button>
-            </FormControl>
+            </Grid>
         </>
     )
 }
