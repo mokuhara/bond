@@ -10,7 +10,7 @@ import Status from './status'
 import { transactionState } from '../index/store'
 import Cookies from 'js-cookie'
 import VideoMeetings from '../videMeeting/index'
-import Chat from '../../../../../components/chat'
+import Chat from '../../../chat'
 
 type transaction = {transaction: typeof transactionState[0]}
 

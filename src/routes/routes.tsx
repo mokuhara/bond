@@ -23,9 +23,9 @@ import BizpackNew from "../pages/mypage/specialist/bizpack/new"
 import BizpackIndex from  "../pages/mypage/specialist/bizpack/index"
 import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
 
-import Chat from "../components/chat"
-import ThreadEdit from "../components/chat/thread/edit"
-import ThreadShow from "../components/chat/thread/show"
+import Chat from "../pages/mypage/chat"
+import ThreadEdit from "../pages/mypage/chat/thread/edit"
+import ThreadShow from "../pages/mypage/chat/thread/show"
 
 const RootRouter: React.FC = () => {
     return (
