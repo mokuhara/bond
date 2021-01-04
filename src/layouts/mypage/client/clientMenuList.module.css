@@ -1,0 +1,34 @@
+
+ul {
+    padding: 0px;
+}
+
+.list {
+    list-style: none;
+}
+
+.link {
+    font-size: 14px;
+    font-weight: 'bold';
+    text-decoration: none;
+    color: rgba(0,16,14,0.8);
+    box-sizing: border-box;
+    padding: 7px 16px;
+    width: 100%;
+}
+
+.link:hover {
+    background: rgba(0,16,14,0.03);
+    opacity: 1;
+}
+
+
+.list {
+    display: flex;
+    align-items: center;
+}
+
+.text {
+    vertical-align: middle;
+    padding-left: 15px;
+}
