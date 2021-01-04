@@ -44,7 +44,6 @@ const ClientBizPackShow: React.FC = () => {
     const classes = useStyles()
     const location = useLocation<{bizpack: bizpack}>();
     const bizpack = location.state.bizpack
-    console.log('bizpack', bizpack);
     const products = useCallback(() => {
         return bizpack.products.map((product, index) => {
             return (bizpack.products &&

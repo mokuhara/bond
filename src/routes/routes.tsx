@@ -71,7 +71,6 @@ const RootRouter: React.FC = () => {
                     <ClientMypage><Transaction /></ClientMypage>
                 </PrivateRoute>
 
-
                 {/* specialistMypage */}
                 <PrivateRoute path='/mypage/specialist/profile'>
                     <SpecialistMypage><Profile /></SpecialistMypage>
