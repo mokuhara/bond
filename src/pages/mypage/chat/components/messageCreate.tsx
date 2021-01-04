@@ -1,38 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, IconButton, Grid, InputAdornment } from "@material-ui/core"
-import firebase from "firebase/app"
 import Cookies from 'js-cookie'
 import { useHistory } from 'react-router-dom';
 import SendIcon from '@material-ui/icons/Send';
 
-import messageState from './store'
-import { db } from '../../firebase'
+import { messageState } from '../store'
+import { db } from '../firebase'
 
 
-// 設置場所考える
-const MessageNew: React.FC<{messageId: string, userId: number, threadId: number, messageText: string, handleCloseEdit: Function}> = ({messageId, userId, threadId, messageText, handleCloseEdit}) => {
+const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
     const history = useHistory()
     const [message, setMessage] = useState(messageState)
 
     useEffect(() => {
+        const userId = Cookies.get('bd-uid') ? parseInt(Cookies.get('bd-uid') as string, 10) : undefined
         // TODO userIdからiconURLとるロジック作成する
         const iconUrl = "https://www.palcloset.jp/shared/pc_pal/event/typy/2019_doraemon/images/dora.png"
         if(!userId){ history.push("/")}
-        setMessage(Object.assign(message, {userId, threadId, iconUrl, id: messageId, message: messageText}))
-    }, [message])
+        setMessage(Object.assign(message, {userId, threadId, iconUrl}))
+    }, [])
 
     const setValue = (obj: object) => {
         setMessage(Object.assign(message, obj))
       }
 
     const onSubmit = async () => {
-        db.collection("messages")
-        .doc(message.id)
-        .set({
-            message: message.message,
-            updatedAt: new Date(),
-        }, {merge: true})
-        handleCloseEdit()
+    setMessage(Object.assign(message, {createdAt: new Date()}))
+    db.collection("messages").add(message)
     }
 
     return (
@@ -45,7 +39,8 @@ const MessageNew: React.FC<{messageId: string, userId: number, threadId: number,
                         fullWidth
                         id="message"
                         label="message"
-                        value={message.message ? message.message: messageText}
+                        multiline
+                        rows={2}
                         InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">

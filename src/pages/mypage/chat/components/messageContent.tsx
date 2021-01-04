@@ -4,12 +4,12 @@ import {format} from 'date-fns'
 import ReactMarkdown from 'react-markdown';
 
 
-import messagesState from './store'
-import styles from './message.module.css'
-import MessageEdit from '../edit'
+import { existMessageState } from '../store'
+import styles from './messageContent.module.css'
+import MessageEdit from './messageEdit'
 
 
-const Message: React.FC<{message: typeof messagesState[0]}> = ({message}) => {
+const MessageBox: React.FC<{message: typeof existMessageState}> = ({message}) => {
     const userId = Cookies.get('bd-uid') ? parseInt(Cookies.get('bd-uid') as string, 10) : undefined
     const reg=new RegExp("((https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+))")
 
@@ -60,4 +60,4 @@ const Message: React.FC<{message: typeof messagesState[0]}> = ({message}) => {
     )
 }
 
-export default Message
+export default MessageBox

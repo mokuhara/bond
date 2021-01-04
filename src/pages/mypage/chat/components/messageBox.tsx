@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { db } from "../../firebase"
-import { TextField, IconButton, Grid, InputAdornment } from "@material-ui/core"
-import { wrapDocumentSnapshotData } from '../../firebase'
+import { db } from "../firebase"
+import { wrapDocumentSnapshotData } from '../firebase'
 
-import messagesState from './store'
-import Message from './message'
-import styles from './index.module.css'
+import { existMessagesState } from '../store'
+import Message from './messageContent'
+import styles from './messageBox.module.css'
 
 const MessageIndex: React.FC<{threadId: number}> = ({threadId}) => {
-    const [messages, setMessages] = useState(messagesState)
+    const [messages, setMessages] = useState(existMessagesState)
     wrapDocumentSnapshotData()
 
 

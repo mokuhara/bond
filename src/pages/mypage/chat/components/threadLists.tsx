@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { db } from "../../firebase"
+import { db } from "../firebase"
 import { Grid, CssBaseline, Button, Table, TableHead, TableRow, TableCell, TableContainer, TableBody, Paper, CardContent, Card, Typography} from '@material-ui/core'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom';
 
 
-import threadsState from './store'
+import { threadsState } from '../store/index'
 
 const useStyles = makeStyles((theme: Theme) => ({
     tabaleHeader: {
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }))
 
-const ThreadIndex: React.FC<{transactionId: number}> = ({transactionId}) => {
+const ThreadLists: React.FC<{transactionId: number}> = ({transactionId}) => {
     type thread = typeof threadsState[0]
     const [threads, setThreads] = useState(threadsState)
     const classes = useStyles()
@@ -58,14 +58,14 @@ const ThreadIndex: React.FC<{transactionId: number}> = ({transactionId}) => {
 
     const editThread = (thread: thread) => {
         history.push({
-            pathname: '/chat/thread/edit',
+            pathname: '/mypage/chat/thread/edit',
             state: {thread}
         })
     }
 
     const moveThread = (threadId: string) => {
         history.push({
-            pathname: '/chat/thread',
+            pathname: '/mypage/chat/thread',
             state: {threadId}
         })
     }
@@ -111,4 +111,4 @@ const ThreadIndex: React.FC<{transactionId: number}> = ({transactionId}) => {
     )
 }
 
-export default ThreadIndex
+export default ThreadLists

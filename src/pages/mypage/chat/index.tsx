@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Modal , Grid, Typography} from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-import ThreadIndex from './thread/index'
-import ThreadNew from './thread/new'
+import ThreadLists from './components/threadLists'
+import ThreadNew from './components/createThread'
 
 const rand = () => {
     return Math.round(Math.random() * 20) - 10;
@@ -53,7 +53,7 @@ const Chat: React.FC<{transactionId: number}> = ({transactionId}) => {
 
     return (
         <div>
-          <ThreadIndex transactionId={transactionId}/>
+          <ThreadLists transactionId={transactionId}/>
           <Grid container justify="flex-end" alignItems="center">
             <Typography className={classes.title}>スレッド追加</Typography>
             <AddCircleIcon color="primary" onClick={handleOpen}/>

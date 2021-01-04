@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, Grid } from "@material-ui/core"
-import firebase from "firebase/app"
 
-import threadState from './store'
-import { db } from '../../firebase'
-import styles from './index.module.css'
+import { threadState } from '../store/index'
+import { db } from '../firebase'
+import styles from './createThread.module.css'
 
 
 const ThreacNew: React.FC<{transactionId: number}> = ({transactionId}) => {

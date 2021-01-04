@@ -31,10 +31,10 @@ const RootRouter: React.FC = () => {
     return (
         <Router>
             <Switch>
-                <PrivateRoute exact path='/chat/thread/edit'>
+                <PrivateRoute exact path='/mypage/chat/thread/edit'>
                     <Mypage><ThreadEdit /></Mypage>
                 </PrivateRoute>
-                <PrivateRoute exact path='/chat/thread'>
+                <PrivateRoute exact path='/mypage/chat/thread'>
                     <Mypage><ThreadShow /></Mypage>
                 </PrivateRoute>
 

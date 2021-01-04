@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 import { Grid , Card} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import MessageIndex from '../../message/index'
-import MessageNew from '../../message/new'
+import MessageIndex from '../../components/messageBox'
+import MessageNew from '../../components/messageCreate'
 
 const useStyles = makeStyles((theme) => ({
     root: {
