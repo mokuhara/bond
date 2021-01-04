@@ -42,7 +42,8 @@ export const fetchAsyncLogin = createAsyncThunk("auth/login", async (auth: auth)
 
     return {
         token: res.data.token,
-        userId: res.data.userId
+        userId: res.data.userId,
+        type: res.data.type
     }
 })
 
@@ -59,6 +60,7 @@ export const fetchAsyncSignup = createAsyncThunk("auth/signup", async (auth: aut
                     data: {
                         token: "",
                         userId: -1,
+                        type: -1
                     },
                     status: 500
                 }
@@ -78,7 +80,8 @@ export const fetchAsyncSignup = createAsyncThunk("auth/signup", async (auth: aut
 
     return {
         token: res.data.token,
-        userId: res.data.userId
+        userId: res.data.userId,
+        type: res.data.type
     }
 })
 
@@ -175,9 +178,10 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchAsyncLogin.fulfilled, (state, action)=>{
-            const { userId, token } = action.payload
+            const { userId, token, type } = action.payload
             Cookies.set('bdt', token, { expires: 1/24 });
             Cookies.set('bd-uid', String(userId), { expires: 1/24 });
+            Cookies.set('bd-type', String(type), { expires: 1/24 });
             return {
                 ...state,
                 userInfo: {
@@ -187,9 +191,10 @@ const authSlice = createSlice({
             }
         })
         builder.addCase(fetchAsyncSignup.fulfilled, (state, action)=>{
-            const { userId, token } = action.payload
+            const { userId, token, type } = action.payload
             Cookies.set('bdt', token, { expires: 1/24 });
             Cookies.set('bd-uid', String(userId), { expires: 1/24 });
+            Cookies.set('bd-type', String(type), { expires: 1/24 });
             return {
                 ...state,
                 userInfo: {

@@ -57,7 +57,7 @@ const Issue: React.FC = () => {
 
     const moveEditIssue = () => {
         history.push({
-            pathname: '/mypage/issue/edit',
+            pathname: '/mypage/client/issue/edit',
             state: {issue}
         })
 
@@ -68,7 +68,7 @@ const Issue: React.FC = () => {
         destroy(`${apiUrl}/mypage/issue/${issue.ID}/delete`, issue, true)
               .then(res => res.json())
               .then(json => {
-                if(json) { history.push('/mypage/issue/index') }
+                if(json) { history.push('/mypage/client/issue/index') }
               })
     }
 
@@ -183,8 +183,6 @@ const Issue: React.FC = () => {
                     </Grid>
                     </CardContent>
                     </Card>
-                    
-                
             </Grid>
         </>
     )

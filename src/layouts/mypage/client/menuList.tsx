@@ -11,6 +11,7 @@ import CloudDoneIcon from '@material-ui/icons/CloudDone';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import NextWeekIcon from '@material-ui/icons/NextWeek';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import SearchIcon from '@material-ui/icons/Search';
 import { Link, useHistory } from 'react-router-dom';
 import {
     ListItemAvatar,
@@ -26,7 +27,7 @@ import {
     CssBaseline
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import styles from './menuList.module.css';
+import styles from './clientMenuList.module.css'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,10 +71,9 @@ const MenuList: React.FC = () =>{
       };
 
     const actionList = [
-        {link: "/mypage/specialist/bizpacks/new", text: "BizBack作成", icon: <PersonAddIcon />},
-        {link: "/mypage/specialist/portfolio/new", text: "過去事例作成", icon: <NoteAddIcon />},
-        {link: "/mypage/specialist/bizpacks", text: "BizBack一覧", icon: <AssignmentIndIcon />},
-        {link: "/mypage/specialist/portfolio", text: "過去事例一覧", icon: <LibraryBooksIcon />},
+        {link: "/mypage/client/issue/new", text: "公募作成", icon: <CloudUploadIcon />},
+        {link: "/mypage/client/issue/index", text: "公募一覧", icon: <CloudDoneIcon />},
+        {link: "/mypage/client/bizpacks", text: "bizpack一覧", icon: <SearchIcon />},
         {link: "/mypage/transactions", text: "取引一覧", icon: <NextWeekIcon />},
     ]
 

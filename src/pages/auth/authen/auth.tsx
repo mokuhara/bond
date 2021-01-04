@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { unwrapResult } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie'
 
 import { useAppDispatch } from "../../../store/storeHelper";
 import { SnackBar } from "../../utils/snackbar"
@@ -88,7 +89,16 @@ const Auth: React.FC = () => {
           asyncDispatch(fetchAsyncLogin(authen))
             .then(unwrapResult)
             .then(() =>{
-              history.push(`/mypage`)
+              const CookieUserType = Cookies.get('bd-type')
+              const userType = {
+                specialist : "1",
+                client: "2"
+              }
+              if(CookieUserType === userType.specialist){
+                history.push(`/mypage/specialist`)
+              }else if (CookieUserType === userType.client) {
+                history.push(`/mypage/client`)
+              }
             })
             .catch(error => {
               console.error(error)
