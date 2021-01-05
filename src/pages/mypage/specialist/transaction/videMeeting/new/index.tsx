@@ -1,10 +1,11 @@
 import React, { useState }  from 'react'
-import { Button, TextField, Typography} from '@material-ui/core';
+import { Button, TextField, Typography, FormControlLabel, Checkbox, Grid} from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 
 import { post } from '../../../../../../libs/fetch';
 import videoMeetingState from './store'
+import {format} from 'date-fns'
 
 
 const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) => {
@@ -79,6 +80,10 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
             })
     }
 
+    const handleChange = () => {
+        setVideoMeeting({ ...videoMeeting, start_time: format(new Date(), 'yyyy-MM-dd hh:mm').replace(' ', 'T' )})
+    }
+
 
     // modal
     const rand = () => {
@@ -117,20 +122,36 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
                     error={Boolean(errors.topic)}
                     helperText={errors.topic && "入力必須です"}
                 />
-                <TextField
-                    id="startAt"
-                    name="startAt"
-                    type="datetime-local"
-                    defaultValue="2017-05-24T10:30"
-                    className={classes.textField}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}
-                    onChange={(e)=>{setVideoMeeting({ ...videoMeeting, start_time: e.target.value})}}
-                    inputRef={register({ required: true })}
-                    error={Boolean(errors.startAt)}
-                    helperText={errors.startAt && "入力必須です"}
-                />
+                <Grid container alignItems="center">
+                    <Grid item xs={8}>
+                        <TextField
+                            id="startAt"
+                            name="startAt"
+                            type="datetime-local"
+                            value={videoMeeting.start_time}
+                            className={classes.textField}
+                            InputLabelProps={{
+                            shrink: true,
+                            }}
+                            onChange={(e)=>{setVideoMeeting({ ...videoMeeting, start_time: e.target.value})}}
+                            inputRef={register({ required: true })}
+                            error={Boolean(errors.startAt)}
+                            helperText={errors.startAt && "入力必須です"}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <FormControlLabel
+                            control={
+                            <Checkbox
+                                onChange={handleChange}
+                                name="now"
+                                color="primary"
+                            />
+                            }
+                            label="今から"
+                        />
+                    </Grid>
+                </Grid>
                 <Button
                         fullWidth
                         className={classes.button}
