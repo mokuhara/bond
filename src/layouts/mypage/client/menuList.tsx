@@ -1,16 +1,9 @@
 import React, { MouseEvent } from 'react';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import HelpIcon from '@material-ui/icons/Help';
-import CreateIcon from '@material-ui/icons/Create';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import NextWeekIcon from '@material-ui/icons/NextWeek';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link, useHistory } from 'react-router-dom';
 import {
@@ -18,7 +11,6 @@ import {
     Avatar,
     ListItem,
     ListItemIcon,
-    ListItemText,
     Badge,
     Menu,
     MenuItem,
