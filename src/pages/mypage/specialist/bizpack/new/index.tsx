@@ -5,7 +5,7 @@ import "@pathofdev/react-tag-input/build/index.css";
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Grid, CssBaseline, TextField, Switch, FormControl, FormControlLabel, Button, Card, Typography} from "@material-ui/core"
-import Layout from  '../../../../../layouts/mypage/specialist'
+import Layout from  '../../../../../layouts/mypage'
 import { apiUrl, post } from '../../../../../libs/fetch';
 import styles from './index.module.css'
 

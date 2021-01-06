@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react'
-import Layout from '../../../../../layouts/mypage/specialist';
+import Layout from '../../../../../layouts/mypage/specialist/menuLists';
 import { Grid, InputBase, IconButton, Paper } from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';

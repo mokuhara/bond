@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback } from 'react'
-import Layout from '../../../../../layouts/mypage/specialist';
+import Layout from '../../../../../layouts/mypage/specialist/menuLists';
 import { useLocation } from 'react-router-dom'
 import { Grid, Card , CssBaseline, Typography, Chip, Button} from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';

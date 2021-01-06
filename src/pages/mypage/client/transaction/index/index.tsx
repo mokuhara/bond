@@ -135,7 +135,7 @@ const TransactionIndex: React.FC = () => {
 
     const moveTransaction = (transaction: transaction) => {
         history.push({
-            pathname: '/mypage/specialist/transaction',
+            pathname: '/mypage/client/transaction',
             state: {transaction}
         })
     }

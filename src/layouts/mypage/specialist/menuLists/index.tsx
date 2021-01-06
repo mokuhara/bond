@@ -26,7 +26,7 @@ import {
     CssBaseline
 } from '@material-ui/core'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import styles from './menuList.module.css';
+import styles from './index.module.css';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,7 +74,7 @@ const MenuList: React.FC = () =>{
         {link: "/mypage/specialist/portfolio/new", text: "過去事例作成", icon: <NoteAddIcon />},
         {link: "/mypage/specialist/bizpacks", text: "BizBack一覧", icon: <AssignmentIndIcon />},
         {link: "/mypage/specialist/portfolio", text: "過去事例一覧", icon: <LibraryBooksIcon />},
-        {link: "/mypage/transactions", text: "取引一覧", icon: <NextWeekIcon />},
+        {link: "/mypage/specialist/transactions", text: "取引一覧", icon: <NextWeekIcon />},
     ]
 
     return (
