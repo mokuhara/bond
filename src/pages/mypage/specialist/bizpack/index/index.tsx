@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Layout from '../../../../../layouts/mypage/specialist';
+import Layout from '../../../../../layouts/mypage';
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Chip, Button, Menu, MenuItem, Grid } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from 'react-router-dom';
