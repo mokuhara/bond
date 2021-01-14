@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 import {Grid, CssBaseline, TextField, FormControl, Select, MenuItem, InputLabel, Button, Typography, Card} from '@material-ui/core'
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 import { post, apiUrl } from '../../../../../libs/fetch'
 import issueState from './store'
@@ -54,7 +55,7 @@ issueState.userId = userId
 
 // TODO validation作成（開始時間や終了時間、募集期間の関係等）
 const IssueNew: React.FC = () => {
-    console.log('hogheogeogheoghoe')
+    const history = useHistory();
     const classes = useStyles();
     const [issue, setIssue] = useState(issueState)
 
@@ -123,7 +124,7 @@ const IssueNew: React.FC = () => {
         if(issue.userId === 0) alert('ログインしなおしてください')
         post(`${apiUrl}/mypage/issue/create`, issue, {}, true)
               .then(res => res.json())
-              .then(json => console.log(json))
+              .then(json => history.push(`/mypage/client/issue/index`))
     }
 
     useEffect(() => {
@@ -131,6 +132,7 @@ const IssueNew: React.FC = () => {
         if(userId) {
             setIssue({...issue, userId: parseInt(userId, 10)})
         }
+        console.log('issueNew')
     }, [])
     // const { register, errors } = useForm({
     //     mode: 'onBlur',
