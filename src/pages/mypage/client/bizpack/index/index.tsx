@@ -48,7 +48,8 @@ useEffect(() => {
           description: bizpack.description,
           unitPrice: bizpack.unitPrice,
           duration: bizpack.duration,
-          isPublic: bizpack.isPublic
+          isPublic: bizpack.isPublic,
+          specialistUserId: bizpack.userId
         }
     }
 
@@ -72,11 +73,15 @@ useEffect(() => {
         const res = await get(`${apiUrl}/mypage/client/bizpacks`)
                             .then(result => result.json())
         if(res && res.data){
-            filterBizpacks(res.data).then((filteredBizpacks) => {
-                if(!filteredBizpacks) return
-                const reshapeBizpacks = filteredBizpacks.map((bizpack: resBizpack) => createData(bizpack))
-                setBizpacks(reshapeBizpacks);
-            })
+            console.log(res.data)
+            // TODO サーバーサイドでfilterは実施する
+            // filterBizpacks(res.data).then((filteredBizpacks) => {
+            //     if(!filteredBizpacks) return
+            //     const reshapeBizpacks = filteredBizpacks.map((bizpack: resBizpack) => createData(bizpack))
+            //     setBizpacks(reshapeBizpacks);
+            // })
+            const reshapeBizpacks = res.data.map((bizpack: resBizpack) => createData(bizpack))
+            setBizpacks(reshapeBizpacks);
         }
     }
     fetchBizpacks();

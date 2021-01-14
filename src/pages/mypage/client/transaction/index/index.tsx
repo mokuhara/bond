@@ -73,6 +73,8 @@ const TransactionIndex: React.FC = () => {
         get(`${apiUrl}/mypage/transaction/`, {}, true)
             .then(res => res.json())
             .then(json => {
+                console.log('transaction')
+                console.log(json.data)
                 setTableData(createTableData(json.data))
             })
             .catch(e => {

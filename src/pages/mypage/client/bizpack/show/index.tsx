@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { Grid, Card , CssBaseline, Typography, Chip, Button} from '@material-ui/core';
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 import { bizpacksState } from './store'
 import { apiUrl, post } from '../../../../../libs/fetch'
@@ -44,6 +45,7 @@ const ClientBizPackShow: React.FC = () => {
     const classes = useStyles()
     const location = useLocation<{bizpack: bizpack}>();
     const bizpack = location.state.bizpack
+    console.log(bizpack)
 
     const products = useCallback(() => {
         return bizpack.products.map((product, index) => {
@@ -59,11 +61,22 @@ const ClientBizPackShow: React.FC = () => {
     },[bizpack.products])
 
     const createTransaction = async() => {
+        const clientUserId = Cookies.get('bd-uid')
+        if(typeof clientUserId != 'string') return
+
         const body = {
             bizpackId: bizpack.id,
-            bizpack: {...bizpack, category: { type: bizpack.category}},
-            status: 1
+            // bizpack: {...bizpack, category: { type: bizpack.category}},
+            status: 1,
+            specialistUserId: bizpack.specialistUserId,
+            clientUserId: parseInt(clientUserId, 10),
+            title: bizpack.title,
+            description: bizpack.description,
+            category: {type: bizpack.category },
+            unitPrice: bizpack.unitPrice,
+            duration: bizpack.duration
         }
+        console.log(body)
         const res = await post(`${apiUrl}/mypage/transaction/create`, body)
                             .then(result => result.json())
         if(res && res.status === 200){
