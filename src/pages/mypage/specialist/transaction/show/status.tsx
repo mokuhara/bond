@@ -35,6 +35,11 @@ const statusArr = [
 
 const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({transaction, setTransaction}) => {
     const classes = useStyles()
+    console.log('transaction')
+    console.log(transaction)
+    console.log(transaction.SpecialistAcceptance)
+    console.log(transaction.clientAcceptance)
+    console.log(transaction.SpecialistAcceptance === 1 && transaction.clientAcceptance === 1)
 
     const [status, setStatus] = useState(transaction.status)
     const handleStatusChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -68,7 +73,11 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
                     >
                         {statusArr.map(status => {
                             if(status.id === transaction.status) return (<MenuItem selected={true} value={status.id}>{status.name}</MenuItem>)
-                            return (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            if(status.id >= 3){
+                               return transaction.SpecialistAcceptance === 1 && transaction.clientAcceptance === 1 && (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            }else {
+                                return (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            }
                         })}
                     </Select>
                 </FormControl>

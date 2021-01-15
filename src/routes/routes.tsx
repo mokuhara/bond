@@ -15,8 +15,11 @@ import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
 
-import TransactionIndex from "../pages/mypage/specialist/transaction/index"
-import Transaction from "../pages/mypage/specialist/transaction/show"
+import SpecialistTransactionIndex from "../pages/mypage/specialist/transaction/index"
+import SpecialistTransaction from "../pages/mypage/specialist/transaction/show"
+import ClientTransactionIndex from "../pages/mypage/client/transaction/index"
+import ClientTransactionEdit from "../pages/mypage/client/transaction/edit"
+import ClientTransaction from "../pages/mypage/client/transaction/show"
 import IssueRoutes from "./mypage/client/IssueRoutes"
 
 
@@ -58,17 +61,10 @@ const RootRouter: React.FC = () => {
 
 
                 <PrivateRoute path='/mypage/specialist/transactions'>
-                    <SpecialistMypage><TransactionIndex /></SpecialistMypage>
+                    <SpecialistMypage><SpecialistTransactionIndex /></SpecialistMypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/specialist/transaction'>
-                    <SpecialistMypage><Transaction /></SpecialistMypage>
-                </PrivateRoute>
-
-                <PrivateRoute path='/mypage/client/transactions'>
-                    <ClientMypage><TransactionIndex /></ClientMypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/client/transaction'>
-                    <ClientMypage><Transaction /></ClientMypage>
+                    <SpecialistMypage><SpecialistTransaction /></SpecialistMypage>
                 </PrivateRoute>
 
                 {/* specialistMypage */}
@@ -90,6 +86,16 @@ const RootRouter: React.FC = () => {
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/client/bizpack'>
                     <ClientMypage><ClientBizPackShow /></ClientMypage>
+                </PrivateRoute>
+
+                <PrivateRoute path='/mypage/client/transactions'>
+                    <ClientMypage><ClientTransactionIndex /></ClientMypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction/edit'>
+                    <ClientMypage><ClientTransactionEdit /></ClientMypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction'>
+                    <ClientMypage><ClientTransaction /></ClientMypage>
                 </PrivateRoute>
                 <Route path='/mypage/client' component={ClientMypage} />
             </Switch>
