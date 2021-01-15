@@ -17,6 +17,7 @@ import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreat
 import SpecialistTransactionIndex from "../pages/mypage/specialist/transaction/index"
 import SpecialistTransaction from "../pages/mypage/specialist/transaction/show"
 import ClientTransactionIndex from "../pages/mypage/client/transaction/index"
+import ClientTransactionEdit from "../pages/mypage/client/transaction/edit"
 import ClientTransaction from "../pages/mypage/client/transaction/show"
 import IssueRoutes from "./mypage/client/IssueRoutes"
 
@@ -76,6 +77,9 @@ const RootRouter: React.FC = () => {
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/client/transactions'>
                     <Mypage><ClientTransactionIndex /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction/edit'>
+                    <Mypage><ClientTransactionEdit /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/client/transaction'>
                     <Mypage><ClientTransaction /></Mypage>

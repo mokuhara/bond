@@ -86,10 +86,10 @@ const TransactionIndex: React.FC = () => {
         const createData = (transaction: transaction) => {
             return {
                 id: transaction.ID,
-                category: transaction.Bizpack.category.type,
-                title: transaction.Bizpack.title,
+                category: transaction.category.type,
+                title: transaction.title,
                 status: (statusState.filter(status => status.id === transaction.status))[0].name,
-                description: transaction.Bizpack.description,
+                description: transaction.description,
                 transaction: transaction
             }
         }

@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
 import { useLocation } from 'react-router-dom'
-import {Grid, CssBaseline, Card, CardContent, Typography } from '@material-ui/core'
+import {Grid, CssBaseline, Card, CardContent, Typography, Button } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
+import { useHistory } from 'react-router-dom';
+import { apiUrl, put } from '../../../../../libs/fetch'
 
 
 import CreateReview from '../review/new'
@@ -39,9 +41,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
+    buttonWrapper: {
+        margin: '2px',
+        padding: '2px'
+    },
+    button: {
+        fontSize: '12px',
+        margin: '10px'
+    }
 }))
 
 const Transaction: React.FC = () => {
+    const history = useHistory()
     const classes = useStyles()
     const location = useLocation<transaction>();
     const [transaction, setTransaction] = useState(location.state.transaction)
@@ -55,13 +66,59 @@ const Transaction: React.FC = () => {
         return false
     }
 
+    const moveEditIssue = () => {
+        history.push({
+            pathname: '/mypage/client/transaction/edit',
+            state: {transaction}
+        })
+
+    }
+
+    // TODO go側でclientAcceptanceの値が更新されない
+    const toggleAccept = () => {
+        const clientUserId = Cookies.get('bd-uid')
+        if(typeof clientUserId != 'string') return
+        const body = {
+            id: transaction.ID,
+            description: transaction.description,
+            clientAcceptance: transaction.clientAcceptance === 1 ? 0 : 1
+        }
+        console.log(body)
+        put(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, body)
+    }
+
 
     return (
         <>
             <Grid container component="main" className={classes.root}>
                 <CssBaseline />
-                <Grid item xs={10}>
-                    <Typography variant="h6" component="h2" className={classes.title}>案件詳細</Typography>
+                <Grid item xs={10} >
+                    <Grid container justify="space-between">
+                        <Grid item xs={6}>
+                            <Typography variant="h6" component="h2" className={classes.title}>案件詳細</Typography>
+                        </Grid>
+                        <Grid item xs={6}>
+                        <Grid container spacing={2} justify="center" alignItems="center" className={classes.buttonWrapper}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={()=>moveEditIssue()}
+                                className={classes.button}
+                                disabled={transaction.SpecialistAcceptance === 1 && transaction.clientAcceptance === 1}
+                            >
+                                編集する
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={()=>toggleAccept()}
+                                className={classes.button}
+                            >
+                                {transaction.clientAcceptance === 1 ? "承認を解除" : "承認する"}
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    </Grid>
                     <Grid item xs={12}>
                         <Card  className={classes.container} variant="outlined">
                             <CardContent>
@@ -70,19 +127,19 @@ const Transaction: React.FC = () => {
                                         タイトル
                                     </Grid>
                                     <Grid item xs={8} className={classes.data}>
-                                        {transaction.Bizpack.title}
+                                        {transaction.title}
                                     </Grid>
                                     <Grid item xs={4} className={classes.label}>
                                         カテゴリ
                                     </Grid>
                                     <Grid item xs={8} className={classes.data}>
-                                        {transaction.Bizpack.category.type}
+                                        {transaction.category.type}
                                     </Grid>
                                     <Grid item xs={4} className={classes.label}>
                                         詳細
                                     </Grid>
                                     <Grid item xs={8} className={classes.data}>
-                                        {transaction.Bizpack.description}
+                                        {transaction.description}
                                     </Grid>
                                     <Status transaction={transaction} setTransaction={setTransaction}/>
                                 </Grid>

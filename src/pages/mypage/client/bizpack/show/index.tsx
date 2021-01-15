@@ -74,7 +74,9 @@ const ClientBizPackShow: React.FC = () => {
             description: bizpack.description,
             category: {type: bizpack.category },
             unitPrice: bizpack.unitPrice,
-            duration: bizpack.duration
+            duration: bizpack.duration,
+            specialistAcceptance: 1,
+            clientAcceptance: 1,
         }
         console.log(body)
         const res = await post(`${apiUrl}/mypage/transaction/create`, body)
