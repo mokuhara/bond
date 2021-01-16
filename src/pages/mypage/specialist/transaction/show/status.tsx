@@ -69,7 +69,11 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
                     >
                         {statusArr.map(status => {
                             if(status.id === transaction.status) return (<MenuItem selected={true} value={status.id}>{status.name}</MenuItem>)
-                            return (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            if(status.id >= 3){
+                               return transaction.SpecialistAcceptance === 1 && transaction.clientAcceptance === 1 && (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            }else {
+                                return (<MenuItem value={status.id}>{status.name}</MenuItem>)
+                            }
                         })}
                     </Select>
                 </FormControl>

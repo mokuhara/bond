@@ -74,16 +74,16 @@ const Transaction: React.FC = () => {
 
     }
 
-    // TODO go側でclientAcceptanceの値が更新されない
     const toggleAccept = () => {
         const clientUserId = Cookies.get('bd-uid')
         if(typeof clientUserId != 'string') return
+        const newClientAcceptance = transaction.clientAcceptance === 1 ? 2 : 1
         const body = {
             id: transaction.ID,
             description: transaction.description,
-            clientAcceptance: transaction.clientAcceptance === 1 ? 0 : 1
+            clientAcceptance: newClientAcceptance
         }
-        console.log(body)
+        setTransaction({...transaction, clientAcceptance: newClientAcceptance})
         put(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, body)
     }
 

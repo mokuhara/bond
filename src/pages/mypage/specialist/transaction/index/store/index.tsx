@@ -13,7 +13,33 @@ export const transactionState = [{
         duration: 0,
         isPublic: false
     },
+    issueId: 0,
+    issue: {
+        category: { type: 1 },
+        applicationDeadline: "",
+        background: "",
+        budget: 0,
+        categoryId: 0,
+        clientInfo: "",
+        description: "",
+        desiredSpecialist: "",
+        endAt: "",
+        recruitmentCapacity: 0,
+        requiredItem: "",
+        startAt: "",
+        title: "",
+        userId: 0,
+    },
     status: 1,
+    category: { type: 1 },
+    clientUserId: 0,
+    specialistUserId: 0,
+    title: "",
+    description: "",
+    unitPrice: 0,
+    duration: 0,
+    SpecialistAcceptance: 0,
+    clientAcceptance: 0,
     videoMeetings: [{
         id: 0,
         topic: "",
@@ -52,3 +78,4 @@ export const statusState = [
     {id: 6, name: "契約終了"},
     {id: 7, name: "失注"},
 ]
+
