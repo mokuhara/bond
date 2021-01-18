@@ -29,7 +29,7 @@ import ThreadShow from "../pages/mypage/chat/thread/show"
 
 const RootRouter: React.FC = () => {
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Switch>
                 <PrivateRoute exact path='/mypage/chat/thread/edit'>
                     <Mypage><ThreadEdit /></Mypage>
