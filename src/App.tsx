@@ -1,13 +1,8 @@
 import React from 'react';
-import './App.css';
-import RootRouter from './routes/route'
+import RootRouter from './routes/routes'
 
 function App() {
-  return (
-    <div>
-      <RootRouter />
-    </div>
-  );
+  return <RootRouter />
 }
 
 export default App;

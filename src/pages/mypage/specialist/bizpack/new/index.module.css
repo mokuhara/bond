@@ -1,0 +1,14 @@
+.title {
+    font-size: 14px;
+    margin: 15px;
+    font-weight: bold;
+}
+
+.container {
+    width: 100%;
+    margin: 20px;
+}
+
+.buttonWrapper {
+    margin: 20px;
+}
