@@ -21,8 +21,7 @@ const defaultOptions = (isCredential: boolean) => {
 
   return options
 }
-
-export const apiUrl = "http://localhost:8000/v1";
+export const apiUrl = process.env.REACT_APP_API_URL
 
 export const get = (path: string, additionalOptions: object = {}, isCredential: boolean = true): Promise<Response> => {
   const options: object = Object.assign(defaultOptions(isCredential), additionalOptions)
