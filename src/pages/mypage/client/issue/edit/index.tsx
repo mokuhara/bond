@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 import {format} from 'date-fns'
 
 import editIssueState from './store'
-import { put } from '../../../../../libs/fetch'
+import { put, apiUrl } from '../../../../../libs/fetch'
 
 type editIssueState = {issue: typeof editIssueState}
 
@@ -121,7 +121,6 @@ const EditIssue: React.FC = () => {
     }
 
     const asyncUpdateIssue = async () => {
-        const apiUrl = "http://localhost:8000/v1";
         put(`${apiUrl}/mypage/issue/${issue.ID}/update`, issue, {}, true)
               .then(res => res.json())
               .then(json => console.log(json))

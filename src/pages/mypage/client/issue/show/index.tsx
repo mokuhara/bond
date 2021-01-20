@@ -6,7 +6,7 @@ import {format} from 'date-fns'
 import { useHistory } from 'react-router-dom';
 
 
-import { destroy } from '../../../../../libs/fetch'
+import { destroy, apiUrl } from '../../../../../libs/fetch'
 import issueState from './store'
 
 type issueState = {issue: typeof issueState}
@@ -64,7 +64,6 @@ const Issue: React.FC = () => {
     }
 
     const deleteIssue = async () => {
-        const apiUrl = "http://localhost:8000/v1";
         destroy(`${apiUrl}/mypage/issue/${issue.ID}/delete`, issue, true)
               .then(res => res.json())
               .then(json => {
@@ -183,8 +182,8 @@ const Issue: React.FC = () => {
                     </Grid>
                     </CardContent>
                     </Card>
-                    
-                
+
+
             </Grid>
         </>
     )

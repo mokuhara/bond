@@ -1,12 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import Cookies from 'js-cookie'
 import { RootState } from "../../store/store"
-import { post } from "../../libs/fetch"
+import { post, apiUrl } from "../../libs/fetch"
 import authResponse from "./authen/auth.json"
 import httpStatus from "./httpStatus.json"
 import postUserInfo from "./userInfo.json"
-
-const apiUrl = "http://localhost:8000/v1";
 
 type AUTHRESPONSE = typeof authResponse
 type USERINFORESPONSE = {
