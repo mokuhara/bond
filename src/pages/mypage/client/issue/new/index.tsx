@@ -4,7 +4,7 @@ import {Grid, CssBaseline, TextField, FormControl, Select, MenuItem, InputLabel,
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { post } from '../../../../../libs/fetch'
+import { post, apiUrl } from '../../../../../libs/fetch'
 import issueState from './store'
 
 const useStyles = makeStyles((theme) => ({
@@ -119,7 +119,6 @@ const CreateIssue: React.FC = () => {
     }
 
     const asyncCreateIssue = async () => {
-        const apiUrl = "http://localhost:8000/v1";
         if(issue.userId === 0) alert('ログインしなおしてください')
         post(`${apiUrl}/mypage/issue/create`, issue, {}, true)
               .then(res => res.json())

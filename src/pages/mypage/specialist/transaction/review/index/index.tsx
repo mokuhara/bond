@@ -8,7 +8,7 @@ import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltO
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 
 
-import { get } from '../../../../../../libs/fetch'
+import { get, apiUrl } from '../../../../../../libs/fetch'
 import { transactionState } from '../../index/store'
 import reviewsState from './store'
 
@@ -99,7 +99,6 @@ const Review: React.FC<{transaction: transaction}> = ({transaction}) => {
     }
 
     const asyncGetRevies = () => {
-        const apiUrl = "http://localhost:8000/v1";
         get(`${apiUrl}/mypage/review/${transaction.ID}`, {}, true)
             .then(res => res.json())
             .then(json => {

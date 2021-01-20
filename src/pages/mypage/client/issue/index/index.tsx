@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import {format} from 'date-fns'
 
 import { issueState, tableDataState } from './store'
-import { get } from '../../../../../libs/fetch'
+import { get, apiUrl } from '../../../../../libs/fetch'
 
 
 interface Column {
@@ -63,7 +63,6 @@ const IssueIndex: React.FC = () => {
     const [tableData, setTableData] = useState([tableDataState])
 
     const asyncGetIssues = async () => {
-        const apiUrl = "http://localhost:8000/v1";
         get(`${apiUrl}/mypage/issue/`, {}, true)
               .then(res => res.json())
               .then(json => {
