@@ -14,10 +14,11 @@
     "static/js/2.4bd5c731.chunk.js.LICENSE.txt": "/bond/static/js/2.4bd5c731.chunk.js.LICENSE.txt",
     "static/media/Implement.d43642f2.jpg": "/bond/static/media/Implement.d43642f2.jpg",
     "static/media/Operation.53f2ff92.jpg": "/bond/static/media/Operation.53f2ff92.jpg",
-    "static/media/Planing.6034faeb.jpg": "/bond/static/media/Planing.6034faeb.jpg"
+    "static/media/Planing.6034faeb.jpg": "/bond/static/media/Planing.6034faeb.jpg",
+    "static/media/mainImage.0830277b.png": "/bond/static/media/mainImage.0830277b.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.362c1eb8.js",
+    "static/js/runtime-main.da58e1c0.js",
     "static/css/2.6f9bf27b.chunk.css",
     "static/js/2.4bd5c731.chunk.js",
     "static/css/main.02a899cb.chunk.css",
