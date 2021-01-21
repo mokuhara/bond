@@ -3,7 +3,7 @@ import { Button, TextField, Typography, FormControlLabel, Checkbox, Grid} from '
 import { makeStyles , Theme} from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 
-import { post } from '../../../../../../libs/fetch';
+import { post , apiUrl} from '../../../../../../libs/fetch';
 import videoMeetingState from './store'
 import {format} from 'date-fns'
 
@@ -62,7 +62,6 @@ const VideoMeetingForm: React.FC<{transactionId: number}> = ({transactionId}) =>
     }
 
     const asyncCreateVideoMeeting = async () => {
-        const apiUrl = "http://localhost:8000/v1";
         const vidoMeeting =  {
             topic: videoMeeting.topic,
             type: "2",
