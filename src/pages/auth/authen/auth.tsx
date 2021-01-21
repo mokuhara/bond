@@ -12,6 +12,7 @@ import { useAppDispatch } from "../../../store/storeHelper";
 import { SnackBar } from "../../utils/snackbar"
 import mainImage from "../../../assets/img/mainImage.png"
 import logo from "../../../assets/img/logo.png"
+import styles from "./auth.module.css"
 
 import {
     editEmail,
@@ -59,14 +60,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
-    media: {
-      width: "auto",
-      height: "100%",
-      objectFit: "cover",
-    },
     title: {
       fontSize: "18px",
-    }
+    },
   }));
 
 const Auth: React.FC = () => {
@@ -136,11 +132,9 @@ const Auth: React.FC = () => {
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
             <Grid item xs={false} sm={4} md={7}>
-              <CardMedia
-                className={classes.media}
-                image={mainImage}
-                title="main image"
-              />
+                <div className={styles.imageWrapper}>
+                    <img className={styles.image} src={mainImage} />
+                </div>
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
