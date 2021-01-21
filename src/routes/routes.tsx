@@ -21,11 +21,6 @@ import ClientTransactionEdit from "../pages/mypage/client/transaction/edit"
 import ClientTransaction from "../pages/mypage/client/transaction/show"
 import IssueRoutes from "./mypage/client/IssueRoutes"
 
-
-import BizpackNew from "../pages/mypage/specialist/bizpack/new"
-import BizpackIndex from  "../pages/mypage/specialist/bizpack/index"
-import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
-
 import ThreadEdit from "../pages/mypage/chat/thread/edit"
 import ThreadShow from "../pages/mypage/chat/thread/show"
 import ClientBizPackIndex from "../pages/mypage/client/bizpack/index"
@@ -45,11 +40,12 @@ const RootRouter: React.FC = () => {
 
                 <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                {/* <BizpackRoutes/> */}
+                <BizpackRoutes/>
 
-                <PrivateRoute exact path='/mypage/specialist/bizpacks'>
+                {/* <PrivateRoute exact path='/mypage/specialist/bizpacks'>
                     <BizpackIndex />
-                </PrivateRoute>
+                </PrivateRoute> */}
+
                 <PrivateRoute exact path='/mypage/chat/thread'>
                     <Mypage><ThreadShow /></Mypage>
                 </PrivateRoute>
