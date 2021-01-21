@@ -93,9 +93,13 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/mypage/client/transactions'>
                     <Mypage><ClientTransactionIndex /></Mypage>
                 </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction/edit'>
+                    <Mypage><ClientTransactionEdit /></Mypage>
+                </PrivateRoute>
                 <PrivateRoute path='/mypage/client/transaction'>
                     <Mypage><ClientTransaction /></Mypage>
                 </PrivateRoute>
+
 
                 <Route path='/mypage/client' component={Mypage} />
             </Switch>
