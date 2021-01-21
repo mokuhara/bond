@@ -57,11 +57,18 @@ const RootRouter: React.FC = () => {
                 </PrivateRoute>
 
 
-                <PrivateRoute path='/mypage/transactions'>
+                <PrivateRoute path='/mypage/specialist/transactions'>
                     <SpecialistMypage><TransactionIndex /></SpecialistMypage>
                 </PrivateRoute>
-                <PrivateRoute path='/mypage/transaction'>
+                <PrivateRoute path='/mypage/specialist/transaction'>
                     <SpecialistMypage><Transaction /></SpecialistMypage>
+                </PrivateRoute>
+
+                <PrivateRoute path='/mypage/client/transactions'>
+                    <ClientMypage><TransactionIndex /></ClientMypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction'>
+                    <ClientMypage><Transaction /></ClientMypage>
                 </PrivateRoute>
 
 
