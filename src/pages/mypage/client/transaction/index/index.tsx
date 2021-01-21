@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import VideoMeetingForm from '../videMeeting/new'
 import CategoryIcon from '../../../../../components/categoryIcon'
-import { get } from '../../../../../libs/fetch';
+import { get, apiUrl} from '../../../../../libs/fetch';
 import { transactionState,  summrizedTransactionState, statusState } from './store'
 
 interface Column {
@@ -69,7 +69,6 @@ const TransactionIndex: React.FC = () => {
     type tableData = typeof summrizedTransactionState[]
     const [tableData, setTableData] = useState([summrizedTransactionState])
     const asyncGetTransactions = () => {
-        const apiUrl = "http://localhost:8000/v1";
         get(`${apiUrl}/mypage/transaction/`, {}, true)
             .then(res => res.json())
             .then(json => {
