@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Grid, FormControl, MenuItem, Select } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 
-import { put } from '../../../../../libs/fetch'
+import { put, apiUrl } from '../../../../../libs/fetch'
 import { transactionState } from '../index/store'
 import { SignalCellularNoSimOutlined } from '@material-ui/icons';
 
@@ -47,7 +47,6 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
     };
 
     const asyncChangeStatus = async (transaction: transaction) => {
-        const apiUrl = "http://localhost:8000/v1";
         put(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, transaction, {}, true)
             .then(res => res.json())
             .then(json => {
