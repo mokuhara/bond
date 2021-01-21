@@ -53,7 +53,8 @@ const userId = Number(Cookies.get('bd-uid'))
 issueState.userId = userId
 
 // TODO validation作成（開始時間や終了時間、募集期間の関係等）
-const CreateIssue: React.FC = () => {
+const IssueNew: React.FC = () => {
+    console.log('hogheogeogheoghoe')
     const classes = useStyles();
     const [issue, setIssue] = useState(issueState)
 
@@ -368,4 +369,4 @@ const CreateIssue: React.FC = () => {
 
 }
 
-export default CreateIssue
+export default IssueNew

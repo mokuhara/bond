@@ -80,7 +80,7 @@ const UserInfo: React.FC = () => {
             .then(()=>{
                 setActiveStep(activeStep + 1)
                 setTimeout(() => {
-                    history.push(`/mypage`)
+                    history.push(`/mypage/client`)
                 }, 2000);
             })
             .catch(error =>{
