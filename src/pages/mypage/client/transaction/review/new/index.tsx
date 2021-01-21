@@ -5,7 +5,7 @@ import Rating, { IconContainerProps } from '@material-ui/lab/Rating';
 import {SentimentVeryDissatisfied, SentimentDissatisfied, SentimentSatisfied, SentimentSatisfiedAlt, SentimentVerySatisfied} from "@material-ui/icons"
 import Cookies from 'js-cookie'
 
-import { post } from '../../../../../../libs/fetch'
+import { post, apiUrl } from '../../../../../../libs/fetch'
 import { transactionState } from '../../index/store'
 import reviewState from './store'
 
@@ -70,7 +70,6 @@ const CreateReview: React.FC<{transaction: transaction}> = ({transaction}) => {
     type review = typeof reviewState
     const [review, setReview] = useState({rating:0, message:""})
     const asyncCreateReview = async (review: review) => {
-        const apiUrl = "http://localhost:8000/v1";
 
         post(`${apiUrl}/mypage/review/create`, review, {}, true)
             .then(res => res.json())
