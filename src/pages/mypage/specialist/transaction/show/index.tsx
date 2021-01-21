@@ -70,19 +70,19 @@ const Transaction: React.FC = () => {
                                         タイトル
                                     </Grid>
                                     <Grid item xs={8} className={classes.data}>
-                                        {transaction.Bizpack.title}
+                                        {transaction.bizpack.title}
                                     </Grid>
                                     <Grid item xs={4} className={classes.label}>
                                         カテゴリ
                                     </Grid>
                                     <Grid item xs={8} className={classes.data}>
-                                        {transaction.Bizpack.category.type}
+                                        {transaction.bizpack.category.type}
                                     </Grid>
                                     <Grid item xs={4} className={classes.label}>
                                         詳細
                                     </Grid>
                                     <Grid item xs={8} className={classes.data}>
-                                        {transaction.Bizpack.description}
+                                        {transaction.bizpack.description}
                                     </Grid>
                                     <Status transaction={transaction} setTransaction={setTransaction}/>
                                 </Grid>

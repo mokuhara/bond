@@ -81,18 +81,20 @@ const TransactionIndex: React.FC = () => {
 
     const createTableData = (transactions:transaction[] ) => {
         const createData = (transaction: transaction) => {
+            console.log('create', transaction);
             return {
                 id: transaction.ID,
-                category: transaction.Bizpack.category.type,
-                title: transaction.Bizpack.title,
+                category: transaction.bizpack.category.type,
+                title: transaction.bizpack.title,
                 status: (statusState.filter(status => status.id === transaction.status))[0].name,
-                description: transaction.Bizpack.description,
+                description: transaction.bizpack.description,
                 transaction: transaction
             }
         }
         const result =  transactions.map(transaction => {
             return createData(transaction)
         })
+        console.log('res', result)
         return result
     }
 
@@ -145,7 +147,6 @@ const TransactionIndex: React.FC = () => {
 
     //videoMeeting
     const [transactionId, setTransactionId] = useState(0)
-    console.log(tableData)
     return (
         <>
             <Paper className={classes.root}>
