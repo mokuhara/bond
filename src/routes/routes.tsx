@@ -25,7 +25,6 @@ import ThreadEdit from "../pages/mypage/chat/thread/edit"
 import ThreadShow from "../pages/mypage/chat/thread/show"
 import ClientBizPackIndex from "../pages/mypage/client/bizpack/index"
 import ClientBizPackShow from "../pages/mypage/client/bizpack/show"
-import Chat from "../pages/mypage/chat"
 
 const RootRouter: React.FC = () => {
     return (
@@ -42,17 +41,12 @@ const RootRouter: React.FC = () => {
                 <PrivateRoute path='/userinfo' component={UserInfo} />
                 <BizpackRoutes/>
 
-                {/* <PrivateRoute exact path='/mypage/specialist/bizpacks'>
-                    <BizpackIndex />
-                </PrivateRoute> */}
-
                 <PrivateRoute exact path='/mypage/chat/thread'>
                     <Mypage><ThreadShow /></Mypage>
                 </PrivateRoute>
 
                 <Route exact path='/' component={Auth} />
-                    <PrivateRoute path='/userinfo' component={UserInfo} />
-                {/* <BizpackRoutes/> */}
+                <PrivateRoute path='/userinfo' component={UserInfo} />
 
                 {/* specialistMypage */}
                 <PrivateRoute path='/mypage/specialist/profile'>
