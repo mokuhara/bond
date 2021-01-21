@@ -29,7 +29,7 @@ const BizPackEdit: React.FC = () => {
     const res = await put(`${apiUrl}/mypage/bizpacks/${id}`, bizpack)
                         .then(res => res.json())
     if (res.status == 200) {
-      history.push("/mypage/bizpacks")
+      history.push("/mypage/specialist/bizpacks")
     }
   }
 

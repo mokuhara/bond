@@ -85,12 +85,12 @@ const MenuList: React.FC = () =>{
                     <ul>
                         {actionList && actionList.map(action =>(
                             <li key={action.link} className={styles.list}>
-                                <a href={action.link} className={styles.link}>
+                                <Link to={action.link} className={styles.link}>
                                     <div className={styles.list}>
                                         <div>{action.icon}</div>
                                         <div className={styles.text}>{action.text}</div>
                                     </div>
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>

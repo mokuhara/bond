@@ -30,7 +30,7 @@ const BizpackNew: React.FC = (_props) => {
                         .then(res => res.json())
 
     if (res.status == 200) {
-      history.push(`/mypage/bizpacks`)
+      history.push(`/mypage/specialist/bizpacks`)
     }
   }
 

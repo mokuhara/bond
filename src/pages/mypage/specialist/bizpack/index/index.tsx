@@ -92,7 +92,7 @@ const BizPackIndex: React.FC = () => {
 
   const moveEditBizpack = (bizpackId: string) => {
     setAnchorEl(null);
-    history.push(`/mypage/bizpacks/${bizpackId}/edit`)
+    history.push(`/mypage/specialist/bizpacks/${bizpackId}/edit`)
   };
 
   const DeleteBizpack = async (bizpackId: string) => {
