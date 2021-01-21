@@ -9,7 +9,11 @@ import PrivateRoute from './privateRoute'
 import Auth from '../pages/auth/authen/auth'
 import UserInfo from "../pages/auth/userInfo/userInfo"
 import Mypage from '../layouts/mypage'
-import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
+// import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
+import BizpackNew from "../pages/mypage/specialist/bizpack/new"
+import BizpackIndex from "../pages/mypage/specialist/bizpack/index"
+import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
+
 import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
@@ -39,7 +43,19 @@ const RootRouter: React.FC = () => {
 
                 <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                <BizpackRoutes/>
+
+                {/* <BizpackRoutes/> */}
+                <PrivateRoute exact path='/mypage/specialist/bizpacks'>
+                    <BizpackIndex />
+                </PrivateRoute>
+
+                <PrivateRoute path='/mypage/specialist/bizpacks/new'>
+                    <BizpackNew />
+                </PrivateRoute>
+
+                <PrivateRoute exact path='/mypage/specialist/bizpacks/:id/edit'>
+                    <BizpackEdit />
+                </PrivateRoute>
 
                 <PrivateRoute exact path='/mypage/chat/thread'>
                     <Mypage><ThreadShow /></Mypage>
