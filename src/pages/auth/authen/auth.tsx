@@ -1,5 +1,5 @@
 import React , {useState} from "react";
-import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography,  FormControl, RadioGroup, FormControlLabel, Radio} from "@material-ui/core"
+import { Button, Avatar, CssBaseline, TextField,  Link, Paper, Box, Grid, Typography,  FormControl, RadioGroup, FormControlLabel, Radio, CardMedia} from "@material-ui/core"
 import { Search } from "@material-ui/icons"
 import {makeStyles, Theme} from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux"
@@ -10,6 +10,8 @@ import Cookies from 'js-cookie'
 
 import { useAppDispatch } from "../../../store/storeHelper";
 import { SnackBar } from "../../utils/snackbar"
+import mainImage from "../../../assets/img/mainImage.png"
+import logo from "../../../assets/img/logo.png"
 
 import {
     editEmail,
@@ -40,14 +42,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     root: {
       height: '100vh',
     },
-    image: {
-      backgroundImage: 'url(https://honote.macromill.com/uploads/20180515-main.png)',
-      backgroundRepeat: 'no-repeat',
-      backgroundColor:
-        theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    },
     paper: {
       margin: theme.spacing(8, 4),
       display: 'flex',
@@ -65,6 +59,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    media: {
+      width: "auto",
+      height: "100%",
+      objectFit: "cover",
+    },
+    title: {
+      fontSize: "18px",
+    }
   }));
 
 const Auth: React.FC = () => {
@@ -133,14 +135,18 @@ const Auth: React.FC = () => {
     return (
         <Grid container component="main" className={classes.root}>
             <CssBaseline />
-            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={false} sm={4} md={7}>
+              <CardMedia
+                className={classes.media}
+                image={mainImage}
+                title="main image"
+              />
+            </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <Search />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                     Omoch
+                    <Avatar className={classes.avatar} src={logo}/>
+                    <Typography component="h1" variant="h5" className={classes.title}>
+                     SaaS支援サービス
                     </Typography>
                         <FormControl component="label">
                             {!isLoginView && <RadioGroup
