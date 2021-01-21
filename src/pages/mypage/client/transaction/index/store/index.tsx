@@ -1,6 +1,10 @@
 export const transactionState = [{
     ID: 0,
     bizpackId: 0,
+    description: '',
+    unitPrice: 0,
+    duration: 0,
+
     Bizpack: {
         products: [{name: ""}],
         category: { type: 1 },

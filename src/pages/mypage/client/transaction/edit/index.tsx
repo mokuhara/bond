@@ -23,9 +23,9 @@ const EditTransaction: React.FC = () => {
     const location = useLocation<editTransaction>();
     const [transaction, setTransaction] = useState(location.state.transaction)
 
-    const handleChangeTitle = (title: string) => {
-        setTransaction({...transaction, title: title})
-    }
+    // const handleChangeTitle = (title: string) => {
+    //     setTransaction({...transaction, title: title})
+    // }
     const handleChangeDescription = (description: string) => {
         setTransaction({...transaction, description: description})
     }

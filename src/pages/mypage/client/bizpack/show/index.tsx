@@ -66,7 +66,7 @@ const ClientBizPackShow: React.FC = () => {
             bizpackId: bizpack.id,
             // bizpack: {...bizpack, category: { type: bizpack.category}},
             status: 1,
-            specialistUserId: bizpack.specialistUserId,
+            specialistUserId: bizpack.userId,
             clientUserId: parseInt(clientUserId, 10),
             title: bizpack.title,
             description: bizpack.description,
