@@ -1,7 +1,7 @@
 export const transactionState = [{
     ID: 0,
     bizpackId: 0,
-    bizpack: {
+    Bizpack: {
         products: [{name: ""}],
         category: { type: 1 },
         title: "",
@@ -78,4 +78,3 @@ export const statusState = [
     {id: 6, name: "契約終了"},
     {id: 7, name: "失注"},
 ]
-

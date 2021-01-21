@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Grid, FormControl, MenuItem, Select } from '@material-ui/core'
 import {makeStyles, Theme } from "@material-ui/core/styles";
 
-import { put, apiUrl } from '../../../../../libs/fetch'
+import { put } from '../../../../../libs/fetch'
 import { transactionState } from '../index/store'
 import { SignalCellularNoSimOutlined } from '@material-ui/icons';
 
@@ -35,11 +35,6 @@ const statusArr = [
 
 const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({transaction, setTransaction}) => {
     const classes = useStyles()
-    console.log('transaction')
-    console.log(transaction)
-    console.log(transaction.SpecialistAcceptance)
-    console.log(transaction.clientAcceptance)
-    console.log(transaction.SpecialistAcceptance === 1 && transaction.clientAcceptance === 1)
 
     const [status, setStatus] = useState(transaction.status)
     const handleStatusChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -52,6 +47,7 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
     };
 
     const asyncChangeStatus = async (transaction: transaction) => {
+        const apiUrl = "http://localhost:8000/v1";
         put(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, transaction, {}, true)
             .then(res => res.json())
             .then(json => {
@@ -73,11 +69,7 @@ const Status: React.FC<{transaction: transaction, setTransaction:Function}> = ({
                     >
                         {statusArr.map(status => {
                             if(status.id === transaction.status) return (<MenuItem selected={true} value={status.id}>{status.name}</MenuItem>)
-                            if(status.id >= 3){
-                               return transaction.SpecialistAcceptance === 1 && transaction.clientAcceptance === 1 && (<MenuItem value={status.id}>{status.name}</MenuItem>)
-                            }else {
-                                return (<MenuItem value={status.id}>{status.name}</MenuItem>)
-                            }
+                            return (<MenuItem value={status.id}>{status.name}</MenuItem>)
                         })}
                     </Select>
                 </FormControl>

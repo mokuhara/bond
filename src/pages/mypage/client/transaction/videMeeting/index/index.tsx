@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Grid, CssBaseline, Button, Table, TableHead, TableRow, TableCell, TableContainer, TableBody, Paper, CardContent, Card, Typography} from '@material-ui/core'
 import { makeStyles, Theme } from '@material-ui/core/styles'
 
-import { get, destroy, apiUrl } from '../../../../../../libs/fetch'
+import { get, destroy } from '../../../../../../libs/fetch'
 import videMeetingsState from './store'
-import { createNoSubstitutionTemplateLiteral } from 'typescript'
 
 const VideoMeetings : React.FC<{transactionId: number}> = ({transactionId}) => {
     const useStyles = makeStyles((theme: Theme) => ({
@@ -43,6 +42,7 @@ const VideoMeetings : React.FC<{transactionId: number}> = ({transactionId}) => {
     }
 
     const asyncGetVideoMeetings = () => {
+        const apiUrl = "http://localhost:8000/v1";
         get(`${apiUrl}/mypage/videomeeting/${transactionId}`, {}, true)
             .then(res => res.json())
             .then(json => {
@@ -55,6 +55,7 @@ const VideoMeetings : React.FC<{transactionId: number}> = ({transactionId}) => {
     },[])
 
     const deleteHandler = (videoMeetingId: number) => {
+        const apiUrl = "http://localhost:8000/v1";
         destroy(`${apiUrl}/mypage/videomeeting/${videoMeetingId}/delete`, {}, true)
             .then(() => {
                 setVideoMeetings(videoMeetings.filter(videoMeeting => videoMeeting.ID != videoMeetingId))

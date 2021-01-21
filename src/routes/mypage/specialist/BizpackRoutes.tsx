@@ -8,15 +8,15 @@ import BizpackEdit from "../../../pages/mypage/specialist/bizpack/edit"
 const BizpackRoutes: React.FC<RouteProps> = props => {
   return (
     <>
-      <PrivateRoute exact path='/mypage/bizpacks'>
+      <PrivateRoute exact path='/mypage/specialist/bizpacks'>
         <BizpackIndex />
       </PrivateRoute>
 
-      <PrivateRoute path='/mypage/bizpacks/new'>
+      <PrivateRoute path='/mypage/specialist/bizpacks/new'>
         <BizpackNew />
       </PrivateRoute>
 
-      <PrivateRoute exact path='/mypage/bizpacks/:id/edit'>
+      <PrivateRoute exact path='/mypage/specialist/bizpacks/:id/edit'>
         <BizpackEdit />
       </PrivateRoute>
     </>

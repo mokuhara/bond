@@ -3,6 +3,9 @@ import { TextField, IconButton, Grid, InputAdornment } from "@material-ui/core"
 import Cookies from 'js-cookie'
 import { useHistory } from 'react-router-dom';
 import SendIcon from '@material-ui/icons/Send';
+import VideoCallIcon from '@material-ui/icons/VideoCall';
+import { post, apiUrl } from '../../../../libs/fetch'
+import {format} from 'date-fns'
 
 import { messageState } from '../store'
 import { db } from '../firebase'
@@ -29,6 +32,27 @@ const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
     db.collection("messages").add(message)
     }
 
+    const createVideoMeeting = () => {
+        const vidoMeeting =  {
+            topic: 'automate_create_meeting',
+            type: "2",
+            start_time: format(new Date(), 'yyyy-MM-dd hh:mm').replace(' ', 'T' ),
+            timezone: "Asia/Tokyo",
+            settings: {
+                use_pmi: "false"
+            },
+            transactionId: 0
+        }
+        post(`${apiUrl}/mypage/videomeeting/create`, vidoMeeting, {}, true)
+            .then(res => res.json())
+            .then(json => {
+                setValue({message: json.data.join_url})
+                setMessage(Object.assign(message, {createdAt: new Date()}))
+                db.collection("messages").add(message)
+            })
+
+    }
+
     return (
         <>
             <Grid container alignItems="center" justify="space-between">
@@ -46,6 +70,9 @@ const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
                               <InputAdornment position="end">
                                 <IconButton onClick={onSubmit}>
                                     <SendIcon />
+                                </IconButton>
+                                <IconButton onClick={createVideoMeeting}>
+                                    <VideoCallIcon />
                                 </IconButton>
                               </InputAdornment>
                             ),

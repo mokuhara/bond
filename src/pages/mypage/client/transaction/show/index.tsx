@@ -14,6 +14,7 @@ import Cookies from 'js-cookie'
 import VideoMeetings from '../videMeeting/index'
 import Chat from '../../../chat'
 
+
 type transaction = {transaction: typeof transactionState[0]}
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -68,22 +69,22 @@ const Transaction: React.FC = () => {
 
     const moveEditIssue = () => {
         history.push({
-            pathname: '/mypage/specialist/transaction/edit',
+            pathname: '/mypage/client/transaction/edit',
             state: {transaction}
         })
 
     }
 
     const toggleAccept = () => {
-        const specialistUserId = Cookies.get('bd-uid')
-        if(typeof specialistUserId != 'string') return
-        const newSpecialistAcceptance = transaction.SpecialistAcceptance === 1 ? 2 : 1
+        const clientUserId = Cookies.get('bd-uid')
+        if(typeof clientUserId != 'string') return
+        const newClientAcceptance = transaction.clientAcceptance === 1 ? 2 : 1
         const body = {
             id: transaction.ID,
             description: transaction.description,
-            specialistAcceptance: newSpecialistAcceptance
+            clientAcceptance: newClientAcceptance
         }
-        setTransaction({...transaction, SpecialistAcceptance: newSpecialistAcceptance})
+        setTransaction({...transaction, clientAcceptance: newClientAcceptance})
         put(`${apiUrl}/mypage/transaction/${transaction.ID}/update`, body)
     }
 
@@ -114,7 +115,7 @@ const Transaction: React.FC = () => {
                                 onClick={()=>toggleAccept()}
                                 className={classes.button}
                             >
-                                {transaction.SpecialistAcceptance === 1 ? "承認を解除" : "承認する"}
+                                {transaction.clientAcceptance === 1 ? "承認を解除" : "承認する"}
                             </Button>
                         </Grid>
                     </Grid>

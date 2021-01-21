@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 
 import VideoMeetingForm from '../videMeeting/new'
 import CategoryIcon from '../../../../../components/categoryIcon'
-import { get, apiUrl } from '../../../../../libs/fetch';
+import { get } from '../../../../../libs/fetch';
 import { transactionState,  summrizedTransactionState, statusState } from './store'
 
 interface Column {
@@ -69,11 +69,10 @@ const TransactionIndex: React.FC = () => {
     type tableData = typeof summrizedTransactionState[]
     const [tableData, setTableData] = useState([summrizedTransactionState])
     const asyncGetTransactions = () => {
+        const apiUrl = "http://localhost:8000/v1";
         get(`${apiUrl}/mypage/transaction/`, {}, true)
             .then(res => res.json())
             .then(json => {
-                console.log('transaction')
-                console.log(json.data)
                 setTableData(createTableData(json.data))
             })
             .catch(e => {
@@ -83,7 +82,6 @@ const TransactionIndex: React.FC = () => {
 
     const createTableData = (transactions:transaction[] ) => {
         const createData = (transaction: transaction) => {
-            console.log('create', transaction);
             return {
                 id: transaction.ID,
                 category: transaction.category.type,
@@ -96,7 +94,6 @@ const TransactionIndex: React.FC = () => {
         const result =  transactions.map(transaction => {
             return createData(transaction)
         })
-        console.log('res', result)
         return result
     }
 
@@ -138,7 +135,7 @@ const TransactionIndex: React.FC = () => {
 
     const moveTransaction = (transaction: transaction) => {
         history.push({
-            pathname: '/mypage/specialist/transaction',
+            pathname: '/mypage/client/transaction',
             state: {transaction}
         })
     }
@@ -149,6 +146,7 @@ const TransactionIndex: React.FC = () => {
 
     //videoMeeting
     const [transactionId, setTransactionId] = useState(0)
+
     return (
         <>
             <Paper className={classes.root}>

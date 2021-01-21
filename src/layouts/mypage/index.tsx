@@ -14,7 +14,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import MenuList from './menuList';
+import SpecialistMenuList from './specialist/menuLists';
+import ClientMenuList from './client/menuLists';
+import Cookies from 'js-cookie'
 
 
 
@@ -115,6 +117,19 @@ const Mypage: React.FC =  ({children})  => {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const menuList = () => {
+    const userTypeMaster = {
+        specialist: "1",
+        client: "2"
+    }
+    const userType = Cookies.get('bd-type')
+    if(userType === userTypeMaster.specialist) {
+        return <SpecialistMenuList />
+    } else if (userType === userTypeMaster.client){
+        return <ClientMenuList />
+    }
+  }
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -147,7 +162,7 @@ const Mypage: React.FC =  ({children})  => {
           </IconButton>
         </div>
         <Divider />
-        <MenuList />
+        {menuList()}
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

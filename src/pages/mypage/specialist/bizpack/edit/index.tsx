@@ -4,13 +4,14 @@ import "@pathofdev/react-tag-input/build/index.css";
 import { useHistory, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Grid, CssBaseline, TextField, Paper, Switch, FormControl, FormControlLabel, Button, Card } from "@material-ui/core"
-import Layout from '../../../../../layouts/mypage/specialist'
+import Layout from '../../../../../layouts/mypage'
 import { bizpackState, errorState } from './store'
 import { responseFormat } from './actions'
 import { apiUrl, get, put } from '../../../../../libs/fetch'
 import styles from './index.module.css'
 
 const BizPackEdit: React.FC = () => {
+  console.log('edit')
   const history = useHistory()
   const { id } = useParams();
   const [bizpack, setBizpack] = useState(bizpackState);
@@ -107,7 +108,7 @@ const BizPackEdit: React.FC = () => {
                           autoComplete="scale"
                           autoFocus
                           value={bizpack.scale}
-                          onChange={e => setValue({scale: e.target.value})}
+                          onChange={e => setValue({scale: parseInt(e.target.value)})}
                           inputRef={register({ required: true })}
                           error={Boolean(errors.scale)}
                           helperText={errors.scale && "入力必須です"}
@@ -156,7 +157,7 @@ const BizPackEdit: React.FC = () => {
                           autoComplete="unitPrice"
                           autoFocus
                           value={bizpack.unitPrice}
-                          onChange={e => setValue({unitPrice: e.target.value})}
+                          onChange={e => setValue({unitPrice: parseInt(e.target.value)})}
                           inputRef={register({ required: true })}
                           error={Boolean(errors.unitPrice)}
                           helperText={errors.unitPrice && "入力必須です"}
@@ -173,7 +174,7 @@ const BizPackEdit: React.FC = () => {
                           autoComplete="duration"
                           autoFocus
                           value={bizpack.duration}
-                          onChange={e => setValue({duration: e.target.value})}
+                          onChange={e => setValue({duration: parseInt(e.target.value)})}
                           inputRef={register({ required: true })}
                           error={Boolean(errors.duration)}
                           helperText={errors.duration && "入力必須です"}

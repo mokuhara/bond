@@ -8,28 +8,32 @@ import {
 import PrivateRoute from './privateRoute'
 import Auth from '../pages/auth/authen/auth'
 import UserInfo from "../pages/auth/userInfo/userInfo"
-import SpecialistMypage from '../layouts/mypage/specialist'
-import ClientMypage from '../layouts/mypage/client'
-import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
+import Mypage from '../layouts/mypage'
+
+import BizpackNew from "../pages/mypage/specialist/bizpack/new"
+import BizpackIndex from "../pages/mypage/specialist/bizpack/index"
+import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
+
 import Profile from "../pages/mypage/specialist/profile/profile"
 import PortfolioIndex from "../pages/mypage/specialist/portfolio/portfolioIndex"
 import PortfolioCreate from "../pages/mypage/specialist/portfolio/portfolioCreate"
 
-import TransactionIndex from "../pages/mypage/specialist/transaction/index"
-import Transaction from "../pages/mypage/specialist/transaction/show"
-import IssueRoutes from "./mypage/client/IssueRoutes"
+import SpecialistTransactionIndex from "../pages/mypage/specialist/transaction/index"
+import SpecialistTransaction from "../pages/mypage/specialist/transaction/show"
+import ClientTransactionIndex from "../pages/mypage/client/transaction/index"
+import ClientTransactionEdit from "../pages/mypage/client/transaction/edit"
+import ClientTransaction from "../pages/mypage/client/transaction/show"
+
+import IssueNew from '../pages/mypage/client/issue/new'
+import IssueIndex from '../pages/mypage/client/issue/index'
+import IssueShow from '../pages/mypage/client/issue/show'
+import IssueEdit from '../pages/mypage/client/issue/edit'
 
 
-import BizpackNew from "../pages/mypage/specialist/bizpack/new"
-import BizpackIndex from  "../pages/mypage/specialist/bizpack/index"
-import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
-
-import Chat from "../pages/mypage/chat"
 import ThreadEdit from "../pages/mypage/chat/thread/edit"
 import ThreadShow from "../pages/mypage/chat/thread/show"
 import ClientBizPackIndex from "../pages/mypage/client/bizpack/index"
 import ClientBizPackShow from "../pages/mypage/client/bizpack/show"
-
 
 const RootRouter: React.FC = () => {
     return (
@@ -44,55 +48,77 @@ const RootRouter: React.FC = () => {
 
                 <Route exact path='/' component={Auth} />
                 <PrivateRoute path='/userinfo' component={UserInfo} />
-                {/* <BizpackRoutes/> */}
 
+                {/* <BizpackRoutes/> */}
                 <PrivateRoute exact path='/mypage/specialist/bizpacks'>
                     <BizpackIndex />
                 </PrivateRoute>
+
                 <PrivateRoute path='/mypage/specialist/bizpacks/new'>
                     <BizpackNew />
                 </PrivateRoute>
+
                 <PrivateRoute exact path='/mypage/specialist/bizpacks/:id/edit'>
                     <BizpackEdit />
                 </PrivateRoute>
 
-
-                <PrivateRoute path='/mypage/specialist/transactions'>
-                    <SpecialistMypage><TransactionIndex /></SpecialistMypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/specialist/transaction'>
-                    <SpecialistMypage><Transaction /></SpecialistMypage>
+                <PrivateRoute exact path='/mypage/chat/thread'>
+                    <Mypage><ThreadShow /></Mypage>
                 </PrivateRoute>
 
-                <PrivateRoute path='/mypage/client/transactions'>
-                    <ClientMypage><TransactionIndex /></ClientMypage>
-                </PrivateRoute>
-                <PrivateRoute path='/mypage/client/transaction'>
-                    <ClientMypage><Transaction /></ClientMypage>
-                </PrivateRoute>
-
+                <Route exact path='/' component={Auth} />
+                <PrivateRoute path='/userinfo' component={UserInfo} />
 
                 {/* specialistMypage */}
                 <PrivateRoute path='/mypage/specialist/profile'>
-                    <SpecialistMypage><Profile /></SpecialistMypage>
+                    <Mypage><Profile /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/specialist/portfolio/create'>
-                    <SpecialistMypage><PortfolioCreate /></SpecialistMypage>
+                    <Mypage><PortfolioCreate /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/specialist/portfolio'>
-                    <SpecialistMypage><PortfolioIndex /></SpecialistMypage>
+                    <Mypage><PortfolioIndex /></Mypage>
                 </PrivateRoute>
-                <Route path='/mypage/specialist' component={SpecialistMypage} />
+                <PrivateRoute path='/mypage/specialist/transactions'>
+                    <Mypage><SpecialistTransactionIndex /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/specialist/transaction'>
+                    <Mypage><SpecialistTransaction /></Mypage>
+                </PrivateRoute>
+                <Route path='/mypage/specialist' component={Mypage} />
 
                 {/* clientMypage */}
-                { IssueRoutes }
+                <PrivateRoute exact path='/mypage/client/issue/new'>
+                    <Mypage><IssueNew /></Mypage>
+                </PrivateRoute>,
+                <PrivateRoute exact path='/mypage/client/issue/index'>
+                    <Mypage><IssueIndex /></Mypage>
+                </PrivateRoute>,
+                <PrivateRoute exact path='/mypage/client/issue/edit'>
+                    <Mypage><IssueEdit /></Mypage>
+                </PrivateRoute>,
+                <PrivateRoute exact path='/mypage/client/issue'>
+                    <Mypage><IssueShow /></Mypage>
+                </PrivateRoute>,
+
                 <PrivateRoute path='/mypage/client/bizpacks'>
-                    <ClientMypage><ClientBizPackIndex /></ClientMypage>
+                    <Mypage><ClientBizPackIndex /></Mypage>
                 </PrivateRoute>
                 <PrivateRoute path='/mypage/client/bizpack'>
-                    <ClientMypage><ClientBizPackShow /></ClientMypage>
+                    <Mypage><ClientBizPackShow /></Mypage>
                 </PrivateRoute>
-                <Route path='/mypage/client' component={ClientMypage} />
+                <PrivateRoute path='/mypage/client/transactions'>
+                    <Mypage><ClientTransactionIndex /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction/edit'>
+                    <Mypage><ClientTransactionEdit /></Mypage>
+                </PrivateRoute>
+                <PrivateRoute path='/mypage/client/transaction'>
+                    <Mypage><ClientTransaction /></Mypage>
+                </PrivateRoute>
+
+
+                <Route path='/mypage/client' component={Mypage} />
             </Switch>
         </Router>
     );
