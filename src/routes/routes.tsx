@@ -9,7 +9,7 @@ import PrivateRoute from './privateRoute'
 import Auth from '../pages/auth/authen/auth'
 import UserInfo from "../pages/auth/userInfo/userInfo"
 import Mypage from '../layouts/mypage'
-// import BizpackRoutes from "./mypage/specialist/BizpackRoutes"
+
 import BizpackNew from "../pages/mypage/specialist/bizpack/new"
 import BizpackIndex from "../pages/mypage/specialist/bizpack/index"
 import BizpackEdit from "../pages/mypage/specialist/bizpack/edit"
@@ -23,7 +23,12 @@ import SpecialistTransaction from "../pages/mypage/specialist/transaction/show"
 import ClientTransactionIndex from "../pages/mypage/client/transaction/index"
 import ClientTransactionEdit from "../pages/mypage/client/transaction/edit"
 import ClientTransaction from "../pages/mypage/client/transaction/show"
-import IssueRoutes from "./mypage/client/IssueRoutes"
+
+import IssueNew from '../pages/mypage/client/issue/new'
+import IssueIndex from '../pages/mypage/client/issue/index'
+import IssueShow from '../pages/mypage/client/issue/show'
+import IssueEdit from '../pages/mypage/client/issue/edit'
+
 
 import ThreadEdit from "../pages/mypage/chat/thread/edit"
 import ThreadShow from "../pages/mypage/chat/thread/show"
@@ -83,7 +88,19 @@ const RootRouter: React.FC = () => {
                 <Route path='/mypage/specialist' component={Mypage} />
 
                 {/* clientMypage */}
-                { IssueRoutes }
+                <PrivateRoute exact path='/mypage/client/issue/new'>
+                    <Mypage><IssueNew /></Mypage>
+                </PrivateRoute>,
+                <PrivateRoute exact path='/mypage/client/issue/index'>
+                    <Mypage><IssueIndex /></Mypage>
+                </PrivateRoute>,
+                <PrivateRoute exact path='/mypage/client/issue/edit'>
+                    <Mypage><IssueEdit /></Mypage>
+                </PrivateRoute>,
+                <PrivateRoute exact path='/mypage/client/issue'>
+                    <Mypage><IssueShow /></Mypage>
+                </PrivateRoute>,
+
                 <PrivateRoute path='/mypage/client/bizpacks'>
                     <Mypage><ClientBizPackIndex /></Mypage>
                 </PrivateRoute>

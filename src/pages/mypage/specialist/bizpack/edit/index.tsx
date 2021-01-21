@@ -108,7 +108,7 @@ const BizPackEdit: React.FC = () => {
                           autoComplete="scale"
                           autoFocus
                           value={bizpack.scale}
-                          onChange={e => setValue({scale: e.target.value})}
+                          onChange={e => setValue({scale: parseInt(e.target.value)})}
                           inputRef={register({ required: true })}
                           error={Boolean(errors.scale)}
                           helperText={errors.scale && "入力必須です"}
@@ -157,7 +157,7 @@ const BizPackEdit: React.FC = () => {
                           autoComplete="unitPrice"
                           autoFocus
                           value={bizpack.unitPrice}
-                          onChange={e => setValue({unitPrice: e.target.value})}
+                          onChange={e => setValue({unitPrice: parseInt(e.target.value)})}
                           inputRef={register({ required: true })}
                           error={Boolean(errors.unitPrice)}
                           helperText={errors.unitPrice && "入力必須です"}
@@ -174,7 +174,7 @@ const BizPackEdit: React.FC = () => {
                           autoComplete="duration"
                           autoFocus
                           value={bizpack.duration}
-                          onChange={e => setValue({duration: e.target.value})}
+                          onChange={e => setValue({duration: parseInt(e.target.value)})}
                           inputRef={register({ required: true })}
                           error={Boolean(errors.duration)}
                           helperText={errors.duration && "入力必須です"}
