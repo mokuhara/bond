@@ -9,7 +9,8 @@ export const bizpacksState = [
         description: "",
         unitPrice: 0,
         duration: 0,
-        isPublic: false
+        isPublic: false,
+        userId: 0,
     }
 ]
 
@@ -25,7 +26,8 @@ export const resbizpacksState = [
         description: "",
         unitPrice: 0,
         duration: 0,
-        isPublic: false
+        isPublic: false,
+        userId: 0
     }
 ]
 

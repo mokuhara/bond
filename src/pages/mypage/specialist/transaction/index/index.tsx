@@ -145,7 +145,7 @@ const TransactionIndex: React.FC = () => {
 
     //videoMeeting
     const [transactionId, setTransactionId] = useState(0)
-
+    console.log(tableData)
     return (
         <>
             <Paper className={classes.root}>

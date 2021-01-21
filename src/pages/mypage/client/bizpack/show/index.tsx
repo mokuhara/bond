@@ -44,7 +44,7 @@ const ClientBizPackShow: React.FC = () => {
     const classes = useStyles()
     const location = useLocation<{bizpack: bizpack}>();
     const bizpack = location.state.bizpack
-
+    console.log('bizpack', bizpack);
     const products = useCallback(() => {
         return bizpack.products.map((product, index) => {
             return (bizpack.products &&
@@ -62,7 +62,8 @@ const ClientBizPackShow: React.FC = () => {
         const body = {
             bizpackId: bizpack.id,
             bizpack: {...bizpack, category: { type: bizpack.category}},
-            status: 1
+            status: 1,
+            specialistUserId: bizpack.userId,
         }
         const res = await post(`${apiUrl}/mypage/transaction/create`, body)
                             .then(result => result.json())
