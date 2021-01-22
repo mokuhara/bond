@@ -63,10 +63,10 @@ const ThreadLists: React.FC<{transactionId: number}> = ({transactionId}) => {
         })
     }
 
-    const moveThread = (threadId: string) => {
+    const moveThread = (threadId: string, transactionId: number) => {
         history.push({
             pathname: '/mypage/chat/thread',
-            state: {threadId}
+            state: {threadId, transactionId}
         })
     }
 
@@ -95,7 +95,7 @@ const ThreadLists: React.FC<{transactionId: number}> = ({transactionId}) => {
                                             <TableCell align="left" className={classes.tableBody} style={{ minWidth: 40 }}>
                                                 <Grid container spacing={2}>
                                                     <Grid item xs={6}><Grid container justify="flex-end"><Button color="primary" variant="contained" onClick={() => editThread(thread)}>編集</Button></Grid></Grid>
-                                                    <Grid item xs={6}><Grid container justify="flex-start"><Button  variant="contained" onClick={() => moveThread(thread.id)}>詳細</Button></Grid></Grid>
+                                                    <Grid item xs={6}><Grid container justify="flex-start"><Button  variant="contained" onClick={() => moveThread(thread.id, transactionId)}>詳細</Button></Grid></Grid>
                                                 </Grid>
                                             </TableCell>
                                         </TableRow>

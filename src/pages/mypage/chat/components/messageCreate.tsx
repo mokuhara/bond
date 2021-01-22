@@ -11,7 +11,7 @@ import { messageState } from '../store'
 import { db } from '../firebase'
 
 
-const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
+const MessageNew: React.FC<{threadId: number, transactionId: number}> = ({threadId, transactionId}) => {
     const history = useHistory()
     const [message, setMessage] = useState(messageState)
 
@@ -41,8 +41,10 @@ const MessageNew: React.FC<{threadId: number}> = ({threadId}) => {
             settings: {
                 use_pmi: "false"
             },
-            transactionId: 0
+            transactionId: transactionId
         }
+        console.log('videoMeeting')
+        console.log(vidoMeeting)
         post(`${apiUrl}/mypage/videomeeting/create`, vidoMeeting, {}, true)
             .then(res => res.json())
             .then(json => {

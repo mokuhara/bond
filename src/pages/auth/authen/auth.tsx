@@ -61,7 +61,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       margin: theme.spacing(3, 0, 2),
     },
     title: {
-      fontSize: "18px",
+      fontSize: "16px",
+      fontWeight: "bold"
     },
   }));
 
@@ -138,9 +139,11 @@ const Auth: React.FC = () => {
             </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
-                    <Avatar className={classes.avatar} src={logo}/>
+                    <div className={styles.logoWrapper}>
+                        <img className={styles.logo} src={logo} />
+                    </div>
                     <Typography component="h1" variant="h5" className={classes.title}>
-                     SaaS支援サービス
+                     SaaSで助太刀いたす
                     </Typography>
                         <FormControl component="label">
                             {!isLoginView && <RadioGroup
